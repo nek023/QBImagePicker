@@ -8,6 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
+// Controllers
+#import "QBImagePickerController.h"
+
+@interface ViewController : UIViewController <QBImagePickerControllerDelegate>
+
+- (IBAction)pickSinglePhoto:(id)sender;
+- (IBAction)pickMultiplePhotos:(id)sender;
+- (IBAction)pickWithLimitation:(id)sender;
 
 @end

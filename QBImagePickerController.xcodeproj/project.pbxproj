@@ -18,6 +18,15 @@
 		AA75F04716AEFFD100097673 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AA75F04616AEFFD100097673 /* Default-568h@2x.png */; };
 		AA75F04A16AEFFD100097673 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA75F04816AEFFD100097673 /* MainStoryboard.storyboard */; };
 		AA75F04D16AEFFD100097673 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA75F04C16AEFFD100097673 /* ViewController.m */; };
+		AA75F06616AEFFFF00097673 /* QBAssetCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA75F05516AEFFFF00097673 /* QBAssetCollectionViewController.m */; };
+		AA75F06716AEFFFF00097673 /* QBImagePickerAssetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AA75F05816AEFFFF00097673 /* QBImagePickerAssetCell.m */; };
+		AA75F06816AEFFFF00097673 /* QBImagePickerAssetView.m in Sources */ = {isa = PBXBuildFile; fileRef = AA75F05B16AEFFFF00097673 /* QBImagePickerAssetView.m */; };
+		AA75F06916AEFFFF00097673 /* QBImagePickerController.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AA75F05D16AEFFFF00097673 /* QBImagePickerController.bundle */; };
+		AA75F06A16AEFFFF00097673 /* QBImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA75F05F16AEFFFF00097673 /* QBImagePickerController.m */; };
+		AA75F06B16AEFFFF00097673 /* QBImagePickerFooterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AA75F06116AEFFFF00097673 /* QBImagePickerFooterCell.m */; };
+		AA75F06C16AEFFFF00097673 /* QBImagePickerGroupCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AA75F06316AEFFFF00097673 /* QBImagePickerGroupCell.m */; };
+		AA75F06D16AEFFFF00097673 /* QBImagePickerVideoInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = AA75F06516AEFFFF00097673 /* QBImagePickerVideoInfoView.m */; };
+		AA75F06F16AF003700097673 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA75F06E16AF003700097673 /* AssetsLibrary.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +46,25 @@
 		AA75F04916AEFFD100097673 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
 		AA75F04B16AEFFD100097673 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		AA75F04C16AEFFD100097673 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		AA75F05416AEFFFF00097673 /* QBAssetCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBAssetCollectionViewController.h; sourceTree = "<group>"; };
+		AA75F05516AEFFFF00097673 /* QBAssetCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBAssetCollectionViewController.m; sourceTree = "<group>"; };
+		AA75F05616AEFFFF00097673 /* QBAssetCollectionViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBAssetCollectionViewControllerDelegate.h; sourceTree = "<group>"; };
+		AA75F05716AEFFFF00097673 /* QBImagePickerAssetCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBImagePickerAssetCell.h; sourceTree = "<group>"; };
+		AA75F05816AEFFFF00097673 /* QBImagePickerAssetCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBImagePickerAssetCell.m; sourceTree = "<group>"; };
+		AA75F05916AEFFFF00097673 /* QBImagePickerAssetCellDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBImagePickerAssetCellDelegate.h; sourceTree = "<group>"; };
+		AA75F05A16AEFFFF00097673 /* QBImagePickerAssetView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBImagePickerAssetView.h; sourceTree = "<group>"; };
+		AA75F05B16AEFFFF00097673 /* QBImagePickerAssetView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBImagePickerAssetView.m; sourceTree = "<group>"; };
+		AA75F05C16AEFFFF00097673 /* QBImagePickerAssetViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBImagePickerAssetViewDelegate.h; sourceTree = "<group>"; };
+		AA75F05D16AEFFFF00097673 /* QBImagePickerController.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = QBImagePickerController.bundle; sourceTree = "<group>"; };
+		AA75F05E16AEFFFF00097673 /* QBImagePickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBImagePickerController.h; sourceTree = "<group>"; };
+		AA75F05F16AEFFFF00097673 /* QBImagePickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBImagePickerController.m; sourceTree = "<group>"; };
+		AA75F06016AEFFFF00097673 /* QBImagePickerFooterCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBImagePickerFooterCell.h; sourceTree = "<group>"; };
+		AA75F06116AEFFFF00097673 /* QBImagePickerFooterCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBImagePickerFooterCell.m; sourceTree = "<group>"; };
+		AA75F06216AEFFFF00097673 /* QBImagePickerGroupCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBImagePickerGroupCell.h; sourceTree = "<group>"; };
+		AA75F06316AEFFFF00097673 /* QBImagePickerGroupCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBImagePickerGroupCell.m; sourceTree = "<group>"; };
+		AA75F06416AEFFFF00097673 /* QBImagePickerVideoInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBImagePickerVideoInfoView.h; sourceTree = "<group>"; };
+		AA75F06516AEFFFF00097673 /* QBImagePickerVideoInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBImagePickerVideoInfoView.m; sourceTree = "<group>"; };
+		AA75F06E16AF003700097673 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -44,6 +72,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA75F06F16AF003700097673 /* AssetsLibrary.framework in Frameworks */,
 				AA75F03116AEFFD100097673 /* UIKit.framework in Frameworks */,
 				AA75F03316AEFFD100097673 /* Foundation.framework in Frameworks */,
 				AA75F03516AEFFD100097673 /* CoreGraphics.framework in Frameworks */,
@@ -73,6 +102,7 @@
 		AA75F02F16AEFFD100097673 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AA75F06E16AF003700097673 /* AssetsLibrary.framework */,
 				AA75F03016AEFFD100097673 /* UIKit.framework */,
 				AA75F03216AEFFD100097673 /* Foundation.framework */,
 				AA75F03416AEFFD100097673 /* CoreGraphics.framework */,
@@ -83,6 +113,7 @@
 		AA75F03616AEFFD100097673 /* QBImagePickerController */ = {
 			isa = PBXGroup;
 			children = (
+				AA75F05316AEFFFF00097673 /* Classes */,
 				AA75F03F16AEFFD100097673 /* AppDelegate.h */,
 				AA75F04016AEFFD100097673 /* AppDelegate.m */,
 				AA75F04816AEFFD100097673 /* MainStoryboard.storyboard */,
@@ -105,6 +136,31 @@
 				AA75F04616AEFFD100097673 /* Default-568h@2x.png */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		AA75F05316AEFFFF00097673 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				AA75F05E16AEFFFF00097673 /* QBImagePickerController.h */,
+				AA75F05F16AEFFFF00097673 /* QBImagePickerController.m */,
+				AA75F06216AEFFFF00097673 /* QBImagePickerGroupCell.h */,
+				AA75F06316AEFFFF00097673 /* QBImagePickerGroupCell.m */,
+				AA75F05416AEFFFF00097673 /* QBAssetCollectionViewController.h */,
+				AA75F05516AEFFFF00097673 /* QBAssetCollectionViewController.m */,
+				AA75F05616AEFFFF00097673 /* QBAssetCollectionViewControllerDelegate.h */,
+				AA75F05716AEFFFF00097673 /* QBImagePickerAssetCell.h */,
+				AA75F05816AEFFFF00097673 /* QBImagePickerAssetCell.m */,
+				AA75F05916AEFFFF00097673 /* QBImagePickerAssetCellDelegate.h */,
+				AA75F05A16AEFFFF00097673 /* QBImagePickerAssetView.h */,
+				AA75F05B16AEFFFF00097673 /* QBImagePickerAssetView.m */,
+				AA75F05C16AEFFFF00097673 /* QBImagePickerAssetViewDelegate.h */,
+				AA75F06416AEFFFF00097673 /* QBImagePickerVideoInfoView.h */,
+				AA75F06516AEFFFF00097673 /* QBImagePickerVideoInfoView.m */,
+				AA75F06016AEFFFF00097673 /* QBImagePickerFooterCell.h */,
+				AA75F06116AEFFFF00097673 /* QBImagePickerFooterCell.m */,
+				AA75F05D16AEFFFF00097673 /* QBImagePickerController.bundle */,
+			);
+			path = Classes;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -163,6 +219,7 @@
 				AA75F04516AEFFD100097673 /* Default@2x.png in Resources */,
 				AA75F04716AEFFD100097673 /* Default-568h@2x.png in Resources */,
 				AA75F04A16AEFFD100097673 /* MainStoryboard.storyboard in Resources */,
+				AA75F06916AEFFFF00097673 /* QBImagePickerController.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -176,6 +233,13 @@
 				AA75F03D16AEFFD100097673 /* main.m in Sources */,
 				AA75F04116AEFFD100097673 /* AppDelegate.m in Sources */,
 				AA75F04D16AEFFD100097673 /* ViewController.m in Sources */,
+				AA75F06616AEFFFF00097673 /* QBAssetCollectionViewController.m in Sources */,
+				AA75F06716AEFFFF00097673 /* QBImagePickerAssetCell.m in Sources */,
+				AA75F06816AEFFFF00097673 /* QBImagePickerAssetView.m in Sources */,
+				AA75F06A16AEFFFF00097673 /* QBImagePickerController.m in Sources */,
+				AA75F06B16AEFFFF00097673 /* QBImagePickerFooterCell.m in Sources */,
+				AA75F06C16AEFFFF00097673 /* QBImagePickerGroupCell.m in Sources */,
+				AA75F06D16AEFFFF00097673 /* QBImagePickerVideoInfoView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

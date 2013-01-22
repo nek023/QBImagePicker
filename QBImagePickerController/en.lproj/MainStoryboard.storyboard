@@ -1,23 +1,118 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2519" systemVersion="12A206j" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="2">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2844" systemVersion="12C3012" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="yQg-ut-fqB">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1856"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1930"/>
     </dependencies>
     <scenes>
-        <!--class Prefix:identifier View Controller-->
-        <scene sceneID="5">
+        <!--View Controller-->
+        <scene sceneID="dSU-ig-1JN">
             <objects>
-                <viewController id="2" customClass="ViewController" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="3">
-                        <rect key="frame" x="0.0" y="20" width="320" height="460"/>
+                <viewController id="l6f-8F-rD3" customClass="ViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8Mn-IB-HUD">
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qXC-k6-geb">
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="200" id="03c-eX-Jj8"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="Pick a photo">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="pickSinglePhoto:" destination="l6f-8F-rD3" eventType="touchUpInside" id="zq8-DX-QcZ"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KZo-7p-p9E">
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="Pick multiple photos">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="pickMultiplePhotos:" destination="l6f-8F-rD3" eventType="touchUpInside" id="kek-hb-fvq"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="X8k-Q1-llW">
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="Pick at least six photos">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="pickWithLimitation:" destination="l6f-8F-rD3" eventType="touchUpInside" id="fhQ-Th-eUA"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="QBImagePickerController" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jS3-wf-Xfm">
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="274" id="CCC-OW-5hP"/>
+                                    <constraint firstAttribute="height" constant="30" id="v7L-p8-rHi"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="jS3-wf-Xfm" firstAttribute="centerX" secondItem="qXC-k6-geb" secondAttribute="centerX" type="default" id="91d-4b-9qp"/>
+                            <constraint firstItem="jS3-wf-Xfm" firstAttribute="top" secondItem="8Mn-IB-HUD" secondAttribute="top" constant="80" id="CPr-RL-C1D"/>
+                            <constraint firstItem="qXC-k6-geb" firstAttribute="top" secondItem="8Mn-IB-HUD" secondAttribute="top" constant="230" id="CrW-lm-28P"/>
+                            <constraint firstItem="KZo-7p-p9E" firstAttribute="leading" secondItem="qXC-k6-geb" secondAttribute="leading" type="default" id="FHc-R4-K6W"/>
+                            <constraint firstItem="KZo-7p-p9E" firstAttribute="trailing" secondItem="qXC-k6-geb" secondAttribute="trailing" type="default" id="Lc0-r5-VbZ"/>
+                            <constraint firstAttribute="bottom" secondItem="X8k-Q1-llW" secondAttribute="bottom" constant="91" id="Rr5-IU-ngm"/>
+                            <constraint firstItem="X8k-Q1-llW" firstAttribute="trailing" secondItem="KZo-7p-p9E" secondAttribute="trailing" type="default" id="TLJ-WV-M1v"/>
+                            <constraint firstAttribute="bottom" secondItem="KZo-7p-p9E" secondAttribute="bottom" constant="161" id="W6b-ZZ-Npw"/>
+                            <constraint firstItem="KZo-7p-p9E" firstAttribute="centerX" secondItem="8Mn-IB-HUD" secondAttribute="centerX" type="default" id="mLe-Bd-c6k"/>
+                            <constraint firstItem="KZo-7p-p9E" firstAttribute="leading" secondItem="X8k-Q1-llW" secondAttribute="leading" type="default" id="qDZ-uV-By2"/>
+                        </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="s0m-XF-e1C"/>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="4" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hgu-R4-Q3g" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="353" y="77"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="2p9-yl-IAD">
+            <objects>
+                <navigationController definesPresentationContext="YES" id="yQg-ut-fqB" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="PFM-Ka-7Vi">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="l6f-8F-rD3" kind="relationship" relationship="rootViewController" id="dlO-QU-23Y"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="OFq-6f-hya" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-143" y="77"/>
         </scene>
     </scenes>
+    <classes>
+        <class className="NSLayoutConstraint" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
+        </class>
+        <class className="ViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="pickMultiplePhotos:"/>
+                <relationship kind="action" name="pickSinglePhoto:"/>
+                <relationship kind="action" name="pickWithLimitation:"/>
+            </relationships>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
