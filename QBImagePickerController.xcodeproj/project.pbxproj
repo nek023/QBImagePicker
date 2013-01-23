@@ -27,6 +27,7 @@
 		AA75F06D16AEFFFF00097673 /* QBImagePickerVideoInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = AA75F06516AEFFFF00097673 /* QBImagePickerVideoInfoView.m */; };
 		AA75F06F16AF003700097673 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA75F06E16AF003700097673 /* AssetsLibrary.framework */; };
 		AA9526C016AFA54E007B7891 /* QBImagePickerFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = AA9526BF16AFA54E007B7891 /* QBImagePickerFooterView.m */; };
+		AAC8081316AFB1DC002AD9CC /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAC8081216AFB1DC002AD9CC /* QuartzCore.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -65,6 +66,7 @@
 		AA75F06E16AF003700097673 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		AA9526BE16AFA54E007B7891 /* QBImagePickerFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBImagePickerFooterView.h; sourceTree = "<group>"; };
 		AA9526BF16AFA54E007B7891 /* QBImagePickerFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBImagePickerFooterView.m; sourceTree = "<group>"; };
+		AAC8081216AFB1DC002AD9CC /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +74,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AAC8081316AFB1DC002AD9CC /* QuartzCore.framework in Frameworks */,
 				AA75F06F16AF003700097673 /* AssetsLibrary.framework in Frameworks */,
 				AA75F03116AEFFD100097673 /* UIKit.framework in Frameworks */,
 				AA75F03316AEFFD100097673 /* Foundation.framework in Frameworks */,
@@ -102,6 +105,7 @@
 		AA75F02F16AEFFD100097673 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AAC8081216AFB1DC002AD9CC /* QuartzCore.framework */,
 				AA75F06E16AF003700097673 /* AssetsLibrary.framework */,
 				AA75F03016AEFFD100097673 /* UIKit.framework */,
 				AA75F03216AEFFD100097673 /* Foundation.framework */,

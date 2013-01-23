@@ -45,7 +45,7 @@
         tableView.dataSource = self;
         tableView.delegate = self;
         tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        tableView.allowsSelection = NO;
+        tableView.allowsSelection = YES;
         tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         
         [self.view addSubview:tableView];
@@ -70,7 +70,7 @@
         [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleBlackTranslucent animated:NO];
         
         CGFloat top = 0;
-        if(!([UIApplication sharedApplication]).statusBarHidden) top = top + 20;
+        if(![[UIApplication sharedApplication] isStatusBarHidden]) top = top + 20;
         if(!self.navigationController.navigationBarHidden) top = top + 44;
         self.tableView.contentInset = UIEdgeInsetsMake(top, 0, 0, 0);
         self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(top, 0, 0, 0);
@@ -79,7 +79,6 @@
     }
     
     // Scroll to bottom
-    //[self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:([self.tableView numberOfRowsInSection:0] - 1) inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
     [self.tableView setContentOffset:CGPointMake(0, self.tableView.contentSize.height) animated:NO];
 }
 
@@ -191,7 +190,7 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1;
+    return 3;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -199,7 +198,12 @@
     NSInteger numberOfRowsInSection = 0;
     
     switch(section) {
-        case 0:
+        case 0: case 1:
+        {
+            numberOfRowsInSection = (self.allowsMultipleSelection) ? 1 : 0;
+        }
+            break;
+        case 2:
         {
             NSInteger numberOfAssetsInRow = self.view.bounds.size.width / self.imageSize.width;
             numberOfRowsInSection = self.assets.count / numberOfAssetsInRow;
@@ -218,7 +222,66 @@
     switch(indexPath.section) {
         case 0:
         {
-            NSString *cellIdentifier = @"Cell";
+            NSString *cellIdentifier = @"HeaderCell";
+            cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+            
+            if(cell == nil) {
+                cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier] autorelease];
+                cell.selectionStyle = UITableViewCellSelectionStyleBlue;
+            }
+            
+            if(self.selectedAssets.count == self.assets.count) {
+                cell.textLabel.text = @"すべての写真の選択を解除";
+                
+                // Set accessory view
+                UIImageView *accessoryView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 23, 23)];
+                accessoryView.image = [UIImage imageNamed:@"QBImagePickerController.bundle/minus.png"];
+                
+                accessoryView.layer.shadowColor = [[UIColor colorWithWhite:0 alpha:1.0] CGColor];
+                accessoryView.layer.shadowOpacity = 0.70;
+                accessoryView.layer.shadowOffset = CGSizeMake(0, 1.4);
+                accessoryView.layer.shadowRadius = 2;
+                
+                cell.accessoryView = accessoryView;
+                [accessoryView release];
+            } else {
+                cell.textLabel.text = @"すべての写真を選択";
+                
+                // Set accessory view
+                UIImageView *accessoryView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 23, 23)];
+                accessoryView.image = [UIImage imageNamed:@"QBImagePickerController.bundle/plus.png"];
+                
+                accessoryView.layer.shadowColor = [[UIColor colorWithWhite:0 alpha:1.0] CGColor];
+                accessoryView.layer.shadowOpacity = 0.70;
+                accessoryView.layer.shadowOffset = CGSizeMake(0, 1.4);
+                accessoryView.layer.shadowRadius = 2;
+                
+                cell.accessoryView = accessoryView;
+                [accessoryView release];
+            }
+        }
+            break;
+        case 1:
+        {
+            NSString *cellIdentifier = @"HeaderCell";
+            cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+            
+            if(cell == nil) {
+                cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier] autorelease];
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                
+                // Set background view
+                UIView *backgroundView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 1)];
+                backgroundView.backgroundColor = [UIColor colorWithWhite:0.878 alpha:1.0];
+                
+                cell.backgroundView = backgroundView;
+                [backgroundView release];
+            }
+        }
+            break;
+        case 2:
+        {
+            NSString *cellIdentifier = @"SeparatorCell";
             cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
             
             if(cell == nil) {
@@ -226,6 +289,7 @@
                 CGFloat margin = round((self.view.bounds.size.width - self.imageSize.width * numberOfAssetsInRow) / (numberOfAssetsInRow + 1));
                 
                 cell = [[[QBImagePickerAssetCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier imageSize:self.imageSize numberOfAssets:numberOfAssetsInRow margin:margin] autorelease];
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 [(QBImagePickerAssetCell *)cell setDelegate:self];
                 [(QBImagePickerAssetCell *)cell setAllowsMultipleSelection:self.allowsMultipleSelection];
             }
@@ -269,6 +333,16 @@
     switch(indexPath.section) {
         case 0:
         {
+            heightForRow = 44;
+        }
+            break;
+        case 1:
+        {
+            heightForRow = 1;
+        }
+            break;
+        case 2:
+        {
             NSInteger numberOfAssetsInRow = self.view.bounds.size.width / self.imageSize.width;
             CGFloat margin = round((self.view.bounds.size.width - self.imageSize.width * numberOfAssetsInRow) / (numberOfAssetsInRow + 1));
             heightForRow = margin + self.imageSize.height;
@@ -277,6 +351,31 @@
     }
     
     return heightForRow;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if(indexPath.section == 0 && indexPath.row == 0) {
+        if(self.selectedAssets.count == self.assets.count) {
+            // Deselect all assets
+            for(NSUInteger i = 0; i < [tableView numberOfRowsInSection:2]; i++) {
+                QBImagePickerAssetCell *cell = (QBImagePickerAssetCell *)[tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:2]];
+                [cell deselectAllAssets];
+            }
+        } else {
+            // Select all assets
+            for(NSUInteger i = 0; i < [tableView numberOfRowsInSection:2]; i++) {
+                QBImagePickerAssetCell *cell = (QBImagePickerAssetCell *)[tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:2]];
+                [cell selectAllAssets];
+            }
+        }
+        
+        // Update header text
+        [tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        
+        // Cancel table view selection
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    }
 }
 
 
@@ -313,6 +412,9 @@
         } else {
             self.doneButton.enabled = (self.selectedAssets.count > 0);
         }
+        
+        // Update header text
+        [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
     } else {
         [self.delegate assetCollectionViewController:self didFinishPickingAsset:asset];
     }

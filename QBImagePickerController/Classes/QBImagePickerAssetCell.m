@@ -111,7 +111,9 @@
 {
     for(UIView *subview in self.contentView.subviews) {
         if([subview isMemberOfClass:[QBImagePickerAssetView class]]) {
-            [(QBImagePickerAssetView *)subview setSelected:YES];
+            if(![(QBImagePickerAssetView *)subview isHidden]) {
+                [(QBImagePickerAssetView *)subview setSelected:YES];
+            }
         }
     }
 }
@@ -120,7 +122,9 @@
 {
     for(UIView *subview in self.contentView.subviews) {
         if([subview isMemberOfClass:[QBImagePickerAssetView class]]) {
-            [(QBImagePickerAssetView *)subview setSelected:NO];
+            if(![(QBImagePickerAssetView *)subview isHidden]) {
+                [(QBImagePickerAssetView *)subview setSelected:NO];
+            }
         }
     }
 }

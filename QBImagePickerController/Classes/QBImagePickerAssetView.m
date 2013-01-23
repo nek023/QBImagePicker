@@ -82,7 +82,11 @@
 
 - (void)setSelected:(BOOL)selected
 {
-    self.overlayImageView.hidden = !selected;
+    if(self.allowsMultipleSelection) {
+        self.overlayImageView.hidden = !selected;
+    }
+    
+    [self.delegate assetView:self didChangeSelectionState:self.selected];
 }
 
 - (BOOL)selected
@@ -114,23 +118,17 @@
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
     if([self.delegate assetViewCanBeSelected:self]) {
+        self.selected = !self.selected;
+        
         if(self.allowsMultipleSelection) {
-            self.selected = !self.selected;
             self.imageView.image = [self thumbnail];
         } else {
             self.imageView.image = [self tintedThumbnail];
         }
-        
-        [self.delegate assetView:self didChangeSelectionState:self.selected];
     } else {
-        if(self.allowsMultipleSelection && self.selected) {
-            self.selected = !self.selected;
-            self.imageView.image = [self thumbnail];
-            
-            [self.delegate assetView:self didChangeSelectionState:self.selected];
-        } else {
-            self.imageView.image = [self thumbnail];
-        }
+        self.selected = !self.selected;
+        
+        self.imageView.image = [self thumbnail];
     }
 }
 

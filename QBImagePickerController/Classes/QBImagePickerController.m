@@ -137,7 +137,7 @@
             [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleBlackTranslucent animated:YES];
             
             CGFloat top = 0;
-            if(!([UIApplication sharedApplication]).statusBarHidden) top = top + 20;
+            if(![[UIApplication sharedApplication] isStatusBarHidden]) top = top + 20;
             if(!self.navigationController.navigationBarHidden) top = top + 44;
             self.tableView.contentInset = UIEdgeInsetsMake(top, 0, 0, 0);
             self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(top, 0, 0, 0);
