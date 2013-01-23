@@ -10,7 +10,7 @@
 
 // Views
 #import "QBImagePickerAssetCell.h"
-#import "QBImagePickerFooterCell.h"
+#import "QBImagePickerFooterView.h"
 
 @interface QBAssetCollectionViewController ()
 
@@ -79,7 +79,8 @@
     }
     
     // Scroll to bottom
-    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+    //[self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:([self.tableView numberOfRowsInSection:0] - 1) inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+    [self.tableView setContentOffset:CGPointMake(0, self.tableView.contentSize.height) animated:NO];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -122,6 +123,7 @@
 
 - (void)reloadData
 {
+    // Reload assets
     [self.assetsGroup enumerateAssetsUsingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop) {
         if(result) {
             [self.assets addObject:result];
@@ -129,6 +131,28 @@
     }];
     
     [self.tableView reloadData];
+    
+    // Set footer view
+    if(self.filterType == QBImagePickerFilterTypeAllAssets && [self.delegate respondsToSelector:@selector(assetCollectionViewController:descriptionForNumberOfPhotos:numberOfVideos:)]) {
+        [self.assetsGroup setAssetsFilter:[ALAssetsFilter allPhotos]];
+        NSUInteger numberOfPhotos = self.assetsGroup.numberOfAssets;
+        
+        [self.assetsGroup setAssetsFilter:[ALAssetsFilter allVideos]];
+        NSUInteger numberOfVideos = self.assetsGroup.numberOfAssets;
+        
+        [self.assetsGroup setAssetsFilter:[ALAssetsFilter allAssets]];
+        
+        QBImagePickerFooterView *footerView = [[QBImagePickerFooterView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 48)];
+        footerView.titleLabel.text = [self.delegate assetCollectionViewController:self descriptionForNumberOfPhotos:numberOfPhotos numberOfVideos:numberOfVideos];
+        
+        self.tableView.tableFooterView = footerView;
+        [footerView release];
+    } else {
+        QBImagePickerFooterView *footerView = [[QBImagePickerFooterView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 4)];
+        
+        self.tableView.tableFooterView = footerView;
+        [footerView release];
+    }
 }
 
 - (void)updateRightBarButtonItem
@@ -167,7 +191,7 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 2;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -180,11 +204,6 @@
             NSInteger numberOfAssetsInRow = self.view.bounds.size.width / self.imageSize.width;
             numberOfRowsInSection = self.assets.count / numberOfAssetsInRow;
             if((self.assets.count - numberOfRowsInSection * numberOfAssetsInRow) > 0) numberOfRowsInSection++;
-        }
-            break;
-        case 1:
-        {
-            numberOfRowsInSection = 1;
         }
             break;
     }
@@ -235,33 +254,6 @@
             }
         }
             break;
-        case 1:
-        {
-            NSString *cellIdentifier = @"FooterCell";
-            cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-            
-            if(cell == nil) {
-                cell = [[[QBImagePickerFooterCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier] autorelease];
-            }
-            
-            // Set footer title
-            UILabel *titleLabel = [(QBImagePickerFooterCell *)cell titleLabel];
-            
-            if(self.filterType == QBImagePickerFilterTypeAllAssets || [self.delegate respondsToSelector:@selector(assetCollectionViewController:descriptionForNumberOfPhotos:numberOfVideos:)]) {
-                [self.assetsGroup setAssetsFilter:[ALAssetsFilter allPhotos]];
-                NSUInteger numberOfPhotos = self.assetsGroup.numberOfAssets;
-                
-                [self.assetsGroup setAssetsFilter:[ALAssetsFilter allVideos]];
-                NSUInteger numberOfVideos = self.assetsGroup.numberOfAssets;
-                
-                [self.assetsGroup setAssetsFilter:[ALAssetsFilter allAssets]];
-                
-                titleLabel.text = [self.delegate assetCollectionViewController:self descriptionForNumberOfPhotos:numberOfPhotos numberOfVideos:numberOfVideos];
-            } else {
-                titleLabel.text = @"";
-            }
-        }
-            break;
     }
     
     return cell;
@@ -280,15 +272,6 @@
             NSInteger numberOfAssetsInRow = self.view.bounds.size.width / self.imageSize.width;
             CGFloat margin = round((self.view.bounds.size.width - self.imageSize.width * numberOfAssetsInRow) / (numberOfAssetsInRow + 1));
             heightForRow = margin + self.imageSize.height;
-        }
-            break;
-        case 1:
-        {
-            if(self.filterType == QBImagePickerFilterTypeAllAssets || [self.delegate respondsToSelector:@selector(assetCollectionViewController:descriptionForNumberOfPhotos:numberOfVideos:)]) {
-                heightForRow = 48;
-            } else {
-                heightForRow = 4;
-            }
         }
             break;
     }

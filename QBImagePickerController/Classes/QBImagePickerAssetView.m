@@ -106,7 +106,7 @@
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    if([self.delegate assetViewCanBeSelected:self]) {
+    if([self.delegate assetViewCanBeSelected:self] && !self.allowsMultipleSelection) {
         self.imageView.image = [self tintedThumbnail];
     }
 }

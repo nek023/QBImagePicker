@@ -1,28 +1,28 @@
 //
-//  QBImagePickerFooterCell.m
+//  QBImagePickerFooterView.m
 //  QBImagePickerController
 //
-//  Created by questbeat on 2013/01/21.
+//  Created by Katsuma Tanaka on 2013/01/23.
 //  Copyright (c) 2013年 Katsuma Tanaka. All rights reserved.
 //
 
-#import "QBImagePickerFooterCell.h"
+#import "QBImagePickerFooterView.h"
 
-@implementation QBImagePickerFooterCell
+@implementation QBImagePickerFooterView
 
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
+- (id)initWithFrame:(CGRect)frame
 {
-    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+    self = [super initWithFrame:frame];
     
     if(self) {
         /* Initialization */
-        UILabel *titleLabel = [[UILabel alloc] initWithFrame:self.contentView.bounds];
+        UILabel *titleLabel = [[UILabel alloc] initWithFrame:self.bounds];
         titleLabel.font = [UIFont systemFontOfSize:20];
         titleLabel.textAlignment = NSTextAlignmentCenter;
         titleLabel.textColor = [UIColor colorWithRed:0.502 green:0.533 blue:0.58 alpha:1.0];
         titleLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         
-        [self.contentView addSubview:titleLabel];
+        [self addSubview:titleLabel];
         self.titleLabel = titleLabel;
         [titleLabel release];
     }

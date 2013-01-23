@@ -23,10 +23,10 @@
 		AA75F06816AEFFFF00097673 /* QBImagePickerAssetView.m in Sources */ = {isa = PBXBuildFile; fileRef = AA75F05B16AEFFFF00097673 /* QBImagePickerAssetView.m */; };
 		AA75F06916AEFFFF00097673 /* QBImagePickerController.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AA75F05D16AEFFFF00097673 /* QBImagePickerController.bundle */; };
 		AA75F06A16AEFFFF00097673 /* QBImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA75F05F16AEFFFF00097673 /* QBImagePickerController.m */; };
-		AA75F06B16AEFFFF00097673 /* QBImagePickerFooterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AA75F06116AEFFFF00097673 /* QBImagePickerFooterCell.m */; };
 		AA75F06C16AEFFFF00097673 /* QBImagePickerGroupCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AA75F06316AEFFFF00097673 /* QBImagePickerGroupCell.m */; };
 		AA75F06D16AEFFFF00097673 /* QBImagePickerVideoInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = AA75F06516AEFFFF00097673 /* QBImagePickerVideoInfoView.m */; };
 		AA75F06F16AF003700097673 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA75F06E16AF003700097673 /* AssetsLibrary.framework */; };
+		AA9526C016AFA54E007B7891 /* QBImagePickerFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = AA9526BF16AFA54E007B7891 /* QBImagePickerFooterView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,13 +58,13 @@
 		AA75F05D16AEFFFF00097673 /* QBImagePickerController.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = QBImagePickerController.bundle; sourceTree = "<group>"; };
 		AA75F05E16AEFFFF00097673 /* QBImagePickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBImagePickerController.h; sourceTree = "<group>"; };
 		AA75F05F16AEFFFF00097673 /* QBImagePickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBImagePickerController.m; sourceTree = "<group>"; };
-		AA75F06016AEFFFF00097673 /* QBImagePickerFooterCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBImagePickerFooterCell.h; sourceTree = "<group>"; };
-		AA75F06116AEFFFF00097673 /* QBImagePickerFooterCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBImagePickerFooterCell.m; sourceTree = "<group>"; };
 		AA75F06216AEFFFF00097673 /* QBImagePickerGroupCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBImagePickerGroupCell.h; sourceTree = "<group>"; };
 		AA75F06316AEFFFF00097673 /* QBImagePickerGroupCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBImagePickerGroupCell.m; sourceTree = "<group>"; };
 		AA75F06416AEFFFF00097673 /* QBImagePickerVideoInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBImagePickerVideoInfoView.h; sourceTree = "<group>"; };
 		AA75F06516AEFFFF00097673 /* QBImagePickerVideoInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBImagePickerVideoInfoView.m; sourceTree = "<group>"; };
 		AA75F06E16AF003700097673 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
+		AA9526BE16AFA54E007B7891 /* QBImagePickerFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBImagePickerFooterView.h; sourceTree = "<group>"; };
+		AA9526BF16AFA54E007B7891 /* QBImagePickerFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBImagePickerFooterView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -156,8 +156,8 @@
 				AA75F05C16AEFFFF00097673 /* QBImagePickerAssetViewDelegate.h */,
 				AA75F06416AEFFFF00097673 /* QBImagePickerVideoInfoView.h */,
 				AA75F06516AEFFFF00097673 /* QBImagePickerVideoInfoView.m */,
-				AA75F06016AEFFFF00097673 /* QBImagePickerFooterCell.h */,
-				AA75F06116AEFFFF00097673 /* QBImagePickerFooterCell.m */,
+				AA9526BE16AFA54E007B7891 /* QBImagePickerFooterView.h */,
+				AA9526BF16AFA54E007B7891 /* QBImagePickerFooterView.m */,
 				AA75F05D16AEFFFF00097673 /* QBImagePickerController.bundle */,
 			);
 			path = Classes;
@@ -237,9 +237,9 @@
 				AA75F06716AEFFFF00097673 /* QBImagePickerAssetCell.m in Sources */,
 				AA75F06816AEFFFF00097673 /* QBImagePickerAssetView.m in Sources */,
 				AA75F06A16AEFFFF00097673 /* QBImagePickerController.m in Sources */,
-				AA75F06B16AEFFFF00097673 /* QBImagePickerFooterCell.m in Sources */,
 				AA75F06C16AEFFFF00097673 /* QBImagePickerGroupCell.m in Sources */,
 				AA75F06D16AEFFFF00097673 /* QBImagePickerVideoInfoView.m in Sources */,
+				AA9526C016AFA54E007B7891 /* QBImagePickerFooterView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -354,6 +354,7 @@
 				AA75F05216AEFFD100097673 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
