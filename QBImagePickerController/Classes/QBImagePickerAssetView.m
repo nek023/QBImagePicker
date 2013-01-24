@@ -17,6 +17,9 @@
 @property (nonatomic, retain) QBImagePickerVideoInfoView *videoInfoView;
 @property (nonatomic, retain) UIImageView *overlayImageView;
 
+- (UIImage *)thumbnail;
+- (UIImage *)tintedThumbnail;
+
 @end
 
 @implementation QBImagePickerAssetView

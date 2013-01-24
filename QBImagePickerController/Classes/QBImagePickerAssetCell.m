@@ -11,6 +11,12 @@
 // Views
 #import "QBImagePickerAssetView.h"
 
+@interface QBImagePickerAssetCell ()
+
+- (void)addAssetViews;
+
+@end
+
 @implementation QBImagePickerAssetCell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier imageSize:(CGSize)imageSize numberOfAssets:(NSUInteger)numberOfAssets margin:(CGFloat)margin

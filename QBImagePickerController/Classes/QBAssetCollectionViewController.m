@@ -22,6 +22,7 @@
 
 - (void)reloadData;
 - (void)updateRightBarButtonItem;
+- (void)updateDoneButton;
 - (void)done;
 - (void)cancel;
 
