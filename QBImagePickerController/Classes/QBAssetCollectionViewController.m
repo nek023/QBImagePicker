@@ -175,6 +175,15 @@
     }
 }
 
+- (void)updateDoneButton
+{
+    if(self.limitMinimumNumberOfSelection) {
+        self.doneButton.enabled = (self.selectedAssets.count >= self.minimumNumberOfSelection);
+    } else {
+        self.doneButton.enabled = (self.selectedAssets.count > 0);
+    }
+}
+
 - (void)done
 {
     [self.delegate assetCollectionViewController:self didFinishPickingAssets:self.selectedAssets.array];
@@ -263,7 +272,7 @@
             break;
         case 1:
         {
-            NSString *cellIdentifier = @"HeaderCell";
+            NSString *cellIdentifier = @"SeparatorCell";
             cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
             
             if(cell == nil) {
@@ -281,7 +290,7 @@
             break;
         case 2:
         {
-            NSString *cellIdentifier = @"SeparatorCell";
+            NSString *cellIdentifier = @"AssetCell";
             cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
             
             if(cell == nil) {
@@ -314,6 +323,8 @@
                 
                 if([self.selectedAssets containsObject:asset]) {
                     [(QBImagePickerAssetCell *)cell selectAssetAtIndex:i];
+                } else {
+                    [(QBImagePickerAssetCell *)cell deselectAssetAtIndex:i];
                 }
             }
         }
@@ -358,20 +369,20 @@
     if(indexPath.section == 0 && indexPath.row == 0) {
         if(self.selectedAssets.count == self.assets.count) {
             // Deselect all assets
-            for(NSUInteger i = 0; i < [tableView numberOfRowsInSection:2]; i++) {
-                QBImagePickerAssetCell *cell = (QBImagePickerAssetCell *)[tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:2]];
-                [cell deselectAllAssets];
-            }
+            [self.selectedAssets removeAllObjects];
         } else {
             // Select all assets
-            for(NSUInteger i = 0; i < [tableView numberOfRowsInSection:2]; i++) {
-                QBImagePickerAssetCell *cell = (QBImagePickerAssetCell *)[tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:2]];
-                [cell selectAllAssets];
-            }
+            [self.selectedAssets addObjectsFromArray:self.assets];
         }
         
+        // Set done button state
+        [self updateDoneButton];
+        
+        // Update assets
+        [tableView reloadSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationNone];
+        
         // Update header text
-        [tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        [tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
         
         // Cancel table view selection
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -407,14 +418,14 @@
             [self.selectedAssets removeObject:asset];
         }
         
-        if(self.limitMinimumNumberOfSelection) {
-            self.doneButton.enabled = (self.selectedAssets.count >= self.minimumNumberOfSelection);
-        } else {
-            self.doneButton.enabled = (self.selectedAssets.count > 0);
-        }
+        // Set done button state
+        [self updateDoneButton];
         
         // Update header text
-        [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
+        if((selected && self.selectedAssets.count == self.assets.count) ||
+           (!selected && self.selectedAssets.count == self.assets.count - 1)) {
+            [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
+        }
     } else {
         [self.delegate assetCollectionViewController:self didFinishPickingAsset:asset];
     }

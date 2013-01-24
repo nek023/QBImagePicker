@@ -85,8 +85,6 @@
     if(self.allowsMultipleSelection) {
         self.overlayImageView.hidden = !selected;
     }
-    
-    [self.delegate assetView:self didChangeSelectionState:self.selected];
 }
 
 - (BOOL)selected
@@ -130,6 +128,8 @@
         
         self.imageView.image = [self thumbnail];
     }
+    
+    [self.delegate assetView:self didChangeSelectionState:self.selected];
 }
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
