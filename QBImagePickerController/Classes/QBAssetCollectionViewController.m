@@ -132,7 +132,7 @@
     [self.tableView reloadData];
     
     // Set footer view
-    if(self.filterType == QBImagePickerFilterTypeAllAssets && [self.delegate respondsToSelector:@selector(assetCollectionViewController:descriptionForNumberOfPhotos:numberOfVideos:)]) {
+    if(self.filterType == QBImagePickerFilterTypeAllAssets && self.showsFooterDescription) {
         [self.assetsGroup setAssetsFilter:[ALAssetsFilter allPhotos]];
         NSUInteger numberOfPhotos = self.assetsGroup.numberOfAssets;
         
@@ -209,7 +209,9 @@
     switch(section) {
         case 0: case 1:
         {
-            numberOfRowsInSection = (self.allowsMultipleSelection && !self.limitMaximumNumberOfSelection) ? 1 : 0;
+            if(self.allowsMultipleSelection && !self.limitMaximumNumberOfSelection && self.showsHeaderButton) {
+                numberOfRowsInSection = 1;
+            }
         }
             break;
         case 2:
@@ -240,7 +242,7 @@
             }
             
             if(self.selectedAssets.count == self.assets.count) {
-                cell.textLabel.text = @"すべての写真の選択を解除";
+                cell.textLabel.text = [self.delegate descriptionForDeselectingAllAssets:self];
                 
                 // Set accessory view
                 UIImageView *accessoryView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 23, 23)];
@@ -254,7 +256,7 @@
                 cell.accessoryView = accessoryView;
                 [accessoryView release];
             } else {
-                cell.textLabel.text = @"すべての写真を選択";
+                cell.textLabel.text = [self.delegate descriptionForSelectingAllAssets:self];
                 
                 // Set accessory view
                 UIImageView *accessoryView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 23, 23)];
@@ -399,8 +401,6 @@
     if(self.allowsMultipleSelection && self.limitMaximumNumberOfSelection) {
         canSelect = (self.selectedAssets.count < self.maximumNumberOfSelection);
     }
-    
-    NSLog(@"*** canSelect: %@", (canSelect) ? @"YES" : @"NO");
     
     return canSelect;
 }

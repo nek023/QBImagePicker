@@ -26,6 +26,8 @@ typedef enum {
 - (void)imagePickerControllerWillFinishPickingMedia:(QBImagePickerController *)imagePickerController;
 - (void)imagePickerController:(QBImagePickerController *)imagePickerController didFinishPickingMediaWithInfo:(id)info;
 - (void)imagePickerControllerDidCancel:(QBImagePickerController *)imagePickerController;
+- (NSString *)descriptionForSelectingAllAssets:(QBImagePickerController *)imagePickerController;
+- (NSString *)descriptionForDeselectingAllAssets:(QBImagePickerController *)imagePickerController;
 - (NSString *)imagePickerController:(QBImagePickerController *)imagePickerController descriptionForNumberOfPhotos:(NSUInteger)numberOfPhotos numberOfVideos:(NSUInteger)numberOfVideos;
 
 @end

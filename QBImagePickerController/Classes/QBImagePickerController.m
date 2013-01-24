@@ -274,6 +274,8 @@
     assetCollectionViewController.filterType = self.filterType;
     assetCollectionViewController.showsCancelButton = self.showsCancelButton;
     assetCollectionViewController.fullScreenLayoutEnabled = self.fullScreenLayoutEnabled;
+    assetCollectionViewController.showsHeaderButton = ([self.delegate respondsToSelector:@selector(descriptionForSelectingAllAssets:)] && [self.delegate respondsToSelector:@selector(descriptionForDeselectingAllAssets:)]);
+    assetCollectionViewController.showsFooterDescription = [self.delegate respondsToSelector:@selector(imagePickerController:descriptionForNumberOfPhotos:numberOfVideos:)];
     
     assetCollectionViewController.allowsMultipleSelection = self.allowsMultipleSelection;
     assetCollectionViewController.limitMinimumNumberOfSelection = self.limitMinimumNumberOfSelection;
@@ -324,9 +326,37 @@
     }
 }
 
+- (NSString *)descriptionForSelectingAllAssets:(QBAssetCollectionViewController *)assetCollectionViewController
+{
+    NSString *description = nil;
+    
+    if([self.delegate respondsToSelector:@selector(descriptionForSelectingAllAssets:)]) {
+        description = [self.delegate descriptionForSelectingAllAssets:self];
+    }
+    
+    return description;
+}
+
+- (NSString *)descriptionForDeselectingAllAssets:(QBAssetCollectionViewController *)assetCollectionViewController
+{
+    NSString *description = nil;
+    
+    if([self.delegate respondsToSelector:@selector(descriptionForDeselectingAllAssets:)]) {
+        description = [self.delegate descriptionForDeselectingAllAssets:self];
+    }
+    
+    return description;
+}
+
 - (NSString *)assetCollectionViewController:(QBAssetCollectionViewController *)assetCollectionViewController descriptionForNumberOfPhotos:(NSUInteger)numberOfPhotos numberOfVideos:(NSUInteger)numberOfVideos
 {
-    return [self.delegate imagePickerController:self descriptionForNumberOfPhotos:numberOfPhotos numberOfVideos:numberOfVideos];
+    NSString *description = nil;
+    
+    if([self.delegate respondsToSelector:@selector(imagePickerController:descriptionForNumberOfPhotos:numberOfVideos:)]) {
+        description = [self.delegate imagePickerController:self descriptionForNumberOfPhotos:numberOfPhotos numberOfVideos:numberOfVideos];
+    }
+    
+    return description;
 }
 
 @end

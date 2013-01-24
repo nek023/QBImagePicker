@@ -72,6 +72,16 @@
     [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
+- (NSString *)descriptionForSelectingAllAssets:(QBImagePickerController *)imagePickerController
+{
+    return @"すべての写真を選択";
+}
+
+- (NSString *)descriptionForDeselectingAllAssets:(QBImagePickerController *)imagePickerController
+{
+    return @"すべての写真の選択を解除";
+}
+
 - (NSString *)imagePickerController:(QBImagePickerController *)imagePickerController descriptionForNumberOfPhotos:(NSUInteger)numberOfPhotos numberOfVideos:(NSUInteger)numberOfVideos
 {
     return [NSString stringWithFormat:@"写真%d枚、ビデオ%d本", numberOfPhotos, numberOfVideos];
