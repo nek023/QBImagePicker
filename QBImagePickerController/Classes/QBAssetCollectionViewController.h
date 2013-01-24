@@ -30,8 +30,8 @@
 @property (nonatomic, assign) BOOL showsFooterDescription;
 
 @property (nonatomic, assign) BOOL allowsMultipleSelection;
-@property (nonatomic, assign) BOOL limitMinimumNumberOfSelection;
-@property (nonatomic, assign) BOOL limitMaximumNumberOfSelection;
+@property (nonatomic, assign) BOOL limitsMinimumNumberOfSelection;
+@property (nonatomic, assign) BOOL limitsMaximumNumberOfSelection;
 @property (nonatomic, assign) NSUInteger minimumNumberOfSelection;
 @property (nonatomic, assign) NSUInteger maximumNumberOfSelection;
 

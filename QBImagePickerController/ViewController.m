@@ -39,7 +39,7 @@
     imagePickerController.delegate = self;
     imagePickerController.allowsMultipleSelection = YES;
     
-    imagePickerController.limitMinimumNumberOfSelection = YES;
+    imagePickerController.limitsMinimumNumberOfSelection = YES;
     imagePickerController.minimumNumberOfSelection = 6;
     
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:imagePickerController];

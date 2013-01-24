@@ -49,8 +49,8 @@
         self.fullScreenLayoutEnabled = YES;
         
         self.allowsMultipleSelection = NO;
-        self.limitMinimumNumberOfSelection = NO;
-        self.limitMaximumNumberOfSelection = NO;
+        self.limitsMinimumNumberOfSelection = NO;
+        self.limitsMaximumNumberOfSelection = NO;
         self.minimumNumberOfSelection = 0;
         self.maximumNumberOfSelection = 0;
         
@@ -278,8 +278,8 @@
     assetCollectionViewController.showsFooterDescription = [self.delegate respondsToSelector:@selector(imagePickerController:descriptionForNumberOfPhotos:numberOfVideos:)];
     
     assetCollectionViewController.allowsMultipleSelection = self.allowsMultipleSelection;
-    assetCollectionViewController.limitMinimumNumberOfSelection = self.limitMinimumNumberOfSelection;
-    assetCollectionViewController.limitMaximumNumberOfSelection = self.limitMaximumNumberOfSelection;
+    assetCollectionViewController.limitsMinimumNumberOfSelection = self.limitsMinimumNumberOfSelection;
+    assetCollectionViewController.limitsMaximumNumberOfSelection = self.limitsMaximumNumberOfSelection;
     assetCollectionViewController.minimumNumberOfSelection = self.minimumNumberOfSelection;
     assetCollectionViewController.maximumNumberOfSelection = self.maximumNumberOfSelection;
     

@@ -178,7 +178,7 @@
 
 - (void)updateDoneButton
 {
-    if(self.limitMinimumNumberOfSelection) {
+    if(self.limitsMinimumNumberOfSelection) {
         self.doneButton.enabled = (self.selectedAssets.count >= self.minimumNumberOfSelection);
     } else {
         self.doneButton.enabled = (self.selectedAssets.count > 0);
@@ -210,7 +210,7 @@
     switch(section) {
         case 0: case 1:
         {
-            if(self.allowsMultipleSelection && !self.limitMaximumNumberOfSelection && self.showsHeaderButton) {
+            if(self.allowsMultipleSelection && !self.limitsMaximumNumberOfSelection && self.showsHeaderButton) {
                 numberOfRowsInSection = 1;
             }
         }
@@ -399,7 +399,7 @@
 {
     BOOL canSelect = YES;
     
-    if(self.allowsMultipleSelection && self.limitMaximumNumberOfSelection) {
+    if(self.allowsMultipleSelection && self.limitsMaximumNumberOfSelection) {
         canSelect = (self.selectedAssets.count < self.maximumNumberOfSelection);
     }
     
