@@ -123,13 +123,20 @@
         } else {
             self.imageView.image = [self tintedThumbnail];
         }
-    } else {
-        self.selected = !self.selected;
         
-        self.imageView.image = [self thumbnail];
+        [self.delegate assetView:self didChangeSelectionState:self.selected];
+    } else {
+        if(self.allowsMultipleSelection && self.selected) {
+            self.selected = !self.selected;
+            self.imageView.image = [self thumbnail];
+            
+            [self.delegate assetView:self didChangeSelectionState:self.selected];
+        } else {
+            self.imageView.image = [self thumbnail];
+        }
+        
+        [self.delegate assetView:self didChangeSelectionState:self.selected];
     }
-    
-    [self.delegate assetView:self didChangeSelectionState:self.selected];
 }
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event

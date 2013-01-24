@@ -209,7 +209,7 @@
     switch(section) {
         case 0: case 1:
         {
-            numberOfRowsInSection = (self.allowsMultipleSelection) ? 1 : 0;
+            numberOfRowsInSection = (self.allowsMultipleSelection && !self.limitMaximumNumberOfSelection) ? 1 : 0;
         }
             break;
         case 2:
@@ -399,6 +399,8 @@
     if(self.allowsMultipleSelection && self.limitMaximumNumberOfSelection) {
         canSelect = (self.selectedAssets.count < self.maximumNumberOfSelection);
     }
+    
+    NSLog(@"*** canSelect: %@", (canSelect) ? @"YES" : @"NO");
     
     return canSelect;
 }
