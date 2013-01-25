@@ -82,6 +82,16 @@
     return @"すべての写真の選択を解除";
 }
 
+- (NSString *)imagePickerController:(QBImagePickerController *)imagePickerController descriptionForNumberOfPhotos:(NSUInteger)numberOfPhotos
+{
+    return [NSString stringWithFormat:@"写真%d枚", numberOfPhotos];
+}
+
+- (NSString *)imagePickerController:(QBImagePickerController *)imagePickerController descriptionForNumberOfVideos:(NSUInteger)numberOfVideos
+{
+    return [NSString stringWithFormat:@"ビデオ%d本", numberOfVideos];
+}
+
 - (NSString *)imagePickerController:(QBImagePickerController *)imagePickerController descriptionForNumberOfPhotos:(NSUInteger)numberOfPhotos numberOfVideos:(NSUInteger)numberOfVideos
 {
     return [NSString stringWithFormat:@"写真%d枚、ビデオ%d本", numberOfPhotos, numberOfVideos];

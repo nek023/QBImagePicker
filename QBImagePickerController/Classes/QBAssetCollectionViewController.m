@@ -133,17 +133,34 @@
     [self.tableView reloadData];
     
     // Set footer view
-    if(self.filterType == QBImagePickerFilterTypeAllAssets && self.showsFooterDescription) {
+    if(self.showsFooterDescription) {
         [self.assetsGroup setAssetsFilter:[ALAssetsFilter allPhotos]];
         NSUInteger numberOfPhotos = self.assetsGroup.numberOfAssets;
         
         [self.assetsGroup setAssetsFilter:[ALAssetsFilter allVideos]];
         NSUInteger numberOfVideos = self.assetsGroup.numberOfAssets;
         
-        [self.assetsGroup setAssetsFilter:[ALAssetsFilter allAssets]];
+        switch(self.filterType) {
+            case QBImagePickerFilterTypeAllAssets:
+                [self.assetsGroup setAssetsFilter:[ALAssetsFilter allAssets]];
+                break;
+            case QBImagePickerFilterTypeAllPhotos:
+                [self.assetsGroup setAssetsFilter:[ALAssetsFilter allPhotos]];
+                break;
+            case QBImagePickerFilterTypeAllVideos:
+                [self.assetsGroup setAssetsFilter:[ALAssetsFilter allVideos]];
+                break;
+        }
         
         QBImagePickerFooterView *footerView = [[QBImagePickerFooterView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 48)];
-        footerView.titleLabel.text = [self.delegate assetCollectionViewController:self descriptionForNumberOfPhotos:numberOfPhotos numberOfVideos:numberOfVideos];
+        
+        if(self.filterType == QBImagePickerFilterTypeAllAssets) {
+            footerView.titleLabel.text = [self.delegate assetCollectionViewController:self descriptionForNumberOfPhotos:numberOfPhotos numberOfVideos:numberOfVideos];
+        } else if(self.filterType == QBImagePickerFilterTypeAllPhotos) {
+            footerView.titleLabel.text = [self.delegate assetCollectionViewController:self descriptionForNumberOfPhotos:numberOfPhotos];
+        } else if(self.filterType == QBImagePickerFilterTypeAllVideos) {
+            footerView.titleLabel.text = [self.delegate assetCollectionViewController:self descriptionForNumberOfVideos:numberOfVideos];
+        }
         
         self.tableView.tableFooterView = footerView;
         [footerView release];

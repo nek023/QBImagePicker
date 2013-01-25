@@ -78,45 +78,44 @@
 {
     [super viewDidLoad];
     
-    // Failure Block
-    void (^assetGroupEnumberatorFailure)(NSError *) = ^(NSError *error) {
+    void (^assetsGroupsEnumerationBlock)(ALAssetsGroup *, BOOL *) = ^(ALAssetsGroup *assetsGroup, BOOL *stop) {
+        if(assetsGroup) {
+            switch(self.filterType) {
+                case QBImagePickerFilterTypeAllAssets:
+                    [assetsGroup setAssetsFilter:[ALAssetsFilter allAssets]];
+                    break;
+                case QBImagePickerFilterTypeAllPhotos:
+                    [assetsGroup setAssetsFilter:[ALAssetsFilter allPhotos]];
+                    break;
+                case QBImagePickerFilterTypeAllVideos:
+                    [assetsGroup setAssetsFilter:[ALAssetsFilter allVideos]];
+                    break;
+            }
+            
+            if(assetsGroup.numberOfAssets > 0) {
+                [self.assetsGroups addObject:assetsGroup];
+            }
+        }
+    };
+    
+    void (^assetsGroupsFailureBlock)(NSError *) = ^(NSError *error) {
         NSLog(@"Error: %@", [error localizedDescription]);
     };
     
     // Enumerate Camera Roll
-    [self.assetsLibrary enumerateGroupsWithTypes:ALAssetsGroupSavedPhotos usingBlock:^(ALAssetsGroup *group, BOOL *stop) {
-        if(group) {
-            [self.assetsGroups addObject:group];
-        }
-    } failureBlock:assetGroupEnumberatorFailure];
+    [self.assetsLibrary enumerateGroupsWithTypes:ALAssetsGroupSavedPhotos usingBlock:assetsGroupsEnumerationBlock failureBlock:assetsGroupsFailureBlock];
     
     // Photo Stream
-    [self.assetsLibrary enumerateGroupsWithTypes:ALAssetsGroupPhotoStream usingBlock:^(ALAssetsGroup *group, BOOL *stop) {
-        if(group) {
-            [self.assetsGroups addObject:group];
-        }
-    } failureBlock:assetGroupEnumberatorFailure];
+    [self.assetsLibrary enumerateGroupsWithTypes:ALAssetsGroupPhotoStream usingBlock:assetsGroupsEnumerationBlock failureBlock:assetsGroupsFailureBlock];
     
     // Album
-    [self.assetsLibrary enumerateGroupsWithTypes:ALAssetsGroupAlbum usingBlock:^(ALAssetsGroup *group, BOOL *stop) {
-        if(group) {
-            [self.assetsGroups addObject:group];
-        }
-    } failureBlock:assetGroupEnumberatorFailure];
+    [self.assetsLibrary enumerateGroupsWithTypes:ALAssetsGroupAlbum usingBlock:assetsGroupsEnumerationBlock failureBlock:assetsGroupsFailureBlock];
     
     // Event
-    [self.assetsLibrary enumerateGroupsWithTypes:ALAssetsGroupEvent usingBlock:^(ALAssetsGroup *group, BOOL *stop) {
-        if(group) {
-            [self.assetsGroups addObject:group];
-        }
-    } failureBlock:assetGroupEnumberatorFailure];
+    [self.assetsLibrary enumerateGroupsWithTypes:ALAssetsGroupEvent usingBlock:assetsGroupsEnumerationBlock failureBlock:assetsGroupsFailureBlock];
     
     // Faces
-    [self.assetsLibrary enumerateGroupsWithTypes:ALAssetsGroupFaces usingBlock:^(ALAssetsGroup *group, BOOL *stop) {
-        if(group) {
-            [self.assetsGroups addObject:group];
-        }
-    } failureBlock:assetGroupEnumberatorFailure];
+    [self.assetsLibrary enumerateGroupsWithTypes:ALAssetsGroupFaces usingBlock:assetsGroupsEnumerationBlock failureBlock:assetsGroupsFailureBlock];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -235,17 +234,6 @@
     }
     
     ALAssetsGroup *assetsGroup = [self.assetsGroups objectAtIndex:indexPath.row];
-    switch(self.filterType) {
-        case QBImagePickerFilterTypeAllAssets:
-            [assetsGroup setAssetsFilter:[ALAssetsFilter allAssets]];
-            break;
-        case QBImagePickerFilterTypeAllPhotos:
-            [assetsGroup setAssetsFilter:[ALAssetsFilter allPhotos]];
-            break;
-        case QBImagePickerFilterTypeAllVideos:
-            [assetsGroup setAssetsFilter:[ALAssetsFilter allVideos]];
-            break;
-    }
     
     cell.imageView.image = [UIImage imageWithCGImage:assetsGroup.posterImage];
     cell.titleLabel.text = [NSString stringWithFormat:@"%@", [assetsGroup valueForProperty:ALAssetsGroupPropertyName]];
@@ -275,7 +263,7 @@
     assetCollectionViewController.showsCancelButton = self.showsCancelButton;
     assetCollectionViewController.fullScreenLayoutEnabled = self.fullScreenLayoutEnabled;
     assetCollectionViewController.showsHeaderButton = ([self.delegate respondsToSelector:@selector(descriptionForSelectingAllAssets:)] && [self.delegate respondsToSelector:@selector(descriptionForDeselectingAllAssets:)]);
-    assetCollectionViewController.showsFooterDescription = [self.delegate respondsToSelector:@selector(imagePickerController:descriptionForNumberOfPhotos:numberOfVideos:)];
+    assetCollectionViewController.showsFooterDescription = ([self.delegate respondsToSelector:@selector(imagePickerController:descriptionForNumberOfPhotos:)] && [self.delegate respondsToSelector:@selector(imagePickerController:descriptionForNumberOfPhotos:numberOfVideos:)]);
     
     assetCollectionViewController.allowsMultipleSelection = self.allowsMultipleSelection;
     assetCollectionViewController.limitsMinimumNumberOfSelection = self.limitsMinimumNumberOfSelection;
@@ -343,6 +331,28 @@
     
     if([self.delegate respondsToSelector:@selector(descriptionForDeselectingAllAssets:)]) {
         description = [self.delegate descriptionForDeselectingAllAssets:self];
+    }
+    
+    return description;
+}
+
+- (NSString *)assetCollectionViewController:(QBAssetCollectionViewController *)assetCollectionViewController descriptionForNumberOfPhotos:(NSUInteger)numberOfPhotos
+{
+    NSString *description = nil;
+    
+    if([self.delegate respondsToSelector:@selector(imagePickerController:descriptionForNumberOfPhotos:)]) {
+        description = [self.delegate imagePickerController:self descriptionForNumberOfPhotos:numberOfPhotos];
+    }
+    
+    return description;
+}
+
+- (NSString *)assetCollectionViewController:(QBAssetCollectionViewController *)assetCollectionViewController descriptionForNumberOfVideos:(NSUInteger)numberOfVideos
+{
+    NSString *description = nil;
+    
+    if([self.delegate respondsToSelector:@selector(imagePickerController:descriptionForNumberOfVideos:)]) {
+        description = [self.delegate imagePickerController:self descriptionForNumberOfVideos:numberOfVideos];
     }
     
     return description;
