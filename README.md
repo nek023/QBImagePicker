@@ -25,3 +25,5 @@ If you want to push the picker to NavigtionController, you don't have to do anyt
 	UINavigationController *navigationController = [[[UINavigationController alloc] initWithRootViewController:imagePickerController] autorelease];
 	[self presentViewController:navigationController animated:YES completion:NULL];
 
+## Credits
+Copyright (c) 2013 questbeat
