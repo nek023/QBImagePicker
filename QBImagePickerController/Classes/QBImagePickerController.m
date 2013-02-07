@@ -96,6 +96,7 @@
             
             if(assetsGroup.numberOfAssets > 0) {
                 [self.assetsGroups addObject:assetsGroup];
+                [self.tableView reloadData];
             }
         }
     };
@@ -256,6 +257,22 @@
 {
     ALAssetsGroup *assetsGroup = [self.assetsGroups objectAtIndex:indexPath.row];
     
+    BOOL showsHeaderButton = ([self.delegate respondsToSelector:@selector(descriptionForSelectingAllAssets:)] && [self.delegate respondsToSelector:@selector(descriptionForDeselectingAllAssets:)]);
+    
+    BOOL showsFooterDescription = NO;
+    
+    switch(self.filterType) {
+        case QBImagePickerFilterTypeAllAssets:
+            showsFooterDescription = ([self.delegate respondsToSelector:@selector(imagePickerController:descriptionForNumberOfPhotos:numberOfVideos:)]);
+            break;
+        case QBImagePickerFilterTypeAllPhotos:
+            showsFooterDescription = ([self.delegate respondsToSelector:@selector(imagePickerController:descriptionForNumberOfPhotos:)]);
+            break;
+        case QBImagePickerFilterTypeAllVideos:
+            showsFooterDescription = ([self.delegate respondsToSelector:@selector(imagePickerController:descriptionForNumberOfVideos:)]);
+            break;
+    }
+    
     // Show assets collection view
     QBAssetCollectionViewController *assetCollectionViewController = [[QBAssetCollectionViewController alloc] init];
     assetCollectionViewController.title = [assetsGroup valueForProperty:ALAssetsGroupPropertyName];
@@ -264,8 +281,8 @@
     assetCollectionViewController.filterType = self.filterType;
     assetCollectionViewController.showsCancelButton = self.showsCancelButton;
     assetCollectionViewController.fullScreenLayoutEnabled = self.fullScreenLayoutEnabled;
-    assetCollectionViewController.showsHeaderButton = ([self.delegate respondsToSelector:@selector(descriptionForSelectingAllAssets:)] && [self.delegate respondsToSelector:@selector(descriptionForDeselectingAllAssets:)]);
-    assetCollectionViewController.showsFooterDescription = ([self.delegate respondsToSelector:@selector(imagePickerController:descriptionForNumberOfPhotos:)] && [self.delegate respondsToSelector:@selector(imagePickerController:descriptionForNumberOfPhotos:numberOfVideos:)]);
+    assetCollectionViewController.showsHeaderButton = showsHeaderButton;
+    assetCollectionViewController.showsFooterDescription = showsFooterDescription;
     
     assetCollectionViewController.allowsMultipleSelection = self.allowsMultipleSelection;
     assetCollectionViewController.limitsMinimumNumberOfSelection = self.limitsMinimumNumberOfSelection;
