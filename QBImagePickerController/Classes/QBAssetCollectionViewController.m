@@ -401,10 +401,14 @@
         [self updateDoneButton];
         
         // Update assets
-        [tableView reloadSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationNone];
+        if (self.showsFooterDescription) {
+            [tableView reloadSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationNone];
+        }
         
         // Update header text
-        [tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
+        if (self.showsHeaderButton) {
+            [tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
+        }
         
         // Cancel table view selection
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -444,9 +448,11 @@
         [self updateDoneButton];
         
         // Update header text
-        if((selected && self.selectedAssets.count == self.assets.count) ||
-           (!selected && self.selectedAssets.count == self.assets.count - 1)) {
-            [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
+        if (self.showsHeaderButton) {
+            if((selected && self.selectedAssets.count == self.assets.count) ||
+               (!selected && self.selectedAssets.count == self.assets.count - 1)) {
+                [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
+            }
         }
     } else {
         [self.delegate assetCollectionViewController:self didFinishPickingAsset:asset];
