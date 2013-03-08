@@ -82,7 +82,9 @@
     }
     
     // Scroll to bottom
-    [self.tableView setContentOffset:CGPointMake(0, self.tableView.contentSize.height) animated:NO];
+    NSInteger numberOfRows = [self.tableView numberOfRowsInSection:2];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:(numberOfRows - 1) inSection:2];
+    [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:NO];
 }
 
 - (void)viewDidAppear:(BOOL)animated
