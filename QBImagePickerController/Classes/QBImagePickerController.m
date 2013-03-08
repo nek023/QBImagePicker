@@ -164,10 +164,12 @@
 {
     [super viewWillDisappear:animated];
     
-    // Restore bar styles
-    self.navigationController.navigationBar.barStyle = self.previousBarStyle;
-    self.navigationController.navigationBar.translucent = self.previousBarTranslucent;
-    [[UIApplication sharedApplication] setStatusBarStyle:self.previousStatusBarStyle animated:YES];
+    if(self.fullScreenLayoutEnabled) {
+        // Restore bar styles
+        self.navigationController.navigationBar.barStyle = self.previousBarStyle;
+        self.navigationController.navigationBar.translucent = self.previousBarTranslucent;
+        [[UIApplication sharedApplication] setStatusBarStyle:self.previousStatusBarStyle animated:YES];
+    }
 }
 
 - (void)setShowsCancelButton:(BOOL)showsCancelButton
