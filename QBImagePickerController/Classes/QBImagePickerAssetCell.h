@@ -17,7 +17,7 @@
 
 @interface QBImagePickerAssetCell : UITableViewCell <QBImagePickerAssetViewDelegate>
 
-@property (nonatomic, assign) id<QBImagePickerAssetCellDelegate> delegate;
+@property (nonatomic, weak) id<QBImagePickerAssetCellDelegate> delegate;
 @property (nonatomic, copy) NSArray *assets;
 @property (nonatomic, assign) CGSize imageSize;
 @property (nonatomic, assign) NSUInteger numberOfAssets;

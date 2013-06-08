@@ -18,10 +18,10 @@
 
 @interface QBImagePickerController ()
 
-@property (nonatomic, retain) ALAssetsLibrary *assetsLibrary;
-@property (nonatomic, retain) NSMutableArray *assetsGroups;
+@property (nonatomic, strong) ALAssetsLibrary *assetsLibrary;
+@property (nonatomic, strong) NSMutableArray *assetsGroups;
 
-@property (nonatomic, retain) UITableView *tableView;
+@property (nonatomic, strong) UITableView *tableView;
 
 @property (nonatomic, assign) UIBarStyle previousBarStyle;
 @property (nonatomic, assign) BOOL previousBarTranslucent;
@@ -58,7 +58,6 @@
         
         ALAssetsLibrary *assetsLibrary = [[ALAssetsLibrary alloc] init];
         self.assetsLibrary = assetsLibrary;
-        [assetsLibrary release];
         
         self.assetsGroups = [NSMutableArray array];
         
@@ -70,7 +69,6 @@
         
         [self.view addSubview:tableView];
         self.tableView = tableView;
-        [tableView release];
     }
     
     return self;
@@ -179,20 +177,9 @@
     if(self.showsCancelButton) {
         UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancel)];
         [self.navigationItem setRightBarButtonItem:cancelButton animated:NO];
-        [cancelButton release];
     } else {
         [self.navigationItem setRightBarButtonItem:nil animated:NO];
     }
-}
-
-- (void)dealloc
-{
-    [_assetsLibrary release];
-    [_assetsGroups release];
-    
-    [_tableView release];
-    
-    [super dealloc];
 }
 
 
@@ -234,7 +221,7 @@
     QBImagePickerGroupCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     
     if(cell == nil) {
-        cell = [[[QBImagePickerGroupCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier] autorelease];
+        cell = [[QBImagePickerGroupCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
     
@@ -293,8 +280,6 @@
     assetCollectionViewController.maximumNumberOfSelection = self.maximumNumberOfSelection;
     
     [self.navigationController pushViewController:assetCollectionViewController animated:YES];
-    
-    [assetCollectionViewController release];
 }
 
 

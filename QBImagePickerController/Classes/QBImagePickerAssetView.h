@@ -16,8 +16,8 @@
 
 @interface QBImagePickerAssetView : UIView
 
-@property (nonatomic, assign) id<QBImagePickerAssetViewDelegate> delegate;
-@property (nonatomic, retain) ALAsset *asset;
+@property (nonatomic, weak) id<QBImagePickerAssetViewDelegate> delegate;
+@property (nonatomic, strong) ALAsset *asset;
 @property (nonatomic, assign) BOOL selected;
 @property (nonatomic, assign) BOOL allowsMultipleSelection;
 

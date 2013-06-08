@@ -26,17 +26,9 @@
         
         [self addSubview:titleLabel];
         self.titleLabel = titleLabel;
-        [titleLabel release];
     }
     
     return self;
-}
-
-- (void)dealloc
-{
-    [_titleLabel release];
-    
-    [super dealloc];
 }
 
 @end

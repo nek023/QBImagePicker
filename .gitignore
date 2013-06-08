@@ -1,5 +1,4 @@
 # Xcode
-.DS_Store
 */build/*
 *.pbxuser
 !default.pbxuser
@@ -17,3 +16,19 @@ profile
 DerivedData
 .idea/
 *.hmap
+ 
+# OSX
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+ 
+# Thumbnails
+._*
+ 
+# Files that might appear on external disk
+.Spotlight-V100
+.Trashes
+ 
+# CocoaPods
+Pods/*

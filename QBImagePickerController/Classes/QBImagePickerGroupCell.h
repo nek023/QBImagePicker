@@ -12,7 +12,7 @@
 
 @interface QBImagePickerGroupCell : UITableViewCell
 
-@property (nonatomic, retain) UILabel *titleLabel;
-@property (nonatomic, retain) UILabel *countLabel;
+@property (nonatomic, strong) UILabel *titleLabel;
+@property (nonatomic, strong) UILabel *countLabel;
 
 @end

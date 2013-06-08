@@ -21,8 +21,8 @@
 
 @interface QBAssetCollectionViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, QBImagePickerAssetCellDelegate>
 
-@property (nonatomic, assign) id<QBAssetCollectionViewControllerDelegate> delegate;
-@property (nonatomic, retain) ALAssetsGroup *assetsGroup;
+@property (nonatomic, weak) id<QBAssetCollectionViewControllerDelegate> delegate;
+@property (nonatomic, strong) ALAssetsGroup *assetsGroup;
 
 @property (nonatomic, assign) CGSize imageSize;
 @property (nonatomic, assign) QBImagePickerFilterType filterType;

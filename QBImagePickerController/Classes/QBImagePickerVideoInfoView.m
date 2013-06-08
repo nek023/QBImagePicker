@@ -12,7 +12,7 @@
 
 @interface QBImagePickerVideoInfoView ()
 
-@property (nonatomic, retain) UILabel *durationLabel;
+@property (nonatomic, strong) UILabel *durationLabel;
 
 @end
 
@@ -32,7 +32,6 @@
         iconImageView.autoresizingMask = UIViewAutoresizingFlexibleRightMargin;
         
         [self addSubview:iconImageView];
-        [iconImageView release];
         
         // Label
         CGRect durationLabelFrame = CGRectMake(iconImageViewFrame.origin.x + iconImageViewFrame.size.width + 6, 0, self.bounds.size.width - (iconImageViewFrame.origin.x + iconImageViewFrame.size.width + 6) - 6, self.bounds.size.height);
@@ -45,7 +44,6 @@
         
         [self addSubview:durationLabel];
         self.durationLabel = durationLabel;
-        [durationLabel release];
     }
     
     return self;
@@ -68,13 +66,6 @@
         
         self.durationLabel.text = [NSString stringWithFormat:@"%d:%02d:%02d", hour, min, sec];
     }
-}
-
-- (void)dealloc
-{
-    [_durationLabel release];
-    
-    [super dealloc];
 }
 
 @end

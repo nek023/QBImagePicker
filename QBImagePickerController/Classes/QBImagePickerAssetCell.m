@@ -38,8 +38,7 @@
 
 - (void)setAssets:(NSArray *)assets
 {
-    [_assets release];
-    _assets = [assets retain];
+    _assets = assets;
     
     // Set assets
     for(NSUInteger i = 0; i < self.numberOfAssets; i++) {
@@ -67,13 +66,6 @@
     }
 }
 
-- (void)dealloc
-{
-    [_assets release];
-    
-    [super dealloc];
-}
-
 
 #pragma mark - Instance Methods
 
@@ -99,7 +91,6 @@
         assetView.autoresizingMask = UIViewAutoresizingNone;
         
         [self.contentView addSubview:assetView];
-        [assetView release];
     }
 }
 

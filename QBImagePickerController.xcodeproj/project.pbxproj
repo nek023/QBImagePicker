@@ -320,6 +320,7 @@
 		AA75F05116AEFFD100097673 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "QBImagePickerController/QBImagePickerController-Prefix.pch";
 				INFOPLIST_FILE = "QBImagePickerController/QBImagePickerController-Info.plist";
@@ -331,6 +332,7 @@
 		AA75F05216AEFFD100097673 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "QBImagePickerController/QBImagePickerController-Prefix.pch";
 				INFOPLIST_FILE = "QBImagePickerController/QBImagePickerController-Info.plist";

@@ -16,11 +16,11 @@
 
 @interface QBAssetCollectionViewController ()
 
-@property (nonatomic, retain) NSMutableArray *assets;
-@property (nonatomic, retain) NSMutableOrderedSet *selectedAssets;
+@property (nonatomic, strong) NSMutableArray *assets;
+@property (nonatomic, strong) NSMutableOrderedSet *selectedAssets;
 
-@property (nonatomic, retain) UITableView *tableView;
-@property (nonatomic, retain) UIBarButtonItem *doneButton;
+@property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) UIBarButtonItem *doneButton;
 
 - (void)reloadData;
 - (void)updateRightBarButtonItem;
@@ -53,7 +53,6 @@
         
         [self.view addSubview:tableView];
         self.tableView = tableView;
-        [tableView release];
     }
     
     return self;
@@ -109,19 +108,6 @@
     [self updateRightBarButtonItem];
 }
 
-- (void)dealloc
-{
-    [_assetsGroup release];
-    
-    [_assets release];
-    [_selectedAssets release];
-    
-    [_tableView release];
-    [_doneButton release];
-    
-    [super dealloc];
-}
-
 
 #pragma mark - Instance Methods
 
@@ -167,12 +153,10 @@
         }
         
         self.tableView.tableFooterView = footerView;
-        [footerView release];
     } else {
         QBImagePickerFooterView *footerView = [[QBImagePickerFooterView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 4)];
         
         self.tableView.tableFooterView = footerView;
-        [footerView release];
     }
 }
 
@@ -185,13 +169,11 @@
         
         [self.navigationItem setRightBarButtonItem:doneButton animated:NO];
         self.doneButton = doneButton;
-        [doneButton release];
     } else if(self.showsCancelButton) {
         // Set cancel button
         UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancel)];
         
         [self.navigationItem setRightBarButtonItem:cancelButton animated:NO];
-        [cancelButton release];
     } else {
         [self.navigationItem setRightBarButtonItem:nil animated:NO];
     }
@@ -259,7 +241,7 @@
             cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
             
             if(cell == nil) {
-                cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier] autorelease];
+                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
                 cell.selectionStyle = UITableViewCellSelectionStyleBlue;
             }
             
@@ -276,7 +258,6 @@
                 accessoryView.layer.shadowRadius = 2;
                 
                 cell.accessoryView = accessoryView;
-                [accessoryView release];
             } else {
                 cell.textLabel.text = [self.delegate descriptionForSelectingAllAssets:self];
                 
@@ -290,7 +271,6 @@
                 accessoryView.layer.shadowRadius = 2;
                 
                 cell.accessoryView = accessoryView;
-                [accessoryView release];
             }
         }
             break;
@@ -300,7 +280,7 @@
             cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
             
             if(cell == nil) {
-                cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier] autorelease];
+                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 
                 // Set background view
@@ -308,7 +288,6 @@
                 backgroundView.backgroundColor = [UIColor colorWithWhite:0.878 alpha:1.0];
                 
                 cell.backgroundView = backgroundView;
-                [backgroundView release];
             }
         }
             break;
@@ -321,7 +300,7 @@
                 NSInteger numberOfAssetsInRow = self.view.bounds.size.width / self.imageSize.width;
                 CGFloat margin = round((self.view.bounds.size.width - self.imageSize.width * numberOfAssetsInRow) / (numberOfAssetsInRow + 1));
                 
-                cell = [[[QBImagePickerAssetCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier imageSize:self.imageSize numberOfAssets:numberOfAssetsInRow margin:margin] autorelease];
+                cell = [[QBImagePickerAssetCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier imageSize:self.imageSize numberOfAssets:numberOfAssetsInRow margin:margin];
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 [(QBImagePickerAssetCell *)cell setDelegate:self];
                 [(QBImagePickerAssetCell *)cell setAllowsMultipleSelection:self.allowsMultipleSelection];

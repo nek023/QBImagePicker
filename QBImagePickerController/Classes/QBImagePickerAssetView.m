@@ -15,9 +15,9 @@
 
 @interface QBImagePickerAssetView ()
 
-@property (nonatomic, retain) UIImageView *imageView;
-@property (nonatomic, retain) QBImagePickerVideoInfoView *videoInfoView;
-@property (nonatomic, retain) UIImageView *overlayImageView;
+@property (nonatomic, strong) UIImageView *imageView;
+@property (nonatomic, strong) QBImagePickerVideoInfoView *videoInfoView;
+@property (nonatomic, strong) UIImageView *overlayImageView;
 
 - (UIImage *)thumbnail;
 - (UIImage *)tintedThumbnail;
@@ -40,7 +40,6 @@
         
         [self addSubview:imageView];
         self.imageView = imageView;
-        [imageView release];
         
         // Video Info View
         QBImagePickerVideoInfoView *videoInfoView = [[QBImagePickerVideoInfoView alloc] initWithFrame:CGRectMake(0, self.bounds.size.height - 17, self.bounds.size.width, 17)];
@@ -49,7 +48,6 @@
         
         [self addSubview:videoInfoView];
         self.videoInfoView = videoInfoView;
-        [videoInfoView release];
         
         // Overlay Image View
         UIImageView *overlayImageView = [[UIImageView alloc] initWithFrame:self.bounds];
@@ -61,7 +59,6 @@
         
         [self addSubview:overlayImageView];
         self.overlayImageView = overlayImageView;
-        [overlayImageView release];
     }
     
     return self;
@@ -69,8 +66,7 @@
 
 - (void)setAsset:(ALAsset *)asset
 {
-    [_asset release];
-    _asset = [asset retain];
+    _asset = asset;
     
     // Set thumbnail image
     self.imageView.image = [self thumbnail];
@@ -95,17 +91,6 @@
 - (BOOL)selected
 {
     return !self.overlayImageView.hidden;
-}
-
-- (void)dealloc
-{
-    [_asset release];
-    
-    [_imageView release];
-    [_videoInfoView release];
-    [_overlayImageView release];
-    
-    [super dealloc];
 }
 
 
