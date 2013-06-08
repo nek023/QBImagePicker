@@ -8,9 +8,16 @@ QBImagePickerController is a clone of UIImagePickerController with multiple sele
 
 
 ## Installation
-	#import <AssetsLibrary/AssetsLibrary.h>
-	#import "QBImagePickerController.h"
-in your ViewController.
+QBImagePickerController can be installed via [CocoaPods](http://cocoapods.org/).
+
+    pod 'QBImagePickerController'
+
+Or simply add.
+
+    #import <AssetsLibrary/AssetsLibrary.h>
+    #import "QBImagePickerController.h"
+
+in your project.
 
 
 ## Usage
