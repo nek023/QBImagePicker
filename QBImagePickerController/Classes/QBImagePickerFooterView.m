@@ -12,11 +12,11 @@
 
 @implementation QBImagePickerFooterView
 
-- (id)initWithFrame:(CGRect)frame
+- (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     
-    if(self) {
+    if (self) {
         /* Initialization */
         UILabel *titleLabel = [[UILabel alloc] initWithFrame:self.bounds];
         titleLabel.font = [UIFont systemFontOfSize:20];

@@ -14,11 +14,11 @@
 // Delegate
 #import "QBAssetCollectionViewControllerDelegate.h"
 
-typedef enum {
+typedef NS_ENUM(NSInteger, QBImagePickerFilterType) {
     QBImagePickerFilterTypeAllAssets,
     QBImagePickerFilterTypeAllPhotos,
     QBImagePickerFilterTypeAllVideos
-} QBImagePickerFilterType;
+};
 
 @class QBImagePickerController;
 

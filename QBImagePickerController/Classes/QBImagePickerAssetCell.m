@@ -21,11 +21,11 @@
 
 @implementation QBImagePickerAssetCell
 
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier imageSize:(CGSize)imageSize numberOfAssets:(NSUInteger)numberOfAssets margin:(CGFloat)margin
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier imageSize:(CGSize)imageSize numberOfAssets:(NSUInteger)numberOfAssets margin:(CGFloat)margin
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     
-    if(self) {
+    if (self) {
         self.imageSize = imageSize;
         self.numberOfAssets = numberOfAssets;
         self.margin = margin;
@@ -41,10 +41,10 @@
     _assets = assets;
     
     // Set assets
-    for(NSUInteger i = 0; i < self.numberOfAssets; i++) {
+    for (NSUInteger i = 0; i < self.numberOfAssets; i++) {
         QBImagePickerAssetView *assetView = (QBImagePickerAssetView *)[self.contentView viewWithTag:(1 + i)];
         
-        if(i < self.assets.count) {
+        if (i < self.assets.count) {
             assetView.hidden = NO;
             
             assetView.asset = [self.assets objectAtIndex:i];
@@ -59,8 +59,8 @@
     _allowsMultipleSelection = allowsMultipleSelection;
     
     // Set property
-    for(UIView *subview in self.contentView.subviews) {
-        if([subview isMemberOfClass:[QBImagePickerAssetView class]]) {
+    for (UIView *subview in self.contentView.subviews) {
+        if ([subview isMemberOfClass:[QBImagePickerAssetView class]]) {
             [(QBImagePickerAssetView *)subview setAllowsMultipleSelection:self.allowsMultipleSelection];
         }
     }
@@ -72,14 +72,14 @@
 - (void)addAssetViews
 {
     // Remove all asset views
-    for(UIView *subview in self.contentView.subviews) {
-        if([subview isMemberOfClass:[QBImagePickerAssetView class]]) {
+    for (UIView *subview in self.contentView.subviews) {
+        if ([subview isMemberOfClass:[QBImagePickerAssetView class]]) {
             [subview removeFromSuperview];
         }
     }
     
     // Add asset views
-    for(NSUInteger i = 0; i < self.numberOfAssets; i++) {
+    for (NSUInteger i = 0; i < self.numberOfAssets; i++) {
         // Calculate frame
         CGFloat offset = (self.margin + self.imageSize.width) * i;
         CGRect assetViewFrame = CGRectMake(offset + self.margin, self.margin, self.imageSize.width, self.imageSize.height);
@@ -108,9 +108,9 @@
 
 - (void)selectAllAssets
 {
-    for(UIView *subview in self.contentView.subviews) {
-        if([subview isMemberOfClass:[QBImagePickerAssetView class]]) {
-            if(![(QBImagePickerAssetView *)subview isHidden]) {
+    for (UIView *subview in self.contentView.subviews) {
+        if ([subview isMemberOfClass:[QBImagePickerAssetView class]]) {
+            if (![(QBImagePickerAssetView *)subview isHidden]) {
                 [(QBImagePickerAssetView *)subview setSelected:YES];
             }
         }
@@ -119,9 +119,9 @@
 
 - (void)deselectAllAssets
 {
-    for(UIView *subview in self.contentView.subviews) {
-        if([subview isMemberOfClass:[QBImagePickerAssetView class]]) {
-            if(![(QBImagePickerAssetView *)subview isHidden]) {
+    for (UIView *subview in self.contentView.subviews) {
+        if ([subview isMemberOfClass:[QBImagePickerAssetView class]]) {
+            if (![(QBImagePickerAssetView *)subview isHidden]) {
                 [(QBImagePickerAssetView *)subview setSelected:NO];
             }
         }

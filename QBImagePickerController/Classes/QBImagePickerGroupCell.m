@@ -12,11 +12,11 @@
 
 @implementation QBImagePickerGroupCell
 
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     
-    if(self) {
+    if (self) {
         /* Initialization */
         // Title
         UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
@@ -64,7 +64,7 @@
     CGRect titleLabelFrame;
     CGRect countLabelFrame;
     
-    if((titleTextSize.width + countTextSize.width + 10) > width) {
+    if ((titleTextSize.width + countTextSize.width + 10) > width) {
         titleLabelFrame = CGRectMake(imageViewSize + 10, 0, width - countTextSize.width - 10, imageViewSize);
         countLabelFrame = CGRectMake(titleLabelFrame.origin.x + titleLabelFrame.size.width + 10, 0, countTextSize.width, imageViewSize);
     } else {

@@ -32,11 +32,11 @@
 
 @implementation QBAssetCollectionViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     
-    if(self) {
+    if (self) {
         /* Initialization */
         self.assets = [NSMutableArray array];
         self.selectedAssets = [NSMutableOrderedSet orderedSet];
@@ -65,15 +65,15 @@
     // Reload
     [self reloadData];
     
-    if(self.fullScreenLayoutEnabled) {
+    if (self.fullScreenLayoutEnabled) {
         // Set bar styles
         self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
         self.navigationController.navigationBar.translucent = YES;
         [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleBlackTranslucent animated:NO];
         
         CGFloat top = 0;
-        if(![[UIApplication sharedApplication] isStatusBarHidden]) top = top + 20;
-        if(!self.navigationController.navigationBarHidden) top = top + 44;
+        if (![[UIApplication sharedApplication] isStatusBarHidden]) top = top + 20;
+        if (!self.navigationController.navigationBarHidden) top = top + 44;
         self.tableView.contentInset = UIEdgeInsetsMake(top, 0, 0, 0);
         self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(top, 0, 0, 0);
         
@@ -115,7 +115,7 @@
 {
     // Reload assets
     [self.assetsGroup enumerateAssetsUsingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop) {
-        if(result) {
+        if (result) {
             [self.assets addObject:result];
         }
     }];
@@ -123,7 +123,7 @@
     [self.tableView reloadData];
     
     // Set footer view
-    if(self.showsFooterDescription) {
+    if (self.showsFooterDescription) {
         [self.assetsGroup setAssetsFilter:[ALAssetsFilter allPhotos]];
         NSUInteger numberOfPhotos = self.assetsGroup.numberOfAssets;
         
@@ -144,11 +144,11 @@
         
         QBImagePickerFooterView *footerView = [[QBImagePickerFooterView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 48)];
         
-        if(self.filterType == QBImagePickerFilterTypeAllAssets) {
+        if (self.filterType == QBImagePickerFilterTypeAllAssets) {
             footerView.titleLabel.text = [self.delegate assetCollectionViewController:self descriptionForNumberOfPhotos:numberOfPhotos numberOfVideos:numberOfVideos];
-        } else if(self.filterType == QBImagePickerFilterTypeAllPhotos) {
+        } else if (self.filterType == QBImagePickerFilterTypeAllPhotos) {
             footerView.titleLabel.text = [self.delegate assetCollectionViewController:self descriptionForNumberOfPhotos:numberOfPhotos];
-        } else if(self.filterType == QBImagePickerFilterTypeAllVideos) {
+        } else if (self.filterType == QBImagePickerFilterTypeAllVideos) {
             footerView.titleLabel.text = [self.delegate assetCollectionViewController:self descriptionForNumberOfVideos:numberOfVideos];
         }
         
@@ -162,14 +162,14 @@
 
 - (void)updateRightBarButtonItem
 {
-    if(self.allowsMultipleSelection) {
+    if (self.allowsMultipleSelection) {
         // Set done button
         UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(done)];
         doneButton.enabled = NO;
         
         [self.navigationItem setRightBarButtonItem:doneButton animated:NO];
         self.doneButton = doneButton;
-    } else if(self.showsCancelButton) {
+    } else if (self.showsCancelButton) {
         // Set cancel button
         UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancel)];
         
@@ -181,7 +181,7 @@
 
 - (void)updateDoneButton
 {
-    if(self.limitsMinimumNumberOfSelection) {
+    if (self.limitsMinimumNumberOfSelection) {
         self.doneButton.enabled = (self.selectedAssets.count >= self.minimumNumberOfSelection);
     } else {
         self.doneButton.enabled = (self.selectedAssets.count > 0);
@@ -213,7 +213,7 @@
     switch(section) {
         case 0: case 1:
         {
-            if(self.allowsMultipleSelection && !self.limitsMaximumNumberOfSelection && self.showsHeaderButton) {
+            if (self.allowsMultipleSelection && !self.limitsMaximumNumberOfSelection && self.showsHeaderButton) {
                 numberOfRowsInSection = 1;
             }
         }
@@ -222,7 +222,7 @@
         {
             NSInteger numberOfAssetsInRow = self.view.bounds.size.width / self.imageSize.width;
             numberOfRowsInSection = self.assets.count / numberOfAssetsInRow;
-            if((self.assets.count - numberOfRowsInSection * numberOfAssetsInRow) > 0) numberOfRowsInSection++;
+            if ((self.assets.count - numberOfRowsInSection * numberOfAssetsInRow) > 0) numberOfRowsInSection++;
         }
             break;
     }
@@ -240,12 +240,12 @@
             NSString *cellIdentifier = @"HeaderCell";
             cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
             
-            if(cell == nil) {
+            if (cell == nil) {
                 cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
                 cell.selectionStyle = UITableViewCellSelectionStyleBlue;
             }
             
-            if(self.selectedAssets.count == self.assets.count) {
+            if (self.selectedAssets.count == self.assets.count) {
                 cell.textLabel.text = [self.delegate descriptionForDeselectingAllAssets:self];
                 
                 // Set accessory view
@@ -279,7 +279,7 @@
             NSString *cellIdentifier = @"SeparatorCell";
             cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
             
-            if(cell == nil) {
+            if (cell == nil) {
                 cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 
@@ -296,7 +296,7 @@
             NSString *cellIdentifier = @"AssetCell";
             cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
             
-            if(cell == nil) {
+            if (cell == nil) {
                 NSInteger numberOfAssetsInRow = self.view.bounds.size.width / self.imageSize.width;
                 CGFloat margin = round((self.view.bounds.size.width - self.imageSize.width * numberOfAssetsInRow) / (numberOfAssetsInRow + 1));
                 
@@ -312,7 +312,7 @@
             NSInteger numberOfAssetsToSet = (offset + numberOfAssetsInRow > self.assets.count) ? (self.assets.count - offset) : numberOfAssetsInRow;
             
             NSMutableArray *assets = [NSMutableArray array];
-            for(NSUInteger i = 0; i < numberOfAssetsToSet; i++) {
+            for (NSUInteger i = 0; i < numberOfAssetsToSet; i++) {
                 ALAsset *asset = [self.assets objectAtIndex:(offset + i)];
                 
                 [assets addObject:asset];
@@ -321,10 +321,10 @@
             [(QBImagePickerAssetCell *)cell setAssets:assets];
             
             // Set selection states
-            for(NSUInteger i = 0; i < numberOfAssetsToSet; i++) {
+            for (NSUInteger i = 0; i < numberOfAssetsToSet; i++) {
                 ALAsset *asset = [self.assets objectAtIndex:(offset + i)];
                 
-                if([self.selectedAssets containsObject:asset]) {
+                if ([self.selectedAssets containsObject:asset]) {
                     [(QBImagePickerAssetCell *)cell selectAssetAtIndex:i];
                 } else {
                     [(QBImagePickerAssetCell *)cell deselectAssetAtIndex:i];
@@ -369,8 +369,8 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(indexPath.section == 0 && indexPath.row == 0) {
-        if(self.selectedAssets.count == self.assets.count) {
+    if (indexPath.section == 0 && indexPath.row == 0) {
+        if (self.selectedAssets.count == self.assets.count) {
             // Deselect all assets
             [self.selectedAssets removeAllObjects];
         } else {
@@ -403,7 +403,7 @@
 {
     BOOL canSelect = YES;
     
-    if(self.allowsMultipleSelection && self.limitsMaximumNumberOfSelection) {
+    if (self.allowsMultipleSelection && self.limitsMaximumNumberOfSelection) {
         canSelect = (self.selectedAssets.count < self.maximumNumberOfSelection);
     }
     
@@ -418,8 +418,8 @@
     NSInteger assetIndex = indexPath.row * numberOfAssetsInRow + index;
     ALAsset *asset = [self.assets objectAtIndex:assetIndex];
     
-    if(self.allowsMultipleSelection) {
-        if(selected) {
+    if (self.allowsMultipleSelection) {
+        if (selected) {
             [self.selectedAssets addObject:asset];
         } else {
             [self.selectedAssets removeObject:asset];
@@ -430,7 +430,7 @@
         
         // Update header text
         if (self.showsHeaderButton) {
-            if((selected && self.selectedAssets.count == self.assets.count) ||
+            if ((selected && self.selectedAssets.count == self.assets.count) ||
                (!selected && self.selectedAssets.count == self.assets.count - 1)) {
                 [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
             }

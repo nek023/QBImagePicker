@@ -34,11 +34,11 @@
 
 @implementation QBImagePickerController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     
-    if(self) {
+    if (self) {
         /* Check sources */
         [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera];
         [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary];
@@ -79,7 +79,7 @@
     [super viewDidLoad];
     
     void (^assetsGroupsEnumerationBlock)(ALAssetsGroup *, BOOL *) = ^(ALAssetsGroup *assetsGroup, BOOL *stop) {
-        if(assetsGroup) {
+        if (assetsGroup) {
             switch(self.filterType) {
                 case QBImagePickerFilterTypeAllAssets:
                     [assetsGroup setAssetsFilter:[ALAssetsFilter allAssets]];
@@ -92,7 +92,7 @@
                     break;
             }
             
-            if(assetsGroup.numberOfAssets > 0) {
+            if (assetsGroup.numberOfAssets > 0) {
                 [self.assetsGroups addObject:assetsGroup];
                 [self.tableView reloadData];
             }
@@ -124,10 +124,10 @@
     [super viewWillAppear:animated];
     
     // Full screen layout
-    if(self.fullScreenLayoutEnabled) {
+    if (self.fullScreenLayoutEnabled) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         
-        if(indexPath == nil) {
+        if (indexPath == nil) {
             self.previousBarStyle = self.navigationController.navigationBar.barStyle;
             self.previousBarTranslucent = self.navigationController.navigationBar.translucent;
             self.previousStatusBarStyle = [[UIApplication sharedApplication] statusBarStyle];
@@ -137,8 +137,8 @@
             [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleBlackTranslucent animated:YES];
             
             CGFloat top = 0;
-            if(![[UIApplication sharedApplication] isStatusBarHidden]) top = top + 20;
-            if(!self.navigationController.navigationBarHidden) top = top + 44;
+            if (![[UIApplication sharedApplication] isStatusBarHidden]) top = top + 20;
+            if (!self.navigationController.navigationBarHidden) top = top + 44;
             self.tableView.contentInset = UIEdgeInsetsMake(top, 0, 0, 0);
             self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(top, 0, 0, 0);
             
@@ -162,7 +162,7 @@
 {
     [super viewWillDisappear:animated];
     
-    if(self.fullScreenLayoutEnabled) {
+    if (self.fullScreenLayoutEnabled) {
         // Restore bar styles
         self.navigationController.navigationBar.barStyle = self.previousBarStyle;
         self.navigationController.navigationBar.translucent = self.previousBarTranslucent;
@@ -174,7 +174,7 @@
 {
     _showsCancelButton = showsCancelButton;
     
-    if(self.showsCancelButton) {
+    if (self.showsCancelButton) {
         UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancel)];
         [self.navigationItem setRightBarButtonItem:cancelButton animated:NO];
     } else {
@@ -187,7 +187,7 @@
 
 - (void)cancel
 {
-    if([self.delegate respondsToSelector:@selector(imagePickerControllerDidCancel:)]) {
+    if ([self.delegate respondsToSelector:@selector(imagePickerControllerDidCancel:)]) {
         [self.delegate imagePickerControllerDidCancel:self];
     }
 }
@@ -220,7 +220,7 @@
     static NSString *cellIdentifier = @"Cell";
     QBImagePickerGroupCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     
-    if(cell == nil) {
+    if (cell == nil) {
         cell = [[QBImagePickerGroupCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
@@ -287,25 +287,25 @@
 
 - (void)assetCollectionViewController:(QBAssetCollectionViewController *)assetCollectionViewController didFinishPickingAsset:(ALAsset *)asset
 {
-    if([self.delegate respondsToSelector:@selector(imagePickerControllerWillFinishPickingMedia:)]) {
+    if ([self.delegate respondsToSelector:@selector(imagePickerControllerWillFinishPickingMedia:)]) {
         [self.delegate imagePickerControllerWillFinishPickingMedia:self];
     }
     
-    if([self.delegate respondsToSelector:@selector(imagePickerController:didFinishPickingMediaWithInfo:)]) {
+    if ([self.delegate respondsToSelector:@selector(imagePickerController:didFinishPickingMediaWithInfo:)]) {
         [self.delegate imagePickerController:self didFinishPickingMediaWithInfo:[self mediaInfoFromAsset:asset]];
     }
 }
 
 - (void)assetCollectionViewController:(QBAssetCollectionViewController *)assetCollectionViewController didFinishPickingAssets:(NSArray *)assets
 {
-    if([self.delegate respondsToSelector:@selector(imagePickerControllerWillFinishPickingMedia:)]) {
+    if ([self.delegate respondsToSelector:@selector(imagePickerControllerWillFinishPickingMedia:)]) {
         [self.delegate imagePickerControllerWillFinishPickingMedia:self];
     }
     
-    if([self.delegate respondsToSelector:@selector(imagePickerController:didFinishPickingMediaWithInfo:)]) {
+    if ([self.delegate respondsToSelector:@selector(imagePickerController:didFinishPickingMediaWithInfo:)]) {
         NSMutableArray *info = [NSMutableArray array];
         
-        for(ALAsset *asset in assets) {
+        for (ALAsset *asset in assets) {
             [info addObject:[self mediaInfoFromAsset:asset]];
         }
         
@@ -315,7 +315,7 @@
 
 - (void)assetCollectionViewControllerDidCancel:(QBAssetCollectionViewController *)assetCollectionViewController
 {
-    if([self.delegate respondsToSelector:@selector(imagePickerControllerDidCancel:)]) {
+    if ([self.delegate respondsToSelector:@selector(imagePickerControllerDidCancel:)]) {
         [self.delegate imagePickerControllerDidCancel:self];
     }
 }
@@ -324,7 +324,7 @@
 {
     NSString *description = nil;
     
-    if([self.delegate respondsToSelector:@selector(descriptionForSelectingAllAssets:)]) {
+    if ([self.delegate respondsToSelector:@selector(descriptionForSelectingAllAssets:)]) {
         description = [self.delegate descriptionForSelectingAllAssets:self];
     }
     
@@ -335,7 +335,7 @@
 {
     NSString *description = nil;
     
-    if([self.delegate respondsToSelector:@selector(descriptionForDeselectingAllAssets:)]) {
+    if ([self.delegate respondsToSelector:@selector(descriptionForDeselectingAllAssets:)]) {
         description = [self.delegate descriptionForDeselectingAllAssets:self];
     }
     
@@ -346,7 +346,7 @@
 {
     NSString *description = nil;
     
-    if([self.delegate respondsToSelector:@selector(imagePickerController:descriptionForNumberOfPhotos:)]) {
+    if ([self.delegate respondsToSelector:@selector(imagePickerController:descriptionForNumberOfPhotos:)]) {
         description = [self.delegate imagePickerController:self descriptionForNumberOfPhotos:numberOfPhotos];
     }
     
@@ -357,7 +357,7 @@
 {
     NSString *description = nil;
     
-    if([self.delegate respondsToSelector:@selector(imagePickerController:descriptionForNumberOfVideos:)]) {
+    if ([self.delegate respondsToSelector:@selector(imagePickerController:descriptionForNumberOfVideos:)]) {
         description = [self.delegate imagePickerController:self descriptionForNumberOfVideos:numberOfVideos];
     }
     
@@ -368,7 +368,7 @@
 {
     NSString *description = nil;
     
-    if([self.delegate respondsToSelector:@selector(imagePickerController:descriptionForNumberOfPhotos:numberOfVideos:)]) {
+    if ([self.delegate respondsToSelector:@selector(imagePickerController:descriptionForNumberOfPhotos:numberOfVideos:)]) {
         description = [self.delegate imagePickerController:self descriptionForNumberOfPhotos:numberOfPhotos numberOfVideos:numberOfVideos];
     }
     

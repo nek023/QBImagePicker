@@ -26,11 +26,11 @@
 
 @implementation QBImagePickerAssetView
 
-- (id)initWithFrame:(CGRect)frame
+- (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     
-    if(self) {
+    if (self) {
         /* Initialization */
         // Image View
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.bounds];
@@ -71,7 +71,7 @@
     // Set thumbnail image
     self.imageView.image = [self thumbnail];
     
-    if([self.asset valueForProperty:ALAssetPropertyType] == ALAssetTypeVideo) {
+    if ([self.asset valueForProperty:ALAssetPropertyType] == ALAssetTypeVideo) {
         double duration = [[asset valueForProperty:ALAssetPropertyDuration] doubleValue];
         
         self.videoInfoView.hidden = NO;
@@ -83,7 +83,7 @@
 
 - (void)setSelected:(BOOL)selected
 {
-    if(self.allowsMultipleSelection) {
+    if (self.allowsMultipleSelection) {
         self.overlayImageView.hidden = !selected;
     }
 }
@@ -98,17 +98,17 @@
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    if([self.delegate assetViewCanBeSelected:self] && !self.allowsMultipleSelection) {
+    if ([self.delegate assetViewCanBeSelected:self] && !self.allowsMultipleSelection) {
         self.imageView.image = [self tintedThumbnail];
     }
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    if([self.delegate assetViewCanBeSelected:self]) {
+    if ([self.delegate assetViewCanBeSelected:self]) {
         self.selected = !self.selected;
         
-        if(self.allowsMultipleSelection) {
+        if (self.allowsMultipleSelection) {
             self.imageView.image = [self thumbnail];
         } else {
             self.imageView.image = [self tintedThumbnail];
@@ -116,7 +116,7 @@
         
         [self.delegate assetView:self didChangeSelectionState:self.selected];
     } else {
-        if(self.allowsMultipleSelection && self.selected) {
+        if (self.allowsMultipleSelection && self.selected) {
             self.selected = !self.selected;
             self.imageView.image = [self thumbnail];
             

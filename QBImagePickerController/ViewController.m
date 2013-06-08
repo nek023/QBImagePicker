@@ -47,7 +47,7 @@
 
 - (void)imagePickerController:(QBImagePickerController *)imagePickerController didFinishPickingMediaWithInfo:(id)info
 {
-    if(imagePickerController.allowsMultipleSelection) {
+    if (imagePickerController.allowsMultipleSelection) {
         NSArray *mediaInfoArray = (NSArray *)info;
         
         NSLog(@"Selected %d photos", mediaInfoArray.count);
