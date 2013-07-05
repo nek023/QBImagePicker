@@ -432,7 +432,7 @@
         if (self.showsHeaderButton) {
             if ((selected && self.selectedAssets.count == self.assets.count) ||
                (!selected && self.selectedAssets.count == self.assets.count - 1)) {
-                [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
+                [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
             }
         }
     } else {
