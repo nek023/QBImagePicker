@@ -69,6 +69,10 @@
         
         [self.view addSubview:tableView];
         self.tableView = tableView;
+        
+        if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7) {
+            self.tableView.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
+        }
     }
     
     return self;
