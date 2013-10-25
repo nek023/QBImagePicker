@@ -54,6 +54,13 @@
 {
     [super layoutSubviews];
     
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7) {
+        // Makes imageView get placed in the corner (x set to 15 on iOS 7)
+        CGRect frame = self.imageView.frame;
+        frame.origin.x = 0;
+        self.imageView.frame = frame;
+    }
+    
     CGFloat height = self.contentView.bounds.size.height;
     CGFloat imageViewSize = height - 1;
     CGFloat width = self.contentView.bounds.size.width - 20;
