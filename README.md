@@ -1,44 +1,58 @@
 # QBImagePickerController
-QBImagePickerController is a clone of UIImagePickerController with multiple selection feature.
+A clone of UIImagePickerController with multiple selection support.
 
 
 ## ScreenShot
-![ss01.png](http://adotout.sakura.ne.jp/github/QBImagePickerController/ss01.png)
-![ss02.png](http://adotout.sakura.ne.jp/github/QBImagePickerController/ss02.png)
 
 
 ## Installation
-QBImagePickerController can be installed via [CocoaPods](http://cocoapods.org/).
+QBImagePickerController is available in CocoaPods.
 
     pod 'QBImagePickerController'
 
-Or simply add.
-
-    #import <AssetsLibrary/AssetsLibrary.h>
-    #import "QBImagePickerController.h"
-
-in your project.
+If you want to install manually, download this repository and copy files in QBImagePickerController directory to your project, and link `AssetsLibrary.framework`.
 
 
-## Usage
-**QBImagePickerController is not a subclass of UINavigationController.**  
-If you want to show the picker as a modal view, you have to set the picker to `topViewController` property of an instance of UINavigationController and use it.
-If you want to push the picker to NavigtionController, you don't have to do anything.
+## Examples
+### Check If Source is Accessible
+    if (![QBImagePickerController isAccessible]) {
+        NSLog(@"Error: Source is not accessible.");
+    }
 
-
-## Example
-	QBImagePickerController *imagePickerController = [[[QBImagePickerController alloc] init] autorelease];
+### Single Image Picker
+	QBImagePickerController *imagePickerController = [[QBImagePickerController alloc] init];
 	imagePickerController.delegate = self;
-	imagePickerController.filterType = QBImagePickerFilterTypeAllPhotos;
-	imagePickerController.showsCancelButton = YES;
-	imagePickerController.fullScreenLayoutEnabled = YES;
+
+### Multiple Image Picker
+	QBImagePickerController *imagePickerController = [[QBImagePickerController alloc] init];
+	imagePickerController.delegate = self;
 	imagePickerController.allowsMultipleSelection = YES;
 
-	imagePickerController.limitsMaximumNumberOfSelection = YES;
+### Multiple Image Picker with Limitation
+	QBImagePickerController *imagePickerController = [[QBImagePickerController alloc] init];
+	imagePickerController.delegate = self;
+	imagePickerController.allowsMultipleSelection = YES;
+	imagePickerController.minimumNumberOfSelection = 3;
 	imagePickerController.maximumNumberOfSelection = 6;
 
-	UINavigationController *navigationController = [[[UINavigationController alloc] initWithRootViewController:imagePickerController] autorelease];
-	[self presentViewController:navigationController animated:YES completion:NULL];
+### Specify the Albums to Show
+	QBImagePickerController *imagePickerController = [[QBImagePickerController alloc] init];
+	imagePickerController.delegate = self;
+	imagePickerController.groupTypes = @[
+	                                     @(ALAssetsGroupSavedPhotos),
+	                                     @(ALAssetsGroupPhotoStream),
+	                                     @(ALAssetsGroupAlbum)
+	                                     ];
+
+The order of albums will be the same as specified in `groupTypes` array.
+
+### Show Image Picker
+**QBImagePickerController is not a subclass of UINavigationController.**  
+If you want to show the picker as a modal view, you have to set the picker to `topViewController` property of an instance of UINavigationController.  
+If you want to push the picker to UINavigtionController, you don't have to do anything.
+
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:imagePickerController];
+    [self presentViewController:navigationController animated:YES completion:NULL];
 
 
 ## License
