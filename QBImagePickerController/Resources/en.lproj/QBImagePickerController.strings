@@ -8,6 +8,6 @@
 
 "title" = "Photos";
 
-"format_photos_and_videos" = "%d Photos, %d Videos";
-"format_photos" = "%d Photos";
-"format_videos" = "%d Videos";
+"format_photos_and_videos" = "%ld Photos, %ld Videos";
+"format_photos" = "%ld Photos";
+"format_videos" = "%ld Videos";
