@@ -3,9 +3,6 @@ A clone of UIImagePickerController with multiple selection support.
 
 
 ## ScreenShot
-![ss01.png](http://adotout.sakura.ne.jp/github/QBImagePickerController/2.0/ss01.png)
-
-![ss02.png](http://adotout.sakura.ne.jp/github/QBImagePickerController/2.0/ss02.png)
 
 
 ## Installation
