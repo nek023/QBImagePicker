@@ -48,7 +48,7 @@
     
     // Scroll to bottom --- iOS 7 differences
     CGFloat topInset;
-    if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1) {
+    if ([self respondsToSelector:@selector(setEdgesForExtendedLayout:)]) {
         topInset = ((self.edgesForExtendedLayout && UIRectEdgeTop) && (self.collectionView.contentInset.top == 0)) ? (20.0 + 44.0) : 0.0;
     } else {
         topInset = (self.collectionView.contentInset.top == 0) ? (20.0 + 44.0) : 0.0;
