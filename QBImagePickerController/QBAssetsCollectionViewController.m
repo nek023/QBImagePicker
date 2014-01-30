@@ -46,8 +46,13 @@
 {
     [super viewWillAppear:animated];
     
-    // Scroll to bottom
-    CGFloat topInset = ((self.edgesForExtendedLayout && UIRectEdgeTop) && (self.collectionView.contentInset.top == 0)) ? (20.0 + 44.0) : 0.0;
+    // Scroll to bottom --- iOS 7 differences
+    CGFloat topInset;
+    if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1) {
+        topInset = ((self.edgesForExtendedLayout && UIRectEdgeTop) && (self.collectionView.contentInset.top == 0)) ? (20.0 + 44.0) : 0.0;
+    } else {
+        topInset = (self.collectionView.contentInset.top == 0) ? (20.0 + 44.0) : 0.0;
+    }
     
     [self.collectionView setContentOffset:CGPointMake(0, self.collectionView.collectionViewLayout.collectionViewContentSize.height - self.collectionView.frame.size.height + topInset)
                                  animated:NO];
