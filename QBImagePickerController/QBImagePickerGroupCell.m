@@ -70,7 +70,7 @@
     
     // Update label
     self.nameLabel.text = [self.assetsGroup valueForProperty:ALAssetsGroupPropertyName];
-    self.countLabel.text = [NSString stringWithFormat:@"%ld", self.assetsGroup.numberOfAssets];
+    self.countLabel.text = [NSString stringWithFormat:@"%ld", (long)self.assetsGroup.numberOfAssets];
 }
 
 @end
