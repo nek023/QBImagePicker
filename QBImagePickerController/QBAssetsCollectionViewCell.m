@@ -36,6 +36,7 @@
         [self.contentView addSubview:imageView];
         self.imageView = imageView;
         
+        //create the camera view for video thumbnails
         QBAssetsCollectionCameraView *cameraView = [[QBAssetsCollectionCameraView alloc]
                                                     initWithFrame:CGRectMake(5, self.bounds.size.height - (5.0 + 6.0), 12.0, 6.0)];
         cameraView.autoresizingMask = UIViewAutoresizingNone;
@@ -84,7 +85,8 @@
     // Update view
     self.imageView.image = [UIImage imageWithCGImage:[asset thumbnail]];
     
-    if ([[asset valueForProperty:ALAssetPropertyType] isEqualToString:ALAssetTypeVideo]) { //add an indicator that this is a video
+    //show the camera icon if this is a video, otherwise hide it
+    if ([[asset valueForProperty:ALAssetPropertyType] isEqualToString:ALAssetTypeVideo]) {
         self.videoCameraView.hidden = NO;
     } else{
         self.videoCameraView.hidden = YES;

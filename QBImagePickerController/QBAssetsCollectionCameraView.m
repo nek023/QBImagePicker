@@ -19,29 +19,23 @@
     return self;
 }
 
-
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)rect
 {
+    //setup with color
     CGContextRef context = UIGraphicsGetCurrentContext();
     UIColor *lightGrayColor = [UIColor colorWithWhite:0.846 alpha:1.000];
     CGContextSetFillColorWithColor(context, lightGrayColor.CGColor);
     CGContextSetStrokeColorWithColor(context, lightGrayColor.CGColor);
     
+    //rectangle part of the camera
     CGRect bodyRect = CGRectMake(0, 0, 8.0, self.bounds.size.height);
     CGContextFillRect(context, bodyRect);
     
-    // Checkmark
-    
-    CGContextSetLineWidth(context, 1.0);
-    
+    //triangle part of the camera (i.e. the lens)
     CGContextMoveToPoint(context, 8.0, 3.0);
     CGContextAddLineToPoint(context, 12.0, 0.0);
     CGContextAddLineToPoint(context, 12.0, 6.0);
     CGContextAddLineToPoint(context, 8.0, 3.0);
-    
-    //CGContextStrokePath(context);
     CGContextFillPath(context);
 }
 

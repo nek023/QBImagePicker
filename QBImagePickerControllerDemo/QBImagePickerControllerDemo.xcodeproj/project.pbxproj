@@ -127,8 +127,6 @@
 		AA8A6B0218717B87008659CB /* QBImagePickerController */ = {
 			isa = PBXGroup;
 			children = (
-				378FE30D1907A5FD00D2FEA1 /* QBAssetsCollectionCameraView.h */,
-				378FE30E1907A5FD00D2FEA1 /* QBAssetsCollectionCameraView.m */,
 				AA68026F1873F9740077CEEA /* QBImagePickerController.h */,
 				AA6802701873F9740077CEEA /* QBImagePickerController.m */,
 				AA6802711873F9740077CEEA /* QBImagePickerGroupCell.h */,
@@ -147,6 +145,8 @@
 				AA6802681873F9740077CEEA /* QBAssetsCollectionOverlayView.m */,
 				AA6802631873F9730077CEEA /* QBAssetsCollectionCheckmarkView.h */,
 				AA6802641873F9730077CEEA /* QBAssetsCollectionCheckmarkView.m */,
+				378FE30D1907A5FD00D2FEA1 /* QBAssetsCollectionCameraView.h */,
+				378FE30E1907A5FD00D2FEA1 /* QBAssetsCollectionCameraView.m */,
 				AA68027E1873F9A50077CEEA /* Resources */,
 			);
 			name = QBImagePickerController;
