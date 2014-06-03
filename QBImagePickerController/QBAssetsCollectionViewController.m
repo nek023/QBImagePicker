@@ -42,20 +42,20 @@
     return self;
 }
 
+- (void) viewDidLoad
+{
+    [super viewDidLoad];
+    
+    dispatch_async(dispatch_get_main_queue(), ^(){
+        // Scroll to bottom --- all the same
+        [self.collectionView setContentOffset:CGPointMake(0, MAX(self.collectionView.collectionViewLayout.collectionViewContentSize.height - self.collectionView.frame.size.height + self.collectionView.contentInset.bottom, -self.collectionView.contentInset.top))
+                                     animated:NO];
+    });
+}
+
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
-    // Scroll to bottom --- iOS 7 differences
-    CGFloat topInset;
-    if ([self respondsToSelector:@selector(setEdgesForExtendedLayout:)]) {
-        topInset = ((self.edgesForExtendedLayout && UIRectEdgeTop) && (self.collectionView.contentInset.top == 0)) ? (20.0 + 44.0) : 0.0;
-    } else {
-        topInset = (self.collectionView.contentInset.top == 0) ? (20.0 + 44.0) : 0.0;
-    }
-    
-    [self.collectionView setContentOffset:CGPointMake(0, self.collectionView.collectionViewLayout.collectionViewContentSize.height - self.collectionView.frame.size.height + topInset)
-                                 animated:NO];
     
     // Validation
     if (self.allowsMultipleSelection) {
