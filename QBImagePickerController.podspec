@@ -8,6 +8,7 @@ Pod::Spec.new do |s|
   s.platform     = :ios
   s.platform     = :ios, '7.0'
   s.source       = { :git => "https://github.com/questbeat/QBImagePickerController.git", :tag => "v#{s.version}" }
-  s.source_files = 'QBImagePickerController/*', 'QBImagePickerController/Resources/*.lproj/*'
+  s.source_files = 'QBImagePickerController/*'
+  s.resources    = 'QBImagePickerController/Resources/*'
   s.requires_arc = true
 end
