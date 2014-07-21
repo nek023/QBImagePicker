@@ -53,29 +53,40 @@ ALAssetsFilter * ALAssetsFilterFromQBImagePickerControllerFilterType(QBImagePick
     self = [super initWithStyle:UITableViewStylePlain];
     
     if (self) {
-        // Property settings
-        self.selectedAssetURLs = [NSMutableSet set];
-        
-        self.groupTypes = @[
-                            @(ALAssetsGroupSavedPhotos),
-                            @(ALAssetsGroupPhotoStream),
-                            @(ALAssetsGroupAlbum)
-                            ];
-        self.filterType = QBImagePickerControllerFilterTypeNone;
-        self.showsCancelButton = YES;
-        
-        // View settings
-        self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        
-        // Create assets library instance
-        ALAssetsLibrary *assetsLibrary = [[ALAssetsLibrary alloc] init];
-        self.assetsLibrary = assetsLibrary;
-        
-        // Register cell classes
-        [self.tableView registerClass:[QBImagePickerGroupCell class] forCellReuseIdentifier:@"GroupCell"];
+        [self setupProperties];
     }
     
     return self;
+}
+
+-(void)awakeFromNib
+{
+    [super awakeFromNib];
+    [self setupProperties];
+}
+
+- (void)setupProperties
+{
+    // Property settings
+    self.selectedAssetURLs = [NSMutableSet set];
+    
+    self.groupTypes = @[
+                        @(ALAssetsGroupSavedPhotos),
+                        @(ALAssetsGroupPhotoStream),
+                        @(ALAssetsGroupAlbum)
+                        ];
+    self.filterType = QBImagePickerControllerFilterTypeNone;
+    self.showsCancelButton = YES;
+    
+    // View settings
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
+    // Create assets library instance
+    ALAssetsLibrary *assetsLibrary = [[ALAssetsLibrary alloc] init];
+    self.assetsLibrary = assetsLibrary;
+    
+    // Register cell classes
+    [self.tableView registerClass:[QBImagePickerGroupCell class] forCellReuseIdentifier:@"GroupCell"];
 }
 
 - (void)viewDidLoad
