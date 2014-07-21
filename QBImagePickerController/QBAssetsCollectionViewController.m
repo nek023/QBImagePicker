@@ -46,16 +46,18 @@
 {
     [super viewWillAppear:animated];
     
-    // Scroll to bottom --- iOS 7 differences
-    CGFloat topInset;
-    if ([self respondsToSelector:@selector(setEdgesForExtendedLayout:)]) {
-        topInset = ((self.edgesForExtendedLayout && UIRectEdgeTop) && (self.collectionView.contentInset.top == 0)) ? (20.0 + 44.0) : 0.0;
-    } else {
-        topInset = (self.collectionView.contentInset.top == 0) ? (20.0 + 44.0) : 0.0;
+    if (self.isMovingToParentViewController) {
+        // Scroll to bottom --- iOS 7 differences
+        CGFloat topInset;
+        if ([self respondsToSelector:@selector(setEdgesForExtendedLayout:)]) {
+            topInset = ((self.edgesForExtendedLayout && UIRectEdgeTop) && (self.collectionView.contentInset.top == 0)) ? (20.0 + 44.0) : 0.0;
+        } else {
+            topInset = (self.collectionView.contentInset.top == 0) ? (20.0 + 44.0) : 0.0;
+        }
+
+        [self.collectionView setContentOffset:CGPointMake(0, self.collectionView.collectionViewLayout.collectionViewContentSize.height - self.collectionView.frame.size.height + topInset)
+                                     animated:NO];
     }
-    
-    [self.collectionView setContentOffset:CGPointMake(0, self.collectionView.collectionViewLayout.collectionViewContentSize.height - self.collectionView.frame.size.height + topInset)
-                                 animated:NO];
     
     // Validation
     if (self.allowsMultipleSelection) {
