@@ -22,9 +22,9 @@ UIKIT_EXTERN ALAssetsFilter * ALAssetsFilterFromQBImagePickerControllerFilterTyp
 @protocol QBImagePickerControllerDelegate <NSObject>
 
 @optional
-- (void)imagePickerController:(QBImagePickerController *)imagePickerController didSelectAsset:(ALAsset *)asset;
-- (void)imagePickerController:(QBImagePickerController *)imagePickerController didSelectAssets:(NSArray *)assets;
-- (void)imagePickerControllerDidCancel:(QBImagePickerController *)imagePickerController;
+- (void)qb_imagePickerController:(QBImagePickerController *)imagePickerController didSelectAsset:(ALAsset *)asset;
+- (void)qb_imagePickerController:(QBImagePickerController *)imagePickerController didSelectAssets:(NSArray *)assets;
+- (void)qb_imagePickerControllerDidCancel:(QBImagePickerController *)imagePickerController;
 
 @end
 

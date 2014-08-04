@@ -153,8 +153,8 @@ ALAssetsFilter * ALAssetsFilterFromQBImagePickerControllerFilterType(QBImagePick
 - (void)cancel:(id)sender
 {
     // Delegate
-    if (self.delegate && [self.delegate respondsToSelector:@selector(imagePickerControllerDidCancel:)]) {
-        [self.delegate imagePickerControllerDidCancel:self];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(qb_imagePickerControllerDidCancel:)]) {
+		[self.delegate qb_imagePickerControllerDidCancel:self];
     }
 }
 
@@ -264,8 +264,8 @@ ALAssetsFilter * ALAssetsFilterFromQBImagePickerControllerFilterType(QBImagePick
                                 // Check if the loading finished
                                 if (assets.count == weakSelf.selectedAssetURLs.count) {
                                     // Delegate
-                                    if (self.delegate && [self.delegate respondsToSelector:@selector(imagePickerController:didSelectAssets:)]) {
-                                        [self.delegate imagePickerController:self didSelectAssets:[assets copy]];
+                                    if (self.delegate && [self.delegate respondsToSelector:@selector(qb_imagePickerController:didSelectAssets:)]) {
+										[self.delegate qb_imagePickerController:self didSelectAssets:[assets copy]];
                                     }
                                 }
                             } failureBlock:^(NSError *error) {
@@ -339,8 +339,8 @@ ALAssetsFilter * ALAssetsFilterFromQBImagePickerControllerFilterType(QBImagePick
         self.navigationItem.rightBarButtonItem.enabled = [self validateNumberOfSelections:self.selectedAssetURLs.count];
     } else {
         // Delegate
-        if (self.delegate && [self.delegate respondsToSelector:@selector(imagePickerController:didSelectAsset:)]) {
-            [self.delegate imagePickerController:self didSelectAsset:asset];
+        if (self.delegate && [self.delegate respondsToSelector:@selector(qb_imagePickerController:didSelectAsset:)]) {
+			[self.delegate qb_imagePickerController:self didSelectAsset:asset];
         }
     }
 }
