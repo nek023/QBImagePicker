@@ -11,9 +11,12 @@
 @interface QBImagePickerThumbnailView ()
 
 @property (nonatomic, copy) NSArray *thumbnailImages;
+@property (nonatomic, strong, readonly) UIImage *blankImage;
 @end
 
 @implementation QBImagePickerThumbnailView
+
+@synthesize blankImage = _blankImage;
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
@@ -76,10 +79,24 @@
                                usingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop) {
                                    if (result) {
                                        UIImage *thumbnailImage = [UIImage imageWithCGImage:[result thumbnail]];
-                                       [thumbnailImages addObject:thumbnailImage];
+                                       [thumbnailImages addObject:thumbnailImage ? : self.blankImage];
                                    }
                                }];
-    self.thumbnailImages = [thumbnailImages copy];
+    self.thumbnailImages = thumbnailImages;
+}
+
+- (UIImage *)blankImage
+{
+    if (!_blankImage) {
+        CGSize size = CGSizeMake(200, 200);
+        UIGraphicsBeginImageContextWithOptions(size, YES, 0);
+        [[UIColor colorWithRed:(240.f / 255.f) green:(240.f / 255.f) blue:(240.f / 255.f) alpha:1.f] setFill];
+        UIRectFill(CGRectMake(0, 0, size.width, size.height));
+        _blankImage = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+    }
+    
+    return _blankImage;
 }
 
 @end
