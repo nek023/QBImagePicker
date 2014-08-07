@@ -11,6 +11,8 @@
 @interface QBImagePickerThumbnailView ()
 
 @property (nonatomic, copy) NSArray *thumbnailImages;
+@property (nonatomic, strong) UIImage *blankImage;
+
 @end
 
 @implementation QBImagePickerThumbnailView
@@ -76,10 +78,29 @@
                                usingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop) {
                                    if (result) {
                                        UIImage *thumbnailImage = [UIImage imageWithCGImage:[result thumbnail]];
-                                       [thumbnailImages addObject:thumbnailImage];
+                                       [thumbnailImages addObject:thumbnailImage ?: self.blankImage];
                                    }
                                }];
     self.thumbnailImages = [thumbnailImages copy];
+    
+    [self setNeedsDisplay];
+}
+
+- (UIImage *)blankImage
+{
+    if (_blankImage == nil) {
+        CGSize size = CGSizeMake(100.0, 100.0);
+        UIGraphicsBeginImageContextWithOptions(size, NO, 0.0);
+        
+        [[UIColor colorWithWhite:(240.0 / 255.0) alpha:1.0] setFill];
+        UIRectFill(CGRectMake(0, 0, size.width, size.height));
+        
+        _blankImage = UIGraphicsGetImageFromCurrentImageContext();
+        
+        UIGraphicsEndImageContext();
+    }
+    
+    return _blankImage;
 }
 
 @end
