@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		378FE30F1907A5FD00D2FEA1 /* QBAssetsCollectionCameraView.m in Sources */ = {isa = PBXBuildFile; fileRef = 378FE30E1907A5FD00D2FEA1 /* QBAssetsCollectionCameraView.m */; };
 		AA5F3BFE1871A826009738C1 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA5F3BFD1871A826009738C1 /* AssetsLibrary.framework */; };
 		AA6802751873F9740077CEEA /* QBAssetsCollectionCheckmarkView.m in Sources */ = {isa = PBXBuildFile; fileRef = AA6802641873F9730077CEEA /* QBAssetsCollectionCheckmarkView.m */; };
 		AA6802761873F9740077CEEA /* QBAssetsCollectionFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = AA6802661873F9730077CEEA /* QBAssetsCollectionFooterView.m */; };
@@ -45,6 +46,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		378FE30D1907A5FD00D2FEA1 /* QBAssetsCollectionCameraView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QBAssetsCollectionCameraView.h; path = ../../QBImagePickerController/QBAssetsCollectionCameraView.h; sourceTree = "<group>"; };
+		378FE30E1907A5FD00D2FEA1 /* QBAssetsCollectionCameraView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QBAssetsCollectionCameraView.m; path = ../../QBImagePickerController/QBAssetsCollectionCameraView.m; sourceTree = "<group>"; };
 		AA5F3BFD1871A826009738C1 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		AA6802631873F9730077CEEA /* QBAssetsCollectionCheckmarkView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QBAssetsCollectionCheckmarkView.h; path = ../../QBImagePickerController/QBAssetsCollectionCheckmarkView.h; sourceTree = "<group>"; };
 		AA6802641873F9730077CEEA /* QBAssetsCollectionCheckmarkView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QBAssetsCollectionCheckmarkView.m; path = ../../QBImagePickerController/QBAssetsCollectionCheckmarkView.m; sourceTree = "<group>"; };
@@ -142,6 +145,8 @@
 				AA6802681873F9740077CEEA /* QBAssetsCollectionOverlayView.m */,
 				AA6802631873F9730077CEEA /* QBAssetsCollectionCheckmarkView.h */,
 				AA6802641873F9730077CEEA /* QBAssetsCollectionCheckmarkView.m */,
+				378FE30D1907A5FD00D2FEA1 /* QBAssetsCollectionCameraView.h */,
+				378FE30E1907A5FD00D2FEA1 /* QBAssetsCollectionCameraView.m */,
 				AA68027E1873F9A50077CEEA /* Resources */,
 			);
 			name = QBImagePickerController;
@@ -334,6 +339,7 @@
 				AAD64ECD18710798004C3AD5 /* AppDelegate.m in Sources */,
 				AA6802761873F9740077CEEA /* QBAssetsCollectionFooterView.m in Sources */,
 				AA6802771873F9740077CEEA /* QBAssetsCollectionOverlayView.m in Sources */,
+				378FE30F1907A5FD00D2FEA1 /* QBAssetsCollectionCameraView.m in Sources */,
 				AA6802781873F9740077CEEA /* QBAssetsCollectionViewCell.m in Sources */,
 				AA68027D1873F9740077CEEA /* QBImagePickerThumbnailView.m in Sources */,
 				AA68027B1873F9740077CEEA /* QBImagePickerController.m in Sources */,
