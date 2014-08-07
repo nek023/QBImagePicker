@@ -47,9 +47,9 @@
     [super viewWillAppear:animated];
     
     if (self.isMovingToParentViewController) {
-        // Scroll to bottom --- iOS 7 differences
+        // Scroll to bottom
         CGFloat topInset;
-        if ([self respondsToSelector:@selector(setEdgesForExtendedLayout:)]) {
+        if ([self respondsToSelector:@selector(setEdgesForExtendedLayout:)]) { // iOS7 or later
             topInset = ((self.edgesForExtendedLayout && UIRectEdgeTop) && (self.collectionView.contentInset.top == 0)) ? (20.0 + 44.0) : 0.0;
         } else {
             topInset = (self.collectionView.contentInset.top == 0) ? (20.0 + 44.0) : 0.0;
