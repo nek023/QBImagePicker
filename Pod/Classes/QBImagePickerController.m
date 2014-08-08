@@ -36,7 +36,7 @@ ALAssetsFilter * ALAssetsFilterFromQBImagePickerControllerFilterType(QBImagePick
 
 @property (nonatomic, strong, readwrite) ALAssetsLibrary *assetsLibrary;
 @property (nonatomic, copy, readwrite) NSArray *assetsGroups;
-@property (nonatomic, strong, readwrite) NSMutableSet *selectedAssetURLs;
+@property (nonatomic, strong, readwrite) NSMutableOrderedSet *selectedAssetURLs;
 
 @end
 
@@ -68,7 +68,7 @@ ALAssetsFilter * ALAssetsFilterFromQBImagePickerControllerFilterType(QBImagePick
 - (void)setupProperties
 {
     // Property settings
-    self.selectedAssetURLs = [NSMutableSet set];
+    self.selectedAssetURLs = [NSMutableOrderedSet orderedSet];
     
     self.groupTypes = @[
                         @(ALAssetsGroupSavedPhotos),

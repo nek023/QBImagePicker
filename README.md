@@ -2,12 +2,6 @@
 A clone of UIImagePickerController with multiple selection support.
 
 
-## ScreenShot
-![01.png](http://adotout.sakura.ne.jp/github/QBImagePickerController/2.0/01.png)
-
-![02.png](http://adotout.sakura.ne.jp/github/QBImagePickerController/2.0/02.png)
-
-
 ## Installation
 QBImagePickerController is available in CocoaPods.
 
@@ -16,7 +10,7 @@ QBImagePickerController is available in CocoaPods.
 If you want to install manually, download this repository and copy files in QBImagePickerController directory to your project, and link `AssetsLibrary.framework`.
 
 
-## Examples
+## Example
 ### Check If Source is Accessible
     if (![QBImagePickerController isAccessible]) {
         NSLog(@"Error: Source is not accessible.");

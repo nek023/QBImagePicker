@@ -19,6 +19,8 @@
 @property (nonatomic, assign) NSInteger numberOfPhotos;
 @property (nonatomic, assign) NSInteger numberOfVideos;
 
+@property (nonatomic, assign) BOOL disableScrollToBottom;
+
 @end
 
 @implementation QBAssetsCollectionViewController
@@ -46,10 +48,10 @@
 {
     [super viewWillAppear:animated];
     
-    if (self.isMovingToParentViewController) {
-        // Scroll to bottom --- iOS 7 differences
+    // Scroll to bottom
+    if (self.isMovingToParentViewController && !self.disableScrollToBottom) {
         CGFloat topInset;
-        if ([self respondsToSelector:@selector(setEdgesForExtendedLayout:)]) {
+        if ([self respondsToSelector:@selector(setEdgesForExtendedLayout:)]) { // iOS7 or later
             topInset = ((self.edgesForExtendedLayout && UIRectEdgeTop) && (self.collectionView.contentInset.top == 0)) ? (20.0 + 44.0) : 0.0;
         } else {
             topInset = (self.collectionView.contentInset.top == 0) ? (20.0 + 44.0) : 0.0;
@@ -63,6 +65,20 @@
     if (self.allowsMultipleSelection) {
         self.navigationItem.rightBarButtonItem.enabled = [self validateNumberOfSelections:self.imagePickerController.selectedAssetURLs.count];
     }
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    self.disableScrollToBottom = YES;
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    
+    self.disableScrollToBottom = NO;
 }
 
 

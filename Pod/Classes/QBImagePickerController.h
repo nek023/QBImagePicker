@@ -32,7 +32,7 @@ UIKIT_EXTERN ALAssetsFilter * ALAssetsFilterFromQBImagePickerControllerFilterTyp
 
 @property (nonatomic, strong, readonly) ALAssetsLibrary *assetsLibrary;
 @property (nonatomic, copy, readonly) NSArray *assetsGroups;
-@property (nonatomic, strong, readonly) NSMutableSet *selectedAssetURLs;
+@property (nonatomic, strong, readonly) NSMutableOrderedSet *selectedAssetURLs;
 
 @property (nonatomic, weak) id<QBImagePickerControllerDelegate> delegate;
 @property (nonatomic, copy) NSArray *groupTypes;
