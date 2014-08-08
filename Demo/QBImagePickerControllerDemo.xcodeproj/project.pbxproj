@@ -18,7 +18,7 @@
 		AAB63B2A19932F93005BE2E8 /* QBImagePickerGroupCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AAB63B2019932F93005BE2E8 /* QBImagePickerGroupCell.m */; };
 		AAB63B2B19932F93005BE2E8 /* QBImagePickerThumbnailView.m in Sources */ = {isa = PBXBuildFile; fileRef = AAB63B2219932F93005BE2E8 /* QBImagePickerThumbnailView.m */; };
 		AAB63B3119932FAA005BE2E8 /* QBImagePickerController.strings in Resources */ = {isa = PBXBuildFile; fileRef = AAB63B2E19932FAA005BE2E8 /* QBImagePickerController.strings */; };
-		AAB63B34199335DE005BE2E8 /* QBAssetsCollectionVideoIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = AAB63B33199335DE005BE2E8 /* QBAssetsCollectionVideoIndicatorView.m */; };
+		AAD5BD9019944ED000200158 /* QBAssetsCollectionVideoIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = AAD5BD8F19944ED000200158 /* QBAssetsCollectionVideoIndicatorView.m */; };
 		AAD64EBD18710798004C3AD5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAD64EBC18710798004C3AD5 /* Foundation.framework */; };
 		AAD64EBF18710798004C3AD5 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAD64EBE18710798004C3AD5 /* CoreGraphics.framework */; };
 		AAD64EC118710798004C3AD5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAD64EC018710798004C3AD5 /* UIKit.framework */; };
@@ -67,8 +67,8 @@
 		AAB63B2219932F93005BE2E8 /* QBImagePickerThumbnailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QBImagePickerThumbnailView.m; path = ../../Pod/Classes/QBImagePickerThumbnailView.m; sourceTree = "<group>"; };
 		AAB63B2F19932FAA005BE2E8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/QBImagePickerController.strings; sourceTree = "<group>"; };
 		AAB63B3019932FAA005BE2E8 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/QBImagePickerController.strings; sourceTree = "<group>"; };
-		AAB63B32199335DE005BE2E8 /* QBAssetsCollectionVideoIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBAssetsCollectionVideoIndicatorView.h; sourceTree = "<group>"; };
-		AAB63B33199335DE005BE2E8 /* QBAssetsCollectionVideoIndicatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBAssetsCollectionVideoIndicatorView.m; sourceTree = "<group>"; };
+		AAD5BD8E19944ED000200158 /* QBAssetsCollectionVideoIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QBAssetsCollectionVideoIndicatorView.h; path = ../../Pod/Classes/QBAssetsCollectionVideoIndicatorView.h; sourceTree = "<group>"; };
+		AAD5BD8F19944ED000200158 /* QBAssetsCollectionVideoIndicatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QBAssetsCollectionVideoIndicatorView.m; path = ../../Pod/Classes/QBAssetsCollectionVideoIndicatorView.m; sourceTree = "<group>"; };
 		AAD64EB918710798004C3AD5 /* QBImagePickerControllerDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QBImagePickerControllerDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AAD64EBC18710798004C3AD5 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		AAD64EBE18710798004C3AD5 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -124,8 +124,8 @@
 				AAB63B1419932F93005BE2E8 /* QBAssetsCollectionFooterView.m */,
 				AAB63B1519932F93005BE2E8 /* QBAssetsCollectionOverlayView.h */,
 				AAB63B1619932F93005BE2E8 /* QBAssetsCollectionOverlayView.m */,
-				AAB63B32199335DE005BE2E8 /* QBAssetsCollectionVideoIndicatorView.h */,
-				AAB63B33199335DE005BE2E8 /* QBAssetsCollectionVideoIndicatorView.m */,
+				AAD5BD8E19944ED000200158 /* QBAssetsCollectionVideoIndicatorView.h */,
+				AAD5BD8F19944ED000200158 /* QBAssetsCollectionVideoIndicatorView.m */,
 				AAB63B1719932F93005BE2E8 /* QBAssetsCollectionViewCell.h */,
 				AAB63B1819932F93005BE2E8 /* QBAssetsCollectionViewCell.m */,
 				AAB63B1919932F93005BE2E8 /* QBAssetsCollectionViewController.h */,
@@ -347,10 +347,10 @@
 			files = (
 				AAB63B2819932F93005BE2E8 /* QBAssetsCollectionViewLayout.m in Sources */,
 				AAD64ED318710798004C3AD5 /* ViewController.m in Sources */,
-				AAB63B34199335DE005BE2E8 /* QBAssetsCollectionVideoIndicatorView.m in Sources */,
 				AAD64ECD18710798004C3AD5 /* AppDelegate.m in Sources */,
 				AAB63B2419932F93005BE2E8 /* QBAssetsCollectionFooterView.m in Sources */,
 				AAB63B2519932F93005BE2E8 /* QBAssetsCollectionOverlayView.m in Sources */,
+				AAD5BD9019944ED000200158 /* QBAssetsCollectionVideoIndicatorView.m in Sources */,
 				AAB63B2619932F93005BE2E8 /* QBAssetsCollectionViewCell.m in Sources */,
 				AAB63B2B19932F93005BE2E8 /* QBImagePickerThumbnailView.m in Sources */,
 				AAB63B2919932F93005BE2E8 /* QBImagePickerController.m in Sources */,
