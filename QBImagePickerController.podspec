@@ -1,11 +1,11 @@
 Pod::Spec.new do |s|
   s.name             = "QBImagePickerController"
-  s.version          = "2.1"
+  s.version          = "2.2"
   s.summary          = "A clone of UIImagePickerController with multiple selection support."
   s.homepage         = "https://github.com/questbeat/QBImagePickerController"
   s.license          = 'MIT'
   s.author           = { "questbeat" => "questbeat@gmail.com" }
-  s.source           = { :git => "https://github.com/questbeat/QBImagePickerController.git", :tag => "v2.1" }
+  s.source           = { :git => "https://github.com/questbeat/QBImagePickerController.git", :tag => s.version.to_s }
   s.social_media_url = 'https://twitter.com/questbeat'
   s.source_files     = 'Pod/Classes/*.{h,m}'
   s.resources        = 'Pod/Assets/*.lproj'
