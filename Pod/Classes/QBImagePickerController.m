@@ -53,19 +53,20 @@ ALAssetsFilter * ALAssetsFilterFromQBImagePickerControllerFilterType(QBImagePick
     self = [super initWithStyle:UITableViewStylePlain];
     
     if (self) {
-        [self setupProperties];
+        [self setUpProperties];
     }
     
     return self;
 }
 
--(void)awakeFromNib
+- (void)awakeFromNib
 {
     [super awakeFromNib];
-    [self setupProperties];
+    
+    [self setUpProperties];
 }
 
-- (void)setupProperties
+- (void)setUpProperties
 {
     // Property settings
     self.selectedAssetURLs = [NSMutableOrderedSet orderedSet];
@@ -235,7 +236,7 @@ ALAssetsFilter * ALAssetsFilterFromQBImagePickerControllerFilterType(QBImagePick
                 break;
             }
             
-            ALAssetsGroup *sortedAssetsGroup = [sortedAssetsGroups objectAtIndex:i];
+            ALAssetsGroup *sortedAssetsGroup = sortedAssetsGroups[i];
             ALAssetsGroupType sortedAssetsGroupType = [[sortedAssetsGroup valueForProperty:ALAssetsGroupPropertyType] unsignedIntegerValue];
             NSUInteger indexOfSortedAssetsGroupType = [typesOrder indexOfObject:@(sortedAssetsGroupType)];
             
@@ -291,7 +292,7 @@ ALAssetsFilter * ALAssetsFilterFromQBImagePickerControllerFilterType(QBImagePick
 {
     QBImagePickerGroupCell *cell = [tableView dequeueReusableCellWithIdentifier:@"GroupCell" forIndexPath:indexPath];
     
-    ALAssetsGroup *assetsGroup = [self.assetsGroups objectAtIndex:indexPath.row];
+    ALAssetsGroup *assetsGroup = self.assetsGroups[indexPath.row];
     cell.assetsGroup = assetsGroup;
     
     return cell;
@@ -314,7 +315,7 @@ ALAssetsFilter * ALAssetsFilterFromQBImagePickerControllerFilterType(QBImagePick
     assetsCollectionViewController.minimumNumberOfSelection = self.minimumNumberOfSelection;
     assetsCollectionViewController.maximumNumberOfSelection = self.maximumNumberOfSelection;
     
-    ALAssetsGroup *assetsGroup = [self.assetsGroups objectAtIndex:indexPath.row];
+    ALAssetsGroup *assetsGroup = self.assetsGroups[indexPath.row];
     assetsCollectionViewController.delegate = self;
     assetsCollectionViewController.assetsGroup = assetsGroup;
     

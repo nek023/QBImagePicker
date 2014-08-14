@@ -158,7 +158,7 @@
 - (void)selectAssetHavingURL:(NSURL *)URL
 {
     for (NSInteger i = 0; i < self.assets.count; i++) {
-        ALAsset *asset = [self.assets objectAtIndex:i];
+        ALAsset *asset = self.assets[i];
         NSURL *assetURL = [asset valueForProperty:ALAssetPropertyAssetURL];
         
         if ([assetURL isEqual:URL]) {
@@ -215,7 +215,7 @@
     QBAssetsCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"AssetsCell" forIndexPath:indexPath];
     cell.showsOverlayViewWhenSelected = self.allowsMultipleSelection;
     
-    ALAsset *asset = [self.assets objectAtIndex:indexPath.row];
+    ALAsset *asset = self.assets[indexPath.row];
     cell.asset = asset;
     
     return cell;
@@ -303,7 +303,7 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    ALAsset *asset = [self.assets objectAtIndex:indexPath.row];
+    ALAsset *asset = self.assets[indexPath.row];
     
     // Validation
     if (self.allowsMultipleSelection) {
@@ -318,7 +318,7 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    ALAsset *asset = [self.assets objectAtIndex:indexPath.row];
+    ALAsset *asset = self.assets[indexPath.row];
     
     // Validation
     if (self.allowsMultipleSelection) {
