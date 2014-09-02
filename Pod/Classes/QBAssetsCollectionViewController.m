@@ -16,8 +16,9 @@
 
 @property (nonatomic, strong) NSMutableArray *assets;
 
-@property (nonatomic, assign) NSInteger numberOfPhotos;
-@property (nonatomic, assign) NSInteger numberOfVideos;
+@property (nonatomic, assign) NSUInteger numberOfAssets;
+@property (nonatomic, assign) NSUInteger numberOfPhotos;
+@property (nonatomic, assign) NSUInteger numberOfVideos;
 
 @property (nonatomic, assign) BOOL disableScrollToBottom;
 
@@ -99,25 +100,31 @@
     // Set title
     self.title = [self.assetsGroup valueForProperty:ALAssetsGroupPropertyName];
     
-    // Get the number of photos and videos
-    [self.assetsGroup setAssetsFilter:[ALAssetsFilter allPhotos]];
-    self.numberOfPhotos = self.assetsGroup.numberOfAssets;
-    
-    [self.assetsGroup setAssetsFilter:[ALAssetsFilter allVideos]];
-    self.numberOfVideos = self.assetsGroup.numberOfAssets;
-    
     // Set assets filter
     [self.assetsGroup setAssetsFilter:ALAssetsFilterFromQBImagePickerControllerFilterType(self.filterType)];
     
     // Load assets
-    self.assets = [NSMutableArray array];
+    NSMutableArray *assets = [NSMutableArray array];
+    __block NSUInteger numberOfAssets = 0;
+    __block NSUInteger numberOfPhotos = 0;
+    __block NSUInteger numberOfVideos = 0;
     
-    __weak typeof(self) weakSelf = self;
     [self.assetsGroup enumerateAssetsUsingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop) {
         if (result) {
-            [weakSelf.assets addObject:result];
+            numberOfAssets++;
+            
+            NSString *type = [result valueForProperty:ALAssetPropertyType];
+            if ([type isEqualToString:ALAssetTypePhoto]) numberOfPhotos++;
+            else if ([type isEqualToString:ALAssetTypeVideo]) numberOfVideos++;
+            
+            [assets addObject:result];
         }
     }];
+    
+    self.assets = assets;
+    self.numberOfAssets = numberOfAssets;
+    self.numberOfPhotos = numberOfPhotos;
+    self.numberOfVideos = numberOfVideos;
     
     // Update view
     [self.collectionView reloadData];
@@ -207,7 +214,7 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return self.assetsGroup.numberOfAssets;
+    return self.numberOfAssets;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
