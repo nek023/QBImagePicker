@@ -99,12 +99,28 @@
     // Set title
     self.title = [self.assetsGroup valueForProperty:ALAssetsGroupPropertyName];
     
+    __block NSInteger photoCounter = 0;
+    
     // Get the number of photos and videos
     [self.assetsGroup setAssetsFilter:[ALAssetsFilter allPhotos]];
-    self.numberOfPhotos = self.assetsGroup.numberOfAssets;
+    [self.assetsGroup enumerateAssetsUsingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop) {
+        if (result) {
+            photoCounter ++;
+        }
+    }];
+    
+    self.numberOfPhotos = photoCounter;
+
+    __block NSInteger videoCounter = 0;
     
     [self.assetsGroup setAssetsFilter:[ALAssetsFilter allVideos]];
-    self.numberOfVideos = self.assetsGroup.numberOfAssets;
+    [self.assetsGroup enumerateAssetsUsingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop) {
+        if (result) {
+            videoCounter ++;
+        }
+    }];
+    
+    self.numberOfVideos = videoCounter;
     
     // Set assets filter
     [self.assetsGroup setAssetsFilter:ALAssetsFilterFromQBImagePickerControllerFilterType(self.filterType)];

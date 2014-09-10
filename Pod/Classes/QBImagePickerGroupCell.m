@@ -70,7 +70,17 @@
     
     // Update label
     self.nameLabel.text = [self.assetsGroup valueForProperty:ALAssetsGroupPropertyName];
-    self.countLabel.text = [NSString stringWithFormat:@"%ld", (long)self.assetsGroup.numberOfAssets];
+    
+    __block NSInteger counter = 0;
+    
+    // Get the number of photos and videos
+    [self.assetsGroup enumerateAssetsUsingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop) {
+        if (result) {
+            counter ++;
+        }
+    }];
+    
+    self.countLabel.text = [NSString stringWithFormat:@"%ld", counter];
 }
 
 @end
