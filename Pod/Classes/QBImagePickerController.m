@@ -95,13 +95,16 @@ ALAssetsFilter * ALAssetsFilterFromQBImagePickerControllerFilterType(QBImagePick
     [super viewDidLoad];
     
     // View controller settings
-    self.title = NSLocalizedStringFromTable(@"title", @"QBImagePickerController", nil);
+    self.title = NSLocalizedStringFromTableInBundle(@"title",
+                                                    @"QBImagePickerController",
+                                                    [NSBundle bundleWithPath:[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"QBImagePickerController.bundle"]],
+                                                    nil);
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
+
     // Load assets groups
     [self loadAssetsGroupsWithTypes:self.groupTypes
                          completion:^(NSArray *assetsGroups) {
