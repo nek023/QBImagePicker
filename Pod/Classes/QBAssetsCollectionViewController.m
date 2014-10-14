@@ -254,20 +254,22 @@
                 } else {
                     format = @"format_photos_and_videos";
                 }
-                footerView.textLabel.text = [NSString stringWithFormat:NSLocalizedStringFromTable(format,
-                                                                                                  @"QBImagePickerController",
-                                                                                                  nil),
-                                                                                                  self.numberOfPhotos,
-                                                                                                  self.numberOfVideos
-                                                                                                  ];
+                footerView.textLabel.text = [NSString stringWithFormat:NSLocalizedStringFromTableInBundle(format,
+                                                                                                          @"QBImagePickerController",
+                                                                                                          [NSBundle bundleWithPath:[[NSBundle mainBundle] pathForResource:@"QBImagePickerController" ofType:@"bundle"]],
+                                                                                                          nil),
+                                             self.numberOfPhotos,
+                                             self.numberOfVideos
+                                             ];
                 break;
             }
-                
+
             case QBImagePickerControllerFilterTypePhotos:{
                 NSString *format = (self.numberOfPhotos == 1) ? @"format_photo" : @"format_photos";
-                footerView.textLabel.text = [NSString stringWithFormat:NSLocalizedStringFromTable(format,
-                                                                                                  @"QBImagePickerController",
-                                                                                                  nil),
+                footerView.textLabel.text = [NSString stringWithFormat:NSLocalizedStringFromTableInBundle(format,
+                                                                                                          @"QBImagePickerController",
+                                                                                                          [NSBundle bundleWithPath:[[NSBundle mainBundle] pathForResource:@"QBImagePickerController" ofType:@"bundle"]],
+                                                                                                          nil),
                                                                                                   self.numberOfPhotos
                                                                                                   ];
                 break;
@@ -275,9 +277,10 @@
                 
             case QBImagePickerControllerFilterTypeVideos:{
                 NSString *format = (self.numberOfVideos == 1) ? @"format_video" : @"format_videos";
-                footerView.textLabel.text = [NSString stringWithFormat:NSLocalizedStringFromTable(format,
-                                                                                                  @"QBImagePickerController",
-                                                                                                  nil),
+                footerView.textLabel.text = [NSString stringWithFormat:NSLocalizedStringFromTableInBundle(format,
+                                                                                                          @"QBImagePickerController",
+                                                                                                          [NSBundle bundleWithPath:[[NSBundle mainBundle] pathForResource:@"QBImagePickerController" ofType:@"bundle"]],
+                                                                                                          nil),
                                                                                                   self.numberOfVideos
                                                                                                   ];
                 break;
