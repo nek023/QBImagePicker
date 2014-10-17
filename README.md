@@ -17,23 +17,23 @@ If you want to install manually, download this repository and copy files in QBIm
     }
 
 ### Single Image Picker
-	QBImagePickerController *imagePickerController = [[QBImagePickerController alloc] init];
+	QBImagePickerController *imagePickerController = [[QBImagePickerController alloc] initWithStyle:UITableViewStylePlain];
 	imagePickerController.delegate = self;
 
 ### Multiple Image Picker
-	QBImagePickerController *imagePickerController = [[QBImagePickerController alloc] init];
+	QBImagePickerController *imagePickerController = [[QBImagePickerController alloc] initWithStyle:UITableViewStylePlain];
 	imagePickerController.delegate = self;
 	imagePickerController.allowsMultipleSelection = YES;
 
 ### Multiple Image Picker with Limitation
-	QBImagePickerController *imagePickerController = [[QBImagePickerController alloc] init];
+	QBImagePickerController *imagePickerController = [[QBImagePickerController alloc] initWithStyle:UITableViewStylePlain];
 	imagePickerController.delegate = self;
 	imagePickerController.allowsMultipleSelection = YES;
 	imagePickerController.minimumNumberOfSelection = 3;
 	imagePickerController.maximumNumberOfSelection = 6;
 
 ### Specify the Albums to Show
-	QBImagePickerController *imagePickerController = [[QBImagePickerController alloc] init];
+	QBImagePickerController *imagePickerController = [[QBImagePickerController alloc] initWithStyle:UITableViewStylePlain];
 	imagePickerController.delegate = self;
 	imagePickerController.groupTypes = @[
 	                                     @(ALAssetsGroupSavedPhotos),
