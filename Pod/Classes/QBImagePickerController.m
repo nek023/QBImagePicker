@@ -260,18 +260,46 @@ ALAssetsFilter * ALAssetsFilterFromQBImagePickerControllerFilterType(QBImagePick
     
     for (NSURL *selectedAssetURL in self.selectedAssetURLs) {
         __weak typeof(self) weakSelf = self;
+        
+        // Success block
+        void (^selectAsset)(ALAsset *) = ^(ALAsset *asset) {
+            [assets addObject:asset];
+            // Check if the loading finished
+            if (assets.count == weakSelf.selectedAssetURLs.count) {
+                // Delegate
+                if (self.delegate && [self.delegate respondsToSelector:@selector(qb_imagePickerController:didSelectAssets:)]) {
+                    [self.delegate qb_imagePickerController:self didSelectAssets:[assets copy]];
+                }
+            }
+        };
+        
         [self.assetsLibrary assetForURL:selectedAssetURL
                             resultBlock:^(ALAsset *asset) {
-                                // Add asset
-                                [assets addObject:asset];
                                 
-                                // Check if the loading finished
-                                if (assets.count == weakSelf.selectedAssetURLs.count) {
-                                    // Delegate
-                                    if (self.delegate && [self.delegate respondsToSelector:@selector(qb_imagePickerController:didSelectAssets:)]) {
-										[self.delegate qb_imagePickerController:self didSelectAssets:[assets copy]];
-                                    }
+                                // Success #1
+                                if (asset){
+                                    selectAsset(asset);
+                                    
+                                // No luck, try another way
+                                } else {
+                                    
+                                    // Search in the Photo Stream Album
+                                    [self.assetsLibrary enumerateGroupsWithTypes:ALAssetsGroupPhotoStream
+                                                           usingBlock:^(ALAssetsGroup *group, BOOL *stop)
+                                     {
+                                         [group enumerateAssetsWithOptions:NSEnumerationReverse usingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop) {
+                                             if([result.defaultRepresentation.url isEqual:selectedAssetURL])
+                                             {
+                                                 selectAsset(result);
+                                                 *stop = YES;
+                                             }
+                                         }];
+                                     }
+                                                                    failureBlock:^(NSError *error) {
+                                                                        NSLog(@"Error: %@", [error localizedDescription]);
+                                                                    }];
                                 }
+                            
                             } failureBlock:^(NSError *error) {
                                 NSLog(@"Error: %@", [error localizedDescription]);
                             }];
