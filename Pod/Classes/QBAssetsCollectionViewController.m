@@ -66,6 +66,8 @@
     if (self.allowsMultipleSelection) {
         self.navigationItem.rightBarButtonItem.enabled = [self validateNumberOfSelections:self.imagePickerController.selectedAssetURLs.count];
     }
+
+    [self.collectionView reloadData];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -139,7 +141,8 @@
         UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(done:)];
         [self.navigationItem setRightBarButtonItem:doneButton animated:NO];
     } else {
-        [self.navigationItem setRightBarButtonItem:nil animated:NO];
+        UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancel:)];
+        [self.navigationItem setRightBarButtonItem:cancelButton animated:NO];
     }
 }
 
@@ -159,6 +162,10 @@
     }
 }
 
+- (void)cancel:(id)sender
+{
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+}
 
 #pragma mark - Managing Selection
 
@@ -298,6 +305,19 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad){
+        if (UIDeviceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])) {
+            return CGSizeMake(202.f, 202.f);
+        }
+        return CGSizeMake(151, 151);
+    }
+
+    CGFloat screenHeight = [UIScreen mainScreen].bounds.size.height;
+    if (screenHeight == 667) {
+        return CGSizeMake(91.f, 91.f);
+    } else if (screenHeight == 736) {
+        return CGSizeMake(101.f, 101.f);
+    }
     return CGSizeMake(77.5, 77.5);
 }
 
@@ -339,6 +359,13 @@
     if (self.delegate && [self.delegate respondsToSelector:@selector(assetsCollectionViewController:didDeselectAsset:)]) {
         [self.delegate assetsCollectionViewController:self didDeselectAsset:asset];
     }
+}
+
+- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    [super willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
+
+    [self.collectionView reloadData];
 }
 
 @end
