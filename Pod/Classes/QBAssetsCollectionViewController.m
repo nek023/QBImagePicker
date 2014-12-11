@@ -312,6 +312,12 @@
         return CGSizeMake(151, 151);
     }
 
+    CGFloat screenHeight = [UIScreen mainScreen].bounds.size.height;
+    if (screenHeight == 667) {
+        return CGSizeMake(91.f, 91.f);
+    } else if (screenHeight == 736) {
+        return CGSizeMake(101.f, 101.f);
+    }
     return CGSizeMake(77.5, 77.5);
 }
 
