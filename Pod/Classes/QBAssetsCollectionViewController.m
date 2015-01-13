@@ -66,6 +66,12 @@
     if (self.allowsMultipleSelection) {
         self.navigationItem.rightBarButtonItem.enabled = [self validateNumberOfSelections:self.imagePickerController.selectedAssetURLs.count];
     }
+    
+    // Observe AssetsLibrary changes
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(assetsLibraryChanged:)
+                                                 name:ALAssetsLibraryChangedNotification
+                                               object:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -73,6 +79,8 @@
     [super viewWillDisappear:animated];
     
     self.disableScrollToBottom = YES;
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -80,6 +88,14 @@
     [super viewDidDisappear:animated];
     
     self.disableScrollToBottom = NO;
+}
+
+
+#pragma mark - Observe Library changes
+
+- (void)assetsLibraryChanged:(NSNotification *)notification {
+    // Reloading assets in current group
+    self.assetsGroup = self.assetsGroup;
 }
 
 
@@ -110,7 +126,7 @@
     __block NSUInteger numberOfVideos = 0;
     
     [self.assetsGroup enumerateAssetsUsingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop) {
-        if (result) {
+        if (result && result.defaultRepresentation) {
             numberOfAssets++;
             
             NSString *type = [result valueForProperty:ALAssetPropertyType];
