@@ -1,0 +1,19 @@
+/*
+ QBImagePickerController.strings
+ QBImagePickerControllerDemo
+ 
+ Created by Xing Yan on 2015/03/28.
+ Copyright (c) 2014年 Xing Yan. All rights reserved.
+ */
+
+"title" = "照片";
+
+"format_photo" = "照片: %ld张";
+"format_photos" = "照片: %ld张";
+"format_video" = "视频: %ld个";
+"format_videos" = "视频: %ld个";
+"format_photo_and_video" = "照片%ld张、视频%ld个";
+"format_photos_and_video" = "照片%ld张、视频%ld个";
+"format_photo_and_videos" = "照片%ld张、视频%ld个";
+"format_photos_and_videos" = "照片%ld张、视频%ld个";
+
