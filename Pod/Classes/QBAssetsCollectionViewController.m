@@ -298,18 +298,22 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    float sizef = 77.0;
-    CGSize screenSize = [UIScreen mainScreen].bounds.size;
-    float screenHeight = MAX(screenSize.height, screenSize.width);
-    if (screenHeight == 568)
-        sizef = 77.5f;
-    else if(screenHeight == 667)
-        sizef = 91.0f;
-    else if(screenHeight == 736)
-        sizef = 66.5;
-    else if(screenHeight == 1024)
-        sizef = 124;
-    return CGSizeMake(sizef, sizef);
+    static CGSize cellSize;
+    if (cellSize.width == 0) {
+        float sizef = 77.0;
+        CGSize screenSize = [UIScreen mainScreen].bounds.size;
+        float screenHeight = MAX(screenSize.height, screenSize.width);
+        if (screenHeight == 568)
+            sizef = 77.5f;
+        else if(screenHeight == 667)
+            sizef = 91.0f;
+        else if(screenHeight == 736)
+            sizef = 66.5;
+        else if(screenHeight == 1024)
+            sizef = 124;
+        cellSize = CGSizeMake(sizef, sizef);
+    }
+    return cellSize;
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
