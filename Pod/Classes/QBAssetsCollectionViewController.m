@@ -16,8 +16,9 @@
 
 @property (nonatomic, strong) NSMutableArray *assets;
 
-@property (nonatomic, assign) NSInteger numberOfPhotos;
-@property (nonatomic, assign) NSInteger numberOfVideos;
+@property (nonatomic, assign) NSUInteger numberOfAssets;
+@property (nonatomic, assign) NSUInteger numberOfPhotos;
+@property (nonatomic, assign) NSUInteger numberOfVideos;
 
 @property (nonatomic, assign) BOOL disableScrollToBottom;
 
@@ -99,25 +100,31 @@
     // Set title
     self.title = [self.assetsGroup valueForProperty:ALAssetsGroupPropertyName];
     
-    // Get the number of photos and videos
-    [self.assetsGroup setAssetsFilter:[ALAssetsFilter allPhotos]];
-    self.numberOfPhotos = self.assetsGroup.numberOfAssets;
-    
-    [self.assetsGroup setAssetsFilter:[ALAssetsFilter allVideos]];
-    self.numberOfVideos = self.assetsGroup.numberOfAssets;
-    
     // Set assets filter
     [self.assetsGroup setAssetsFilter:ALAssetsFilterFromQBImagePickerControllerFilterType(self.filterType)];
     
     // Load assets
-    self.assets = [NSMutableArray array];
+    NSMutableArray *assets = [NSMutableArray array];
+    __block NSUInteger numberOfAssets = 0;
+    __block NSUInteger numberOfPhotos = 0;
+    __block NSUInteger numberOfVideos = 0;
     
-    __weak typeof(self) weakSelf = self;
     [self.assetsGroup enumerateAssetsUsingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop) {
         if (result) {
-            [weakSelf.assets addObject:result];
+            numberOfAssets++;
+            
+            NSString *type = [result valueForProperty:ALAssetPropertyType];
+            if ([type isEqualToString:ALAssetTypePhoto]) numberOfPhotos++;
+            else if ([type isEqualToString:ALAssetTypeVideo]) numberOfVideos++;
+            
+            [assets addObject:result];
         }
     }];
+    
+    self.assets = assets;
+    self.numberOfAssets = numberOfAssets;
+    self.numberOfPhotos = numberOfPhotos;
+    self.numberOfVideos = numberOfVideos;
     
     // Update view
     [self.collectionView reloadData];
@@ -158,7 +165,7 @@
 - (void)selectAssetHavingURL:(NSURL *)URL
 {
     for (NSInteger i = 0; i < self.assets.count; i++) {
-        ALAsset *asset = [self.assets objectAtIndex:i];
+        ALAsset *asset = self.assets[i];
         NSURL *assetURL = [asset valueForProperty:ALAssetPropertyAssetURL];
         
         if ([assetURL isEqual:URL]) {
@@ -207,7 +214,7 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return self.assetsGroup.numberOfAssets;
+    return self.numberOfAssets;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -215,7 +222,7 @@
     QBAssetsCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"AssetsCell" forIndexPath:indexPath];
     cell.showsOverlayViewWhenSelected = self.allowsMultipleSelection;
     
-    ALAsset *asset = [self.assets objectAtIndex:indexPath.row];
+    ALAsset *asset = self.assets[indexPath.row];
     cell.asset = asset;
     
     return cell;
@@ -223,7 +230,7 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section
 {
-    return CGSizeMake(collectionView.bounds.size.width, 46.0);
+    return CGSizeMake(collectionView.bounds.size.width, 66.0);
 }
 
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
@@ -247,20 +254,22 @@
                 } else {
                     format = @"format_photos_and_videos";
                 }
-                footerView.textLabel.text = [NSString stringWithFormat:NSLocalizedStringFromTable(format,
-                                                                                                  @"QBImagePickerController",
-                                                                                                  nil),
-                                                                                                  self.numberOfPhotos,
-                                                                                                  self.numberOfVideos
-                                                                                                  ];
+                footerView.textLabel.text = [NSString stringWithFormat:NSLocalizedStringFromTableInBundle(format,
+                                                                                                          @"QBImagePickerController",
+                                                                                                          [NSBundle bundleWithPath:[[NSBundle mainBundle] pathForResource:@"QBImagePickerController" ofType:@"bundle"]],
+                                                                                                          nil),
+                                             self.numberOfPhotos,
+                                             self.numberOfVideos
+                                             ];
                 break;
             }
-                
+
             case QBImagePickerControllerFilterTypePhotos:{
                 NSString *format = (self.numberOfPhotos == 1) ? @"format_photo" : @"format_photos";
-                footerView.textLabel.text = [NSString stringWithFormat:NSLocalizedStringFromTable(format,
-                                                                                                  @"QBImagePickerController",
-                                                                                                  nil),
+                footerView.textLabel.text = [NSString stringWithFormat:NSLocalizedStringFromTableInBundle(format,
+                                                                                                          @"QBImagePickerController",
+                                                                                                          [NSBundle bundleWithPath:[[NSBundle mainBundle] pathForResource:@"QBImagePickerController" ofType:@"bundle"]],
+                                                                                                          nil),
                                                                                                   self.numberOfPhotos
                                                                                                   ];
                 break;
@@ -268,9 +277,10 @@
                 
             case QBImagePickerControllerFilterTypeVideos:{
                 NSString *format = (self.numberOfVideos == 1) ? @"format_video" : @"format_videos";
-                footerView.textLabel.text = [NSString stringWithFormat:NSLocalizedStringFromTable(format,
-                                                                                                  @"QBImagePickerController",
-                                                                                                  nil),
+                footerView.textLabel.text = [NSString stringWithFormat:NSLocalizedStringFromTableInBundle(format,
+                                                                                                          @"QBImagePickerController",
+                                                                                                          [NSBundle bundleWithPath:[[NSBundle mainBundle] pathForResource:@"QBImagePickerController" ofType:@"bundle"]],
+                                                                                                          nil),
                                                                                                   self.numberOfVideos
                                                                                                   ];
                 break;
@@ -288,7 +298,22 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return CGSizeMake(77.5, 77.5);
+    static CGSize cellSize;
+    if (cellSize.width == 0) {
+        float sizef = 77.0;
+        CGSize screenSize = [UIScreen mainScreen].bounds.size;
+        float screenHeight = MAX(screenSize.height, screenSize.width);
+        if (screenHeight == 568)
+            sizef = 77.5f;
+        else if(screenHeight == 667)
+            sizef = 91.0f;
+        else if(screenHeight == 736)
+            sizef = 66.5;
+        else if(screenHeight == 1024)
+            sizef = 124;
+        cellSize = CGSizeMake(sizef, sizef);
+    }
+    return cellSize;
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
@@ -303,7 +328,7 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    ALAsset *asset = [self.assets objectAtIndex:indexPath.row];
+    ALAsset *asset = self.assets[indexPath.row];
     
     // Validation
     if (self.allowsMultipleSelection) {
@@ -318,7 +343,7 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    ALAsset *asset = [self.assets objectAtIndex:indexPath.row];
+    ALAsset *asset = self.assets[indexPath.row];
     
     // Validation
     if (self.allowsMultipleSelection) {
