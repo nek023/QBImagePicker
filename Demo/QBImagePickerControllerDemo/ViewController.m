@@ -2,8 +2,8 @@
 //  ViewController.m
 //  QBImagePickerControllerDemo
 //
-//  Created by Tanaka Katsuma on 2013/12/30.
-//  Copyright (c) 2013年 Katsuma Tanaka. All rights reserved.
+//  Created by Katsuma Tanaka on 2015/04/02.
+//  Copyright (c) 2015年 Katsuma Tanaka. All rights reserved.
 //
 
 #import "ViewController.h"
