@@ -65,7 +65,7 @@
     // Draw duration
     NSInteger minutes = (NSInteger)(self.duration / 60.0);
     NSInteger seconds = (NSInteger)ceil(self.duration - 60.0 * (double)minutes);
-    NSString *durationString = [NSString stringWithFormat:@"%02ld:%02ld", (long)minutes, (long)seconds];
+    NSString *durationString = [NSString stringWithFormat:@"%02ld:%02ld", minutes, seconds];
     
     NSMutableParagraphStyle *paragraphStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
     paragraphStyle.alignment = NSTextAlignmentRight;
