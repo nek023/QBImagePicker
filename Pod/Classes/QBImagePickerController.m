@@ -53,20 +53,19 @@ ALAssetsFilter * ALAssetsFilterFromQBImagePickerControllerFilterType(QBImagePick
     self = [super initWithStyle:UITableViewStylePlain];
     
     if (self) {
-        [self setUpProperties];
+        [self setupProperties];
     }
     
     return self;
 }
 
-- (void)awakeFromNib
+-(void)awakeFromNib
 {
     [super awakeFromNib];
-    
-    [self setUpProperties];
+    [self setupProperties];
 }
 
-- (void)setUpProperties
+- (void)setupProperties
 {
     // Property settings
     self.selectedAssetURLs = [NSMutableOrderedSet orderedSet];
@@ -95,16 +94,13 @@ ALAssetsFilter * ALAssetsFilterFromQBImagePickerControllerFilterType(QBImagePick
     [super viewDidLoad];
     
     // View controller settings
-    self.title = NSLocalizedStringFromTableInBundle(@"title",
-                                                    @"QBImagePickerController",
-                                                    [NSBundle bundleWithPath:[[NSBundle mainBundle] pathForResource:@"QBImagePickerController" ofType:@"bundle"]],
-                                                    nil);
+    self.title = NSLocalizedStringFromTable(@"title", @"QBImagePickerController", nil);
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-
+    
     // Load assets groups
     [self loadAssetsGroupsWithTypes:self.groupTypes
                          completion:^(NSArray *assetsGroups) {
@@ -239,7 +235,7 @@ ALAssetsFilter * ALAssetsFilterFromQBImagePickerControllerFilterType(QBImagePick
                 break;
             }
             
-            ALAssetsGroup *sortedAssetsGroup = sortedAssetsGroups[i];
+            ALAssetsGroup *sortedAssetsGroup = [sortedAssetsGroups objectAtIndex:i];
             ALAssetsGroupType sortedAssetsGroupType = [[sortedAssetsGroup valueForProperty:ALAssetsGroupPropertyType] unsignedIntegerValue];
             NSUInteger indexOfSortedAssetsGroupType = [typesOrder indexOfObject:@(sortedAssetsGroupType)];
             
@@ -295,7 +291,7 @@ ALAssetsFilter * ALAssetsFilterFromQBImagePickerControllerFilterType(QBImagePick
 {
     QBImagePickerGroupCell *cell = [tableView dequeueReusableCellWithIdentifier:@"GroupCell" forIndexPath:indexPath];
     
-    ALAssetsGroup *assetsGroup = self.assetsGroups[indexPath.row];
+    ALAssetsGroup *assetsGroup = [self.assetsGroups objectAtIndex:indexPath.row];
     cell.assetsGroup = assetsGroup;
     
     return cell;
@@ -318,7 +314,7 @@ ALAssetsFilter * ALAssetsFilterFromQBImagePickerControllerFilterType(QBImagePick
     assetsCollectionViewController.minimumNumberOfSelection = self.minimumNumberOfSelection;
     assetsCollectionViewController.maximumNumberOfSelection = self.maximumNumberOfSelection;
     
-    ALAssetsGroup *assetsGroup = self.assetsGroups[indexPath.row];
+    ALAssetsGroup *assetsGroup = [self.assetsGroups objectAtIndex:indexPath.row];
     assetsCollectionViewController.delegate = self;
     assetsCollectionViewController.assetsGroup = assetsGroup;
     

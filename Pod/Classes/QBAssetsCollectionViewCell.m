@@ -18,8 +18,6 @@
 @property (nonatomic, strong) QBAssetsCollectionOverlayView *overlayView;
 @property (nonatomic, strong) QBAssetsCollectionVideoIndicatorView *videoIndicatorView;
 
-@property (nonatomic, strong) UIImage *blankImage;
-
 @end
 
 @implementation QBAssetsCollectionViewCell
@@ -107,13 +105,7 @@
     _asset = asset;
     
     // Update view
-    CGImageRef thumbnailImageRef = [asset thumbnail];
-    
-    if (thumbnailImageRef) {
-        self.imageView.image = [UIImage imageWithCGImage:thumbnailImageRef];
-    } else {
-        self.imageView.image = [self blankImage];
-    }
+    self.imageView.image = [UIImage imageWithCGImage:[asset thumbnail]];
     
     // Show video indicator if the asset is video
     if ([[asset valueForProperty:ALAssetPropertyType] isEqualToString:ALAssetTypeVideo]) {
@@ -121,23 +113,6 @@
     } else {
         [self hideVideoIndicatorView];
     }
-}
-
-- (UIImage *)blankImage
-{
-    if (_blankImage == nil) {
-        CGSize size = CGSizeMake(100.0, 100.0);
-        UIGraphicsBeginImageContextWithOptions(size, NO, 0.0);
-        
-        [[UIColor colorWithWhite:(240.0 / 255.0) alpha:1.0] setFill];
-        UIRectFill(CGRectMake(0, 0, size.width, size.height));
-        
-        _blankImage = UIGraphicsGetImageFromCurrentImageContext();
-        
-        UIGraphicsEndImageContext();
-    }
-    
-    return _blankImage;
 }
 
 @end

@@ -41,26 +41,26 @@
     CGContextSetRGBFillColor(context, 1.0, 1.0, 1.0, 1.0);
     
     if (self.thumbnailImages.count == 3) {
-        UIImage *thumbnailImage = self.thumbnailImages[2];
+        UIImage *thumbnailImage = [self.thumbnailImages objectAtIndex:2];
         
         CGRect thumbnailImageRect = CGRectMake(4.0, 0, 62.0, 62.0);
         CGContextFillRect(context, thumbnailImageRect);
         [thumbnailImage drawInRect:CGRectInset(thumbnailImageRect, 0.5, 0.5)];
     }
+    
     if (self.thumbnailImages.count >= 2) {
-        UIImage *thumbnailImage = self.thumbnailImages[1];
+        UIImage *thumbnailImage = [self.thumbnailImages objectAtIndex:1];
         
         CGRect thumbnailImageRect = CGRectMake(2.0, 2.0, 66.0, 66.0);
         CGContextFillRect(context, thumbnailImageRect);
         [thumbnailImage drawInRect:CGRectInset(thumbnailImageRect, 0.5, 0.5)];
     }
-    if (self.thumbnailImages.count >= 1) {
-        UIImage *thumbnailImage = self.thumbnailImages[0];
-        
-        CGRect thumbnailImageRect = CGRectMake(0, 4.0, 70.0, 70.0);
-        CGContextFillRect(context, thumbnailImageRect);
-        [thumbnailImage drawInRect:CGRectInset(thumbnailImageRect, 0.5, 0.5)];
-    }
+    
+    UIImage *thumbnailImage = [self.thumbnailImages objectAtIndex:0];
+    
+    CGRect thumbnailImageRect = CGRectMake(0, 4.0, 70.0, 70.0);
+    CGContextFillRect(context, thumbnailImageRect);
+    [thumbnailImage drawInRect:CGRectInset(thumbnailImageRect, 0.5, 0.5)];
 }
 
 
@@ -77,13 +77,8 @@
                                   options:0
                                usingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop) {
                                    if (result) {
-                                       CGImageRef thumbnailImageRef = [result thumbnail];
-                                       
-                                       if (thumbnailImageRef) {
-                                           [thumbnailImages addObject:[UIImage imageWithCGImage:thumbnailImageRef]];
-                                       } else {
-                                           [thumbnailImages addObject:[self blankImage]];
-                                       }
+                                       UIImage *thumbnailImage = [UIImage imageWithCGImage:[result thumbnail]];
+                                       [thumbnailImages addObject:thumbnailImage ?: self.blankImage];
                                    }
                                }];
     self.thumbnailImages = [thumbnailImages copy];
