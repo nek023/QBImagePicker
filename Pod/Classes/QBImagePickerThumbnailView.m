@@ -70,8 +70,12 @@
 {
     _assetsGroup = assetsGroup;
     
+    if ([assetsGroup numberOfAssets] == 0) return;
+    
     // Extract three thumbnail images
-    NSIndexSet *indexes = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, MIN(3, assetsGroup.numberOfAssets))];
+    NSUInteger numberOfImages = MIN(3, [assetsGroup numberOfAssets]);
+    NSRange range = NSMakeRange([assetsGroup numberOfAssets] - numberOfImages, numberOfImages);
+    NSIndexSet *indexes = [NSIndexSet indexSetWithIndexesInRange:range];
     NSMutableArray *thumbnailImages = [NSMutableArray array];
     [assetsGroup enumerateAssetsAtIndexes:indexes
                                   options:0
@@ -80,13 +84,13 @@
                                        CGImageRef thumbnailImageRef = [result thumbnail];
                                        
                                        if (thumbnailImageRef) {
-                                           [thumbnailImages addObject:[UIImage imageWithCGImage:thumbnailImageRef]];
+                                           [thumbnailImages insertObject:[UIImage imageWithCGImage:thumbnailImageRef] atIndex:0];
                                        } else {
-                                           [thumbnailImages addObject:[self blankImage]];
+                                           [thumbnailImages insertObject:[self blankImage] atIndex:0];
                                        }
                                    }
                                }];
-    self.thumbnailImages = [thumbnailImages copy];
+    self.thumbnailImages = thumbnailImages;
     
     [self setNeedsDisplay];
 }

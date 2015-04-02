@@ -254,35 +254,24 @@
                 } else {
                     format = @"format_photos_and_videos";
                 }
-                footerView.textLabel.text = [NSString stringWithFormat:NSLocalizedStringFromTableInBundle(format,
-                                                                                                          @"QBImagePickerController",
-                                                                                                          [NSBundle bundleWithPath:[[NSBundle mainBundle] pathForResource:@"QBImagePickerController" ofType:@"bundle"]],
-                                                                                                          nil),
+                
+                footerView.textLabel.text = [NSString stringWithFormat:NSLocalizedStringFromTable(format, @"QBImagePickerController", nil),
                                              self.numberOfPhotos,
-                                             self.numberOfVideos
-                                             ];
+                                             self.numberOfVideos];
                 break;
             }
 
             case QBImagePickerControllerFilterTypePhotos:{
                 NSString *format = (self.numberOfPhotos == 1) ? @"format_photo" : @"format_photos";
-                footerView.textLabel.text = [NSString stringWithFormat:NSLocalizedStringFromTableInBundle(format,
-                                                                                                          @"QBImagePickerController",
-                                                                                                          [NSBundle bundleWithPath:[[NSBundle mainBundle] pathForResource:@"QBImagePickerController" ofType:@"bundle"]],
-                                                                                                          nil),
-                                                                                                  self.numberOfPhotos
-                                                                                                  ];
+                footerView.textLabel.text = [NSString stringWithFormat:NSLocalizedStringFromTable(format, @"QBImagePickerController", nil),
+                                             self.numberOfPhotos];
                 break;
             }
                 
             case QBImagePickerControllerFilterTypeVideos:{
                 NSString *format = (self.numberOfVideos == 1) ? @"format_video" : @"format_videos";
-                footerView.textLabel.text = [NSString stringWithFormat:NSLocalizedStringFromTableInBundle(format,
-                                                                                                          @"QBImagePickerController",
-                                                                                                          [NSBundle bundleWithPath:[[NSBundle mainBundle] pathForResource:@"QBImagePickerController" ofType:@"bundle"]],
-                                                                                                          nil),
-                                                                                                  self.numberOfVideos
-                                                                                                  ];
+                footerView.textLabel.text = [NSString stringWithFormat:NSLocalizedStringFromTable(format, @"QBImagePickerController", nil),
+                                             self.numberOfVideos];
                 break;
             }
         }
@@ -298,7 +287,35 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return CGSizeMake(77.5, 77.5);
+    CGSize size;
+    
+    switch (UI_USER_INTERFACE_IDIOM()) {
+        case UIUserInterfaceIdiomPhone:
+        {
+            CGFloat screenHeight = CGRectGetHeight([[UIScreen mainScreen] bounds]);
+            
+            if (screenHeight == 667.0) {
+                size = CGSizeMake(91.0, 91.0);
+            } else if (screenHeight == 736) {
+                size = CGSizeMake(101.0, 101.0);
+            } else {
+                size = CGSizeMake(77.5, 77.5);
+            }
+        }
+            break;
+            
+        case UIUserInterfaceIdiomPad:
+        {
+            if (UIDeviceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])) {
+                size = CGSizeMake(202.0, 202.0);
+            } else {
+                size = CGSizeMake(151.0, 151.0);
+            }
+        }
+            break;
+    }
+    
+    return size;
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
