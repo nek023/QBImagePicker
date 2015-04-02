@@ -287,7 +287,35 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return CGSizeMake(77.5, 77.5);
+    CGSize size;
+    
+    switch (UI_USER_INTERFACE_IDIOM()) {
+        case UIUserInterfaceIdiomPhone:
+        {
+            CGFloat screenHeight = CGRectGetHeight([[UIScreen mainScreen] bounds]);
+            
+            if (screenHeight == 667.0) {
+                size = CGSizeMake(91.0, 91.0);
+            } else if (screenHeight == 736) {
+                size = CGSizeMake(101.0, 101.0);
+            } else {
+                size = CGSizeMake(77.5, 77.5);
+            }
+        }
+            break;
+            
+        case UIUserInterfaceIdiomPad:
+        {
+            if (UIDeviceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])) {
+                size = CGSizeMake(202.0, 202.0);
+            } else {
+                size = CGSizeMake(151.0, 151.0);
+            }
+        }
+            break;
+    }
+    
+    return size;
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
