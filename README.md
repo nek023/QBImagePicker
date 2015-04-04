@@ -42,20 +42,16 @@ A clone of UIImagePickerController with multiple selection support.
 
 ### CocoaPods
 
-Add the following line to Podfile:
-
-    pod "QBImagePickerController"
-
-And run `pod install`.
+1. Add `pod "QBImagePickerController"` to Podfile
+2. Run `pod install`
+3. Add `#import <QBImagePickerController/QBImagePickerController.h>` to your code
 
 
 ### Carthage
 
-Add the following line to Cartfile:
-
-    github "questbeat/QBImagePicker"
-
-And run `carthage update`.
+1. Add `github "questbeat/QBImagePicker"` to Cartfile
+2. Run `carthage update`
+3. Add `#import <QBImagePicker/QBImagePicker.h>` to your code
 
 
 
