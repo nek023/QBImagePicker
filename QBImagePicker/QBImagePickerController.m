@@ -54,7 +54,13 @@
 - (void)setUpAlbumsViewController
 {
     // Add QBAlbumsViewController as a child
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"QBImagePicker" bundle:[NSBundle bundleForClass:[self class]]];
+    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+    if (![bundle pathForResource:@"QBImagePicker" ofType:@"storyboardc"]) { // To support bundle resource of CocoaPods...
+        NSString *bundlePath = [[NSBundle mainBundle] pathForResource:@"QBImagePicker" ofType:@"bundle"];
+        bundle = [NSBundle bundleWithPath:bundlePath];
+    }
+    
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"QBImagePicker" bundle:bundle];
     UINavigationController *navigationController = [storyboard instantiateViewControllerWithIdentifier:@"QBAlbumsNavigationController"];
     
     [self addChildViewController:navigationController];
