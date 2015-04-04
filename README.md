@@ -1,4 +1,4 @@
-# QBImagePickerController
+# QBImagePicker
 
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 
@@ -53,7 +53,7 @@ And run `pod install`.
 
 Add the following line to Cartfile:
 
-    github "questbeat/QBImagePickerController"
+    github "questbeat/QBImagePicker"
 
 And run `carthage update`.
 
