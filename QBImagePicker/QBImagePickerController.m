@@ -17,6 +17,7 @@
 @property (nonatomic, strong) UINavigationController *albumsNavigationController;
 
 @property (nonatomic, strong) NSMutableOrderedSet *selectedAssets;
+@property (nonatomic, strong) NSBundle *assetBundle;
 
 @end
 
@@ -41,6 +42,13 @@
         
         self.selectedAssets = [NSMutableOrderedSet orderedSet];
         
+        // Get asset bundle
+        self.assetBundle = [NSBundle bundleForClass:[self class]];
+        NSString *bundlePath = [self.assetBundle pathForResource:@"QBImagePicker" ofType:@"bundle"];
+        if (bundlePath) {
+            self.assetBundle = [NSBundle bundleWithPath:bundlePath];
+        }
+        
         [self setUpAlbumsViewController];
         
         // Set instance
@@ -54,13 +62,7 @@
 - (void)setUpAlbumsViewController
 {
     // Add QBAlbumsViewController as a child
-    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
-    if (![bundle pathForResource:@"QBImagePicker" ofType:@"storyboardc"]) { // To support bundle resource of CocoaPods...
-        NSString *bundlePath = [[NSBundle mainBundle] pathForResource:@"QBImagePicker" ofType:@"bundle"];
-        bundle = [NSBundle bundleWithPath:bundlePath];
-    }
-    
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"QBImagePicker" bundle:bundle];
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"QBImagePicker" bundle:self.assetBundle];
     UINavigationController *navigationController = [storyboard instantiateViewControllerWithIdentifier:@"QBAlbumsNavigationController"];
     
     [self addChildViewController:navigationController];
