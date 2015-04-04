@@ -1,56 +1,178 @@
 # QBImagePickerController
+
+[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
+
 A clone of UIImagePickerController with multiple selection support.
 
+![screenshot01.png](screenshot01.png)
+![screenshot02.png](screenshot02.png)
 
-## Installation
-QBImagePickerController is available in CocoaPods.
 
-    pod 'QBImagePickerController'
 
-If you want to install manually, download this repository and copy files in QBImagePickerController directory to your project, and link `AssetsLibrary.framework`.
+## Features
+
+- Allows multiple selection of photos and videos, even from the different albums
+- Fast and memory-efficient scrolling powered by **PhotoKit**
+- Provides similar user interface to the built-in image picker
+- Customizable (grid size, navigation message, etc.)
+- Supports both portrait mode and landscape mode
+- Compatible with iPhone 6/6Plus, and iPad
+
 
 
 ## Example
-### Check If Source is Accessible
-    if (![QBImagePickerController isAccessible]) {
-        NSLog(@"Error: Source is not accessible.");
+
+    QBImagePickerController *imagePickerController = [QBImagePickerController new];
+    imagePickerController.delegate = self;
+    imagePickerController.allowsMultipleSelection = YES;
+    imagePickerController.maximumNumberOfSelection = 6;
+    imagePickerController.showsNumberOfSelectedAssets = YES;
+
+    [self presentViewController:imagePickerController animated:YES completion:NULL];
+
+
+
+## Requirements
+
+- iOS 8.0 or later
+
+
+
+## Installation
+
+### CocoaPods
+
+Add the following line to Podfile:
+
+    pod "QBImagePickerController"
+
+And run `pod install`.
+
+
+### Carthage
+
+Add the following line to Cartfile:
+
+    github "questbeat/QBImagePickerController"
+
+And run `carthage update`.
+
+
+
+## Usage
+
+### Basic
+
+1. Implement `QBImagePickerDelegate` methods
+2. Create `QBImagePickerController` object
+3. Set `self` to the `delegate` property
+4. Show the picker by using `presentViewController:animated:completion:`
+
+    QBImagePickerController *imagePickerController = [QBImagePickerController new];
+    imagePickerController.delegate = self;
+
+    [self presentViewController:imagePickerController animated:YES completion:NULL];
+
+
+### Delegate Methods
+
+#### Getting the selected assets
+
+Implement `qb_imagePickerController:didFinishPickingAssets:` to get the assets selected by the user.  
+This method will be called when the user finishes picking assets.
+
+    - (void)qb_imagePickerController:(QBImagePickerController *)imagePickerController didFinishPickingAssets:(NSArray *)assets {
+        for (PHAsset *asset in assets) {
+            // Do something with the asset
+        }
+
+        [self dismissViewControllerAnimated:YES completion:NULL];
     }
 
-### Single Image Picker
-	QBImagePickerController *imagePickerController = [[QBImagePickerController alloc] init];
-	imagePickerController.delegate = self;
 
-### Multiple Image Picker
-	QBImagePickerController *imagePickerController = [[QBImagePickerController alloc] init];
-	imagePickerController.delegate = self;
-	imagePickerController.allowsMultipleSelection = YES;
+#### Getting notified when the user cancels
 
-### Multiple Image Picker with Limitation
-	QBImagePickerController *imagePickerController = [[QBImagePickerController alloc] init];
-	imagePickerController.delegate = self;
-	imagePickerController.allowsMultipleSelection = YES;
-	imagePickerController.minimumNumberOfSelection = 3;
-	imagePickerController.maximumNumberOfSelection = 6;
+Implement `qb_imagePickerControllerDidCancel:` to get notified when the user hits "Cancel" button.
 
-### Specify the Albums to Show
-	QBImagePickerController *imagePickerController = [[QBImagePickerController alloc] init];
-	imagePickerController.delegate = self;
-	imagePickerController.groupTypes = @[
-	                                     @(ALAssetsGroupSavedPhotos),
-	                                     @(ALAssetsGroupPhotoStream),
-	                                     @(ALAssetsGroupAlbum)
-	                                     ];
+    - (void)qb_imagePickerControllerDidCancel:(QBImagePickerController *)imagePickerController
+        [self dismissViewControllerAnimated:YES completion:NULL];
+    }
 
-The order of albums will be the same as specified in `groupTypes` array.
 
-### Show Image Picker
-**QBImagePickerController is not a subclass of UINavigationController.**  
-If you want to show the picker as a modal view, you have to set the picker to `topViewController` property of an instance of UINavigationController.  
-If you want to push the picker to UINavigtionController, you don't have to do anything.
+#### Getting notified when the selection is changed
 
-    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:imagePickerController];
-    [self presentViewController:navigationController animated:YES completion:NULL];
+You can handle the change of user's selection by implementing these methods.
+
+    - (BOOL)qb_imagePickerController:(QBImagePickerController *)imagePickerController shouldSelectAsset:(PHAsset *)asset;
+    - (void)qb_imagePickerController:(QBImagePickerController *)imagePickerController didSelectAsset:(PHAsset *)asset;
+    - (void)qb_imagePickerController:(QBImagePickerController *)imagePickerController didDeselectAsset:(PHAsset *)asset;
+
+
+### Customization
+
+#### Selection mode
+
+When `allowsMultipleSelection` is `YES`, the user can select multiple photos.  
+The default value is `NO`.
+
+    imagePickerController.allowsMultipleSelection = YES;
+
+You can limit the number of selection by using `minimumNumberOfSelection` and `maximumNumberOfSelection` property.  
+The default value is `0`, which means the number of selection is unlimited.
+
+    imagePickerController.minimumNumberOfSelection = 3;
+    imagePickerController.maximumNumberOfSelection = 6;
+
+
+#### Specify the albums to be shown
+
+Use `assetCollectionSubtypes` property to specify the albums to be shown.  
+The code below shows the default value.
+
+    imagePickerController.assetCollectionSubtypes = @[
+        @(PHAssetCollectionSubtypeSmartAlbumUserLibrary), // Camera Roll
+        @(PHAssetCollectionSubtypeAlbumMyPhotoStream), // My Photo Stream
+        @(PHAssetCollectionSubtypeSmartAlbumPanoramas), // Panoramas
+        @(PHAssetCollectionSubtypeSmartAlbumVideos), // Videos
+        @(PHAssetCollectionSubtypeSmartAlbumBursts) // Bursts
+    ];
+
+The albums will be ordered as you specified.  
+User's albums are always shown after the smart albums.
+
+
+#### Specify the media type to be shown
+
+Use `mediaType` to filter the assets to be shown.  
+The default value is `QBImagePickerMediaTypeAny`.
+
+    imagePickerController.mediaType = QBImagePickerMediaTypeVideo;
+
+
+#### Showing information
+
+There are some properties to show helpful information.
+
+    imagePickerController.prompt = @"Select the photos you want to upload!";
+    imagePickerController.showsNumberOfSelectedAssets = YES;
+
+
+#### Grid size
+
+Use `numberOfColumnsInPortrait` and `numberOfColumnsInLandscape` to change the grid size.  
+The code below shows the default value.
+
+    imagePickerController.numberOfColumnsInPortrait = 4;
+    imagePickerController.numberOfColumnsInLandscape = 7;
+
 
 
 ## License
-*QBImagePickerController* is released under the **MIT License**, see *LICENSE.txt*.
+
+Copyright (c) 2015 Katsuma Tanaka
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
