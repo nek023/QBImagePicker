@@ -336,8 +336,10 @@ ALAssetsFilter * ALAssetsFilterFromQBImagePickerControllerFilterType(QBImagePick
 {
     if (self.allowsMultipleSelection) {
         // Add asset URL
+        [self willChangeValueForKey:@"selectedAssetURLs"];
         NSURL *assetURL = [asset valueForProperty:ALAssetPropertyAssetURL];
         [self.selectedAssetURLs addObject:assetURL];
+        [self didChangeValueForKey:@"selectedAssetURLs"];
         
         // Validation
         self.navigationItem.rightBarButtonItem.enabled = [self validateNumberOfSelections:self.selectedAssetURLs.count];
@@ -353,8 +355,10 @@ ALAssetsFilter * ALAssetsFilterFromQBImagePickerControllerFilterType(QBImagePick
 {
     if (self.allowsMultipleSelection) {
         // Remove asset URL
+        [self willChangeValueForKey:@"selectedAssetURLs"];
         NSURL *assetURL = [asset valueForProperty:ALAssetPropertyAssetURL];
         [self.selectedAssetURLs removeObject:assetURL];
+        [self didChangeValueForKey:@"selectedAssetURLs"];
         
         // Validation
         self.navigationItem.rightBarButtonItem.enabled = [self validateNumberOfSelections:self.selectedAssetURLs.count];
