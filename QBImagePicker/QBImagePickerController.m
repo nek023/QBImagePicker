@@ -57,7 +57,6 @@ ALAssetsFilter * ALAssetsFilterFromQBImagePickerControllerFilterType(QBImagePick
         self.minimumNumberOfSelection = 1;
         self.numberOfColumnsInPortrait = 4;
         self.numberOfColumnsInLandscape = 7;
-        self.showsCancelButton = YES;
         
         self.assetsLibrary = [ALAssetsLibrary new];
         self.selectedAssetURLs = [NSMutableOrderedSet orderedSet];
