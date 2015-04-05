@@ -177,16 +177,16 @@
     ALAssetsLibrary *assetsLibrary = self.imagePickerController.assetsLibrary;
     ALAssetsFilter *assetsFilter;
     
-    switch (self.imagePickerController.mediaType) {
-        case QBImagePickerMediaTypeAny:
+    switch (self.imagePickerController.filterType) {
+        case QBImagePickerControllerFilterTypeNone:
             assetsFilter = [ALAssetsFilter allAssets];
             break;
             
-        case QBImagePickerMediaTypeImage:
+        case QBImagePickerControllerFilterTypePhotos:
             assetsFilter = [ALAssetsFilter allPhotos];
             break;
             
-        case QBImagePickerMediaTypeVideo:
+        case QBImagePickerControllerFilterTypeVideos:
             assetsFilter = [ALAssetsFilter allVideos];
             break;
     }

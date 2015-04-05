@@ -380,8 +380,8 @@
         NSUInteger numberOfPhotos = self.numberOfPhotos;
         NSUInteger numberOfVideos = self.numberOfVideos;
         
-        switch (self.imagePickerController.mediaType) {
-            case QBImagePickerMediaTypeAny:
+        switch (self.imagePickerController.filterType) {
+            case QBImagePickerControllerFilterTypeNone:
             {
                 NSString *format;
                 if (numberOfPhotos == 1) {
@@ -400,7 +400,7 @@
             }
                 break;
                 
-            case QBImagePickerMediaTypeImage:
+            case QBImagePickerControllerFilterTypePhotos:
             {
                 NSString *key = (numberOfPhotos == 1) ? @"format_photo" : @"format_photos";
                 NSString *format = NSLocalizedStringFromTableInBundle(key, @"QBImagePicker", bundle, nil);
@@ -409,7 +409,7 @@
             }
                 break;
                 
-            case QBImagePickerMediaTypeVideo:
+            case QBImagePickerControllerFilterTypeVideos:
             {
                 NSString *key = (numberOfVideos == 1) ? @"format_video" : @"format_videos";
                 NSString *format = NSLocalizedStringFromTableInBundle(key, @"QBImagePicker", bundle, nil);
