@@ -44,4 +44,6 @@ typedef NS_ENUM(NSUInteger, QBImagePickerControllerFilterType) {
 @property (nonatomic, assign) NSUInteger numberOfColumnsInPortrait;
 @property (nonatomic, assign) NSUInteger numberOfColumnsInLandscape;
 
+@property (nonatomic, strong, readonly) NSMutableOrderedSet *selectedAssetURLs;
+
 @end

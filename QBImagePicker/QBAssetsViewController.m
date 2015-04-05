@@ -20,7 +20,6 @@
 @interface QBImagePickerController (Private)
 
 @property (nonatomic, strong) ALAssetsLibrary *assetsLibrary;
-@property (nonatomic, strong) NSMutableOrderedSet *selectedAssetURLs;
 @property (nonatomic, strong) NSBundle *assetBundle;
 
 @end
@@ -446,7 +445,10 @@
     // Add asset to set
     ALAsset *asset = self.assets[indexPath.item];
     NSURL *assetURL = [asset valueForProperty:ALAssetPropertyAssetURL];
+    
+    [imagePickerController willChangeValueForKey:@"selectedAssetURLs"];
     [selectedAssetURLs addObject:assetURL];
+    [imagePickerController didChangeValueForKey:@"selectedAssetURLs"];
     
     if (imagePickerController.allowsMultipleSelection) {
         [self updateControlState];
@@ -476,7 +478,10 @@
     // Remove asset from set
     ALAsset *asset = self.assets[indexPath.item];
     NSURL *assetURL = [asset valueForProperty:ALAssetPropertyAssetURL];
+    
+    [imagePickerController willChangeValueForKey:@"selectedAssetURLs"];
     [selectedAssetURLs removeObject:assetURL];
+    [imagePickerController didChangeValueForKey:@"selectedAssetURLs"];
     
     if (imagePickerController.allowsMultipleSelection) {
         [self updateControlState];
