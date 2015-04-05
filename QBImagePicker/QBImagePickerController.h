@@ -28,19 +28,26 @@ UIKIT_EXTERN ALAssetsFilter * ALAssetsFilterFromQBImagePickerControllerFilterTyp
 
 @end
 
-@interface QBImagePickerController : UITableViewController
+@interface QBImagePickerController : UIViewController
 
-@property (nonatomic, strong, readonly) ALAssetsLibrary *assetsLibrary;
 @property (nonatomic, copy, readonly) NSArray *assetsGroups;
 @property (nonatomic, strong, readonly) NSMutableOrderedSet *selectedAssetURLs;
 
 @property (nonatomic, weak) id<QBImagePickerControllerDelegate> delegate;
+
 @property (nonatomic, copy) NSArray *groupTypes;
 @property (nonatomic, assign) QBImagePickerControllerFilterType filterType;
-@property (nonatomic, assign) BOOL showsCancelButton;
+
 @property (nonatomic, assign) BOOL allowsMultipleSelection;
 @property (nonatomic, assign) NSUInteger minimumNumberOfSelection;
 @property (nonatomic, assign) NSUInteger maximumNumberOfSelection;
+
+@property (nonatomic, assign) BOOL showsCancelButton;
+//@property (nonatomic, copy) NSString *prompt;
+//@property (nonatomic, assign) BOOL showsNumberOfSelectedAssets;
+
+@property (nonatomic, assign) NSUInteger numberOfColumnsInPortrait;
+@property (nonatomic, assign) NSUInteger numberOfColumnsInLandscape;
 
 + (BOOL)isAccessible;
 

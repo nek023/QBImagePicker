@@ -53,21 +53,7 @@
         }
     }
     
-    if (indexPath.section == 0 && indexPath.row == 1) {
-        [self.navigationController pushViewController:imagePickerController animated:YES];
-    } else {
-        UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:imagePickerController];
-        [self presentViewController:navigationController animated:YES completion:NULL];
-    }
-}
-
-- (void)dismissImagePickerController
-{
-    if (self.presentedViewController) {
-        [self dismissViewControllerAnimated:YES completion:NULL];
-    } else {
-        [self.navigationController popToViewController:self animated:YES];
-    }
+    [self presentViewController:imagePickerController animated:YES completion:NULL];
 }
 
 
@@ -78,7 +64,7 @@
     NSLog(@"*** qb_imagePickerController:didSelectAsset:");
     NSLog(@"%@", asset);
     
-    [self dismissImagePickerController];
+    [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
 - (void)qb_imagePickerController:(QBImagePickerController *)imagePickerController didSelectAssets:(NSArray *)assets
@@ -86,14 +72,14 @@
     NSLog(@"*** qb_imagePickerController:didSelectAssets:");
     NSLog(@"%@", assets);
     
-    [self dismissImagePickerController];
+    [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
 - (void)qb_imagePickerControllerDidCancel:(QBImagePickerController *)imagePickerController
 {
     NSLog(@"*** qb_imagePickerControllerDidCancel:");
     
-    [self dismissImagePickerController];
+    [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
 @end
