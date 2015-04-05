@@ -18,10 +18,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    if (![QBImagePickerController isAccessible]) {
-        NSLog(@"Error: Source is not accessible.");
-    }
 }
 
 

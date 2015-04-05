@@ -38,6 +38,10 @@
     [super viewDidLoad];
     
     [self setUpToolbarItems];
+    
+    [self updateAssetsGroupsWithCompletion:^{
+        [self.tableView reloadData];
+    }];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -57,10 +61,6 @@
     
     [self updateControlState];
     [self updateSelectionInfo];
-    
-    [self updateAssetsGroupsWithCompletion:^{
-        [self.tableView reloadData];
-    }];
 }
 
 

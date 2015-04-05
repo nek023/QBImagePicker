@@ -140,9 +140,6 @@
 {
     _assetsGroup = assetsGroup;
     
-    // Set title
-    self.navigationItem.title = [self.assetsGroup valueForProperty:ALAssetsGroupPropertyName];
-    
     // Load assets
     [self updateAssets];
     
