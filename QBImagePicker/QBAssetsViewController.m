@@ -11,7 +11,6 @@
 
 // Views
 #import "QBAssetCell.h"
-#import "QBFooterView.h"
 #import "QBVideoIndicatorView.h"
 
 // ViewControllers
@@ -98,7 +97,7 @@
     self.indexPathForLastVisibleItem = [[self.collectionView indexPathsForVisibleItems] lastObject];
     
     // Update layout
-    [self.collectionViewLayout invalidateLayout];
+    [self.collectionView.collectionViewLayout invalidateLayout];
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
@@ -113,7 +112,7 @@
     NSIndexPath *indexPath = [[self.collectionView indexPathsForVisibleItems] lastObject];
     
     // Update layout
-    [self.collectionViewLayout invalidateLayout];
+    [self.collectionView.collectionViewLayout invalidateLayout];
     
     // Restore scroll position
     [coordinator animateAlongsideTransition:nil completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
@@ -339,9 +338,9 @@
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
 {
     if (kind == UICollectionElementKindSectionFooter) {
-        QBFooterView *footerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter
-                                                                      withReuseIdentifier:@"FooterView"
-                                                                             forIndexPath:indexPath];
+        UICollectionReusableView *footerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter
+                                                                                  withReuseIdentifier:@"FooterView"
+                                                                                         forIndexPath:indexPath];
         
         // Number of assets
         UILabel *label = (UILabel *)[footerView viewWithTag:1];
