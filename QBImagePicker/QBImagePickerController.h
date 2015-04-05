@@ -46,4 +46,6 @@ typedef NS_ENUM(NSUInteger, QBImagePickerControllerFilterType) {
 
 @property (nonatomic, strong, readonly) NSMutableOrderedSet *selectedAssetURLs;
 
+@property (nonatomic, assign) BOOL showsCancelButton __attribute__((deprecated));
+
 @end
