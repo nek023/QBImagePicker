@@ -44,6 +44,12 @@
     [super viewDidLoad];
     
     [self setUpToolbarItems];
+    
+    // Register observer
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(assetsLibraryChanged:)
+                                                 name:ALAssetsLibraryChangedNotification
+                                               object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -68,8 +74,8 @@
     [self updateSelectionInfo];
     
     // Scroll to bottom
-    if (self.assetsGroup.numberOfAssets > 0 && self.isMovingToParentViewController && !self.disableScrollToBottom) {
-        NSIndexPath *indexPath = [NSIndexPath indexPathForItem:(self.assetsGroup.numberOfAssets - 1) inSection:0];
+    if (self.numberOfAssets > 0 && self.isMovingToParentViewController && !self.disableScrollToBottom) {
+        NSIndexPath *indexPath = [NSIndexPath indexPathForItem:(self.numberOfAssets - 1) inSection:0];
         [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionTop animated:NO];
     }
 }
@@ -86,6 +92,25 @@
     [super viewDidAppear:animated];
     
     self.disableScrollToBottom = NO;
+}
+
+- (void)dealloc
+{
+    // Remove observer
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:ALAssetsLibraryChangedNotification
+                                                  object:nil];
+}
+
+
+#pragma mark - Accessors
+
+- (void)setAssetsGroup:(ALAssetsGroup *)assetsGroup
+{
+    _assetsGroup = assetsGroup;
+    
+    [self updateAssets];
+    [self.collectionView reloadData];
 }
 
 
@@ -121,17 +146,21 @@
 }
 
 
-#pragma mark - Accessors
+#pragma mark - Handling Assets Library Changes
 
-- (void)setAssetsGroup:(ALAssetsGroup *)assetsGroup
+- (void)assetsLibraryChanged:(NSNotification *)notification
 {
-    _assetsGroup = assetsGroup;
-    
-    // Load assets
-    [self updateAssets];
-    
-    // Update collection view
-    [self.collectionView reloadData];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSSet *updatedAssetsGroups = notification.userInfo[ALAssetLibraryUpdatedAssetGroupsKey];
+        NSURL *assetsGroupURL = [self.assetsGroup valueForProperty:ALAssetsGroupPropertyURL];
+        
+        for (NSURL *updatedAssetsGroupURL in updatedAssetsGroups) {
+            if ([updatedAssetsGroupURL isEqual:assetsGroupURL]) {
+                [self updateAssets];
+                [self.collectionView reloadData];
+            }
+        }
+    });
 }
 
 

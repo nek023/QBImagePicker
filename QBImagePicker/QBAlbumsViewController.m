@@ -41,6 +41,12 @@
     [self updateAssetsGroupsWithCompletion:^{
         [self.tableView reloadData];
     }];
+    
+    // Register observer
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(assetsLibraryChanged:)
+                                                 name:ALAssetsLibraryChangedNotification
+                                               object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -62,6 +68,14 @@
     [self updateSelectionInfo];
 }
 
+- (void)dealloc
+{
+    // Remove observer
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:ALAssetsLibraryChangedNotification
+                                                  object:nil];
+}
+
 
 #pragma mark - Storyboard
 
@@ -70,6 +84,18 @@
     QBAssetsViewController *assetsViewController = segue.destinationViewController;
     assetsViewController.imagePickerController = self.imagePickerController;
     assetsViewController.assetsGroup = self.assetsGroups[self.tableView.indexPathForSelectedRow.row];
+}
+
+
+#pragma mark - Handling Assets Library Changes
+
+- (void)assetsLibraryChanged:(NSNotification *)notification
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self updateAssetsGroupsWithCompletion:^{
+            [self.tableView reloadData];
+        }];
+    });
 }
 
 
