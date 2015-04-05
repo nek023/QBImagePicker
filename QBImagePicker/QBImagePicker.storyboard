@@ -98,6 +98,7 @@
                             <outlet property="delegate" destination="zDO-wM-OC0" id="PF5-G9-Gcm"/>
                         </connections>
                     </tableView>
+                    <toolbarItems/>
                     <navigationItem key="navigationItem" title="Photos" id="4t5-uF-MRQ">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="cbn-Ia-Fnc">
                             <connections>
@@ -126,6 +127,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="vW8-D1-CAm">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
                     <connections>
                         <segue destination="zDO-wM-OC0" kind="relationship" relationship="rootViewController" id="EG4-Of-r2n"/>
                     </connections>

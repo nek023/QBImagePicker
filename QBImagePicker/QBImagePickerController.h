@@ -44,7 +44,7 @@ UIKIT_EXTERN ALAssetsFilter * ALAssetsFilterFromQBImagePickerControllerFilterTyp
 
 @property (nonatomic, assign) BOOL showsCancelButton;
 @property (nonatomic, copy) NSString *prompt;
-//@property (nonatomic, assign) BOOL showsNumberOfSelectedAssets;
+@property (nonatomic, assign) BOOL showsNumberOfSelectedAssets;
 
 @property (nonatomic, assign) NSUInteger numberOfColumnsInPortrait;
 @property (nonatomic, assign) NSUInteger numberOfColumnsInLandscape;

@@ -32,6 +32,7 @@
     QBImagePickerController *imagePickerController = [QBImagePickerController new];
     imagePickerController.delegate = self;
     imagePickerController.allowsMultipleSelection = (indexPath.section == 1);
+    imagePickerController.showsNumberOfSelectedAssets = YES;
     
     if (indexPath.section == 1) {
         switch (indexPath.row) {

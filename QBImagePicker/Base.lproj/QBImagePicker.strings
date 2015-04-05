@@ -16,3 +16,6 @@
 "format_photos_and_video" = "%ld Photos, %ld Video";
 "format_photo_and_videos" = "%ld Photo, %ld Videos";
 "format_photos_and_videos" = "%ld Photos, %ld Videos";
+
+"item_selected" = "%ld Item Selected";
+"items_selected" = "%ld Items Selected";
