@@ -11,19 +11,6 @@
 // ViewControllers
 #import "QBAlbumsViewController.h"
 
-ALAssetsFilter * ALAssetsFilterFromQBImagePickerControllerFilterType(QBImagePickerControllerFilterType type) {
-    switch (type) {
-        case QBImagePickerControllerFilterTypeNone:
-            return [ALAssetsFilter allAssets];
-            
-        case QBImagePickerControllerFilterTypePhotos:
-            return [ALAssetsFilter allPhotos];
-            
-        case QBImagePickerControllerFilterTypeVideos:
-            return [ALAssetsFilter allVideos];
-    }
-}
-
 @interface QBImagePickerController ()
 
 @property (nonatomic, strong) UINavigationController *albumsNavigationController;
@@ -47,7 +34,7 @@ ALAssetsFilter * ALAssetsFilterFromQBImagePickerControllerFilterType(QBImagePick
                             @(ALAssetsGroupPhotoStream),
                             @(ALAssetsGroupAlbum)
                             ];
-        self.filterType = QBImagePickerControllerFilterTypeNone;
+        self.mediaType = QBImagePickerMediaTypeAny;
         self.minimumNumberOfSelection = 1;
         self.numberOfColumnsInPortrait = 4;
         self.numberOfColumnsInLandscape = 7;

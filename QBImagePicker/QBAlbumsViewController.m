@@ -175,7 +175,21 @@
     __block NSUInteger numberOfFinishedTypes = 0;
     
     ALAssetsLibrary *assetsLibrary = self.imagePickerController.assetsLibrary;
-    ALAssetsFilter *assetsFilter = ALAssetsFilterFromQBImagePickerControllerFilterType(self.imagePickerController.filterType);
+    ALAssetsFilter *assetsFilter;
+    
+    switch (self.imagePickerController.mediaType) {
+        case QBImagePickerMediaTypeAny:
+            assetsFilter = [ALAssetsFilter allAssets];
+            break;
+            
+        case QBImagePickerMediaTypeImage:
+            assetsFilter = [ALAssetsFilter allPhotos];
+            break;
+            
+        case QBImagePickerMediaTypeVideo:
+            assetsFilter = [ALAssetsFilter allVideos];
+            break;
+    }
     
     for (NSNumber *type in types) {
         [assetsLibrary enumerateGroupsWithTypes:[type unsignedIntegerValue]

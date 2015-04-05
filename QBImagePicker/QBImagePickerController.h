@@ -9,14 +9,6 @@
 #import <UIKit/UIKit.h>
 #import <AssetsLibrary/AssetsLibrary.h>
 
-typedef NS_ENUM(NSUInteger, QBImagePickerControllerFilterType) {
-    QBImagePickerControllerFilterTypeNone,
-    QBImagePickerControllerFilterTypePhotos,
-    QBImagePickerControllerFilterTypeVideos
-};
-
-UIKIT_EXTERN ALAssetsFilter * ALAssetsFilterFromQBImagePickerControllerFilterType(QBImagePickerControllerFilterType type);
-
 @class QBImagePickerController;
 
 @protocol QBImagePickerControllerDelegate <NSObject>
@@ -31,12 +23,18 @@ UIKIT_EXTERN ALAssetsFilter * ALAssetsFilterFromQBImagePickerControllerFilterTyp
 
 @end
 
+typedef NS_ENUM(NSUInteger, QBImagePickerMediaType) {
+    QBImagePickerMediaTypeAny = 0,
+    QBImagePickerMediaTypeImage,
+    QBImagePickerMediaTypeVideo
+};
+
 @interface QBImagePickerController : UIViewController
 
 @property (nonatomic, weak) id<QBImagePickerControllerDelegate> delegate;
 
 @property (nonatomic, copy) NSArray *groupTypes;
-@property (nonatomic, assign) QBImagePickerControllerFilterType filterType;
+@property (nonatomic, assign) QBImagePickerMediaType mediaType;
 
 @property (nonatomic, assign) BOOL allowsMultipleSelection;
 @property (nonatomic, assign) NSUInteger minimumNumberOfSelection;
