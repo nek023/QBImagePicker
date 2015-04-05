@@ -171,11 +171,11 @@
 
 - (IBAction)done:(id)sender
 {
-    [self fetchAssetsFromSelectedAssetURLsWithCompletion:^(NSArray *assets) {
-        if ([self.imagePickerController.delegate respondsToSelector:@selector(qb_imagePickerController:didFinishPickingAssets:)]) {
-            [self.imagePickerController.delegate qb_imagePickerController:self.imagePickerController didFinishPickingAssets:assets];
-        }
-    }];
+    if ([self.imagePickerController.delegate respondsToSelector:@selector(qb_imagePickerController:didSelectAssets:)]) {
+        [self fetchAssetsFromSelectedAssetURLsWithCompletion:^(NSArray *assets) {
+            [self.imagePickerController.delegate qb_imagePickerController:self.imagePickerController didSelectAssets:assets];
+        }];
+    }
 }
 
 
@@ -461,13 +461,9 @@
         }
     }
     
-    if ([imagePickerController.delegate respondsToSelector:@selector(qb_imagePickerController:didSelectAsset:)]) {
-        [imagePickerController.delegate qb_imagePickerController:imagePickerController didSelectAsset:asset];
-    }
-    
     if (!imagePickerController.allowsMultipleSelection) {
-        if ([imagePickerController.delegate respondsToSelector:@selector(qb_imagePickerController:didFinishPickingAssets:)]) {
-            [imagePickerController.delegate qb_imagePickerController:imagePickerController didFinishPickingAssets:@[asset]];
+        if ([imagePickerController.delegate respondsToSelector:@selector(qb_imagePickerController:didSelectAsset:)]) {
+            [imagePickerController.delegate qb_imagePickerController:imagePickerController didSelectAsset:asset];
         }
     }
 }
@@ -493,10 +489,6 @@
                 [self.navigationController setToolbarHidden:YES animated:YES];
             }
         }
-    }
-    
-    if ([imagePickerController.delegate respondsToSelector:@selector(qb_imagePickerController:didDeselectAsset:)]) {
-        [imagePickerController.delegate qb_imagePickerController:imagePickerController didDeselectAsset:asset];
     }
 }
 

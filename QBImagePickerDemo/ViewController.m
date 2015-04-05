@@ -56,7 +56,15 @@
 
 #pragma mark - QBImagePickerControllerDelegate
 
-- (void)qb_imagePickerController:(QBImagePickerController *)imagePickerController didFinishPickingAssets:(NSArray *)assets
+- (void)qb_imagePickerController:(QBImagePickerController *)imagePickerController didSelectAsset:(ALAsset *)asset
+{
+    NSLog(@"Selected asset:");
+    NSLog(@"%@", asset);
+    
+    [self dismissViewControllerAnimated:YES completion:NULL];
+}
+
+- (void)qb_imagePickerController:(QBImagePickerController *)imagePickerController didSelectAssets:(NSArray *)assets
 {
     NSLog(@"Selected assets:");
     NSLog(@"%@", assets);
@@ -66,7 +74,7 @@
 
 - (void)qb_imagePickerControllerDidCancel:(QBImagePickerController *)imagePickerController
 {
-    NSLog(@"*** Canceled.");
+    NSLog(@"Canceled.");
     
     [self dismissViewControllerAnimated:YES completion:NULL];
 }

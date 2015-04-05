@@ -6,7 +6,7 @@
 //  Copyright (c) 2015年 Katsuma Tanaka. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 
 //! Project version number for QBImagePicker.
 FOUNDATION_EXPORT double QBImagePickerVersionNumber;
