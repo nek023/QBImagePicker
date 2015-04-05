@@ -136,7 +136,7 @@
 
 - (void)updateAssetsGroupsWithCompletion:(void (^)(void))completion
 {
-    [self fetchAssetsGroupsWithTypes:self.imagePickerController.groupTypes completion:^(NSArray *assetsGroups) {
+    [self fetchAssetsGroupsWithTypes:self.imagePickerController.assetsGroupTypes completion:^(NSArray *assetsGroups) {
         // Map assets group to dictionary
         NSMutableDictionary *mappedAssetsGroups = [NSMutableDictionary dictionaryWithCapacity:assetsGroups.count];
         for (ALAssetsGroup *assetsGroup in assetsGroups) {
@@ -151,9 +151,9 @@
         }
         
         // Pick the groups to be shown
-        NSMutableArray *sortedAssetsGroups = [NSMutableArray arrayWithCapacity:self.imagePickerController.groupTypes.count];
+        NSMutableArray *sortedAssetsGroups = [NSMutableArray arrayWithCapacity:self.imagePickerController.assetsGroupTypes.count];
         
-        for (NSValue *groupType in self.imagePickerController.groupTypes) {
+        for (NSValue *groupType in self.imagePickerController.assetsGroupTypes) {
             NSArray *array = mappedAssetsGroups[groupType];
             
             if (array) {

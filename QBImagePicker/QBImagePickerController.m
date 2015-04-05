@@ -29,11 +29,11 @@
     
     if (self) {
         // Set default values
-        self.groupTypes = @[
-                            @(ALAssetsGroupSavedPhotos),
-                            @(ALAssetsGroupPhotoStream),
-                            @(ALAssetsGroupAlbum)
-                            ];
+        self.assetsGroupTypes = @[
+                                  @(ALAssetsGroupSavedPhotos),
+                                  @(ALAssetsGroupPhotoStream),
+                                  @(ALAssetsGroupAlbum)
+                                  ];
         self.mediaType = QBImagePickerMediaTypeAny;
         self.minimumNumberOfSelection = 1;
         self.numberOfColumnsInPortrait = 4;

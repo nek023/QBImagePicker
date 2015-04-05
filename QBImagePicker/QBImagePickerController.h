@@ -33,7 +33,7 @@ typedef NS_ENUM(NSUInteger, QBImagePickerMediaType) {
 
 @property (nonatomic, weak) id<QBImagePickerControllerDelegate> delegate;
 
-@property (nonatomic, copy) NSArray *groupTypes;
+@property (nonatomic, copy) NSArray *assetsGroupTypes;
 @property (nonatomic, assign) QBImagePickerMediaType mediaType;
 
 @property (nonatomic, assign) BOOL allowsMultipleSelection;
