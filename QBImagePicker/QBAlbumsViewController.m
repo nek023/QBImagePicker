@@ -44,7 +44,7 @@
     
     // Configure navigation item
     self.navigationItem.title = NSLocalizedStringFromTableInBundle(@"title", @"QBImagePicker", self.imagePickerController.assetBundle, nil);
-//    self.navigationItem.prompt = self.imagePickerController.prompt;
+    self.navigationItem.prompt = self.imagePickerController.prompt;
     
     // Show/hide 'Done' button
     if (self.imagePickerController.allowsMultipleSelection) {

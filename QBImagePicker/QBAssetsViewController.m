@@ -83,7 +83,7 @@
     
     // Configure navigation item
     self.navigationItem.title = [self.assetsGroup valueForProperty:ALAssetsGroupPropertyName];
-//    self.navigationItem.prompt = self.imagePickerController.prompt;
+    self.navigationItem.prompt = self.imagePickerController.prompt;
     
     // Configure collection view
     self.collectionView.allowsMultipleSelection = self.imagePickerController.allowsMultipleSelection;

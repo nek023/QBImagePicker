@@ -43,7 +43,7 @@ UIKIT_EXTERN ALAssetsFilter * ALAssetsFilterFromQBImagePickerControllerFilterTyp
 @property (nonatomic, assign) NSUInteger maximumNumberOfSelection;
 
 @property (nonatomic, assign) BOOL showsCancelButton;
-//@property (nonatomic, copy) NSString *prompt;
+@property (nonatomic, copy) NSString *prompt;
 //@property (nonatomic, assign) BOOL showsNumberOfSelectedAssets;
 
 @property (nonatomic, assign) NSUInteger numberOfColumnsInPortrait;
