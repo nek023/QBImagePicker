@@ -31,7 +31,7 @@ typedef NS_ENUM(NSUInteger, QBImagePickerControllerFilterType) {
 
 @property (nonatomic, weak) id<QBImagePickerControllerDelegate> delegate;
 
-@property (nonatomic, copy) NSArray *assetsGroupTypes;
+@property (nonatomic, copy) NSArray *groupTypes;
 @property (nonatomic, assign) QBImagePickerControllerFilterType filterType;
 
 @property (nonatomic, assign) BOOL allowsMultipleSelection;

@@ -29,7 +29,7 @@
     
     if (self) {
         // Set default values
-        self.assetsGroupTypes = @[
+        self.groupTypes = @[
                                   @(ALAssetsGroupSavedPhotos),
                                   @(ALAssetsGroupPhotoStream),
                                   @(ALAssetsGroupAlbum)
