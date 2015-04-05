@@ -132,7 +132,7 @@
 }
 
 
-#pragma mark - Fetching Asset Groups
+#pragma mark - Fetching Assets
 
 - (void)updateAssetsGroupsWithCompletion:(void (^)(void))completion
 {

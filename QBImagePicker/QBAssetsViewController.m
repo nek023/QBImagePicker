@@ -152,10 +152,11 @@
 
 - (IBAction)done:(id)sender
 {
-//    if ([self.imagePickerController.delegate respondsToSelector:@selector(qb_imagePickerController:didSelectAssets:)]) {
-//        [self.imagePickerController.delegate qb_imagePickerController:self.imagePickerController
-//                                                      didSelectAssets:self.imagePickerController.selectedAssets.array];
-//    }
+    [self fetchAssetsFromSelectedAssetURLsWithCompletion:^(NSArray *assets) {
+        if ([self.imagePickerController.delegate respondsToSelector:@selector(qb_imagePickerController:didSelectAssets:)]) {
+            [self.imagePickerController.delegate qb_imagePickerController:self.imagePickerController didSelectAssets:assets];
+        }
+    }];
 }
 
 
@@ -223,6 +224,55 @@
     self.numberOfAssets = numberOfAssets;
     self.numberOfPhotos = numberOfPhotos;
     self.numberOfVideos = numberOfVideos;
+}
+
+- (void)fetchAssetsFromSelectedAssetURLsWithCompletion:(void (^)(NSArray *assets))completion
+{
+    // Load assets from URLs
+    // The asset will be ignored if it is not found
+    ALAssetsLibrary *assetsLibrary = self.imagePickerController.assetsLibrary;
+    NSMutableOrderedSet *selectedAssetURLs = self.imagePickerController.selectedAssetURLs;
+    
+    __block NSMutableArray *assets = [NSMutableArray array];
+    
+    void (^checkNumberOfAssets)(void) = ^{
+        if (assets.count == selectedAssetURLs.count) {
+            if (completion) {
+                completion([assets copy]);
+            }
+        }
+    };
+    
+    for (NSURL *assetURL in selectedAssetURLs) {
+        [assetsLibrary assetForURL:assetURL
+                       resultBlock:^(ALAsset *asset) {
+                           if (asset) {
+                               // Add asset
+                               [assets addObject:asset];
+                               
+                               // Check if the loading finished
+                               checkNumberOfAssets();
+                           } else {
+                               [assetsLibrary enumerateGroupsWithTypes:ALAssetsGroupPhotoStream usingBlock:^(ALAssetsGroup *group, BOOL *stop) {
+                                   [group enumerateAssetsWithOptions:NSEnumerationReverse usingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop) {
+                                       if ([result.defaultRepresentation.url isEqual:assetURL]) {
+                                           // Add asset
+                                           [assets addObject:result];
+                                           
+                                           // Check if the loading finished
+                                           checkNumberOfAssets();
+                                           
+                                           *stop = YES;
+                                       }
+                                   }];
+                               } failureBlock:^(NSError *error) {
+                                   NSLog(@"Error: %@", [error localizedDescription]);
+                               }];
+                           }
+                       } failureBlock:^(NSError *error) {
+                           NSLog(@"Error: %@", [error localizedDescription]);
+                       }];
+    }
 }
 
 
