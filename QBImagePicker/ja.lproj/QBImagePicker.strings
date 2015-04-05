@@ -1,9 +1,9 @@
 /* 
-  QBImagePickerController.strings
-  QBImagePickerControllerDemo
+  QBImagePicker.strings
+  QBImagePicker
 
-  Created by Tanaka Katsuma on 2014/01/01.
-  Copyright (c) 2014年 Katsuma Tanaka. All rights reserved.
+  Created by Katsuma Tanaka on 2015/04/05.
+  Copyright (c) 2015年 Katsuma Tanaka. All rights reserved.
 */
 
 "title" = "アルバム";

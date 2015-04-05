@@ -1,13 +1,17 @@
 //
 //  ViewController.m
-//  QBImagePickerControllerDemo
+//  QBImagePickerDemo
 //
-//  Created by Katsuma Tanaka on 2015/04/02.
+//  Created by Katsuma Tanaka on 2015/04/05.
 //  Copyright (c) 2015年 Katsuma Tanaka. All rights reserved.
 //
 
 #import "ViewController.h"
-#import <AssetsLibrary/AssetsLibrary.h>
+#import <QBImagePicker/QBImagePicker.h>
+
+@interface ViewController () <QBImagePickerControllerDelegate>
+
+@end
 
 @implementation ViewController
 
@@ -25,7 +29,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    QBImagePickerController *imagePickerController = [[QBImagePickerController alloc] init];
+    QBImagePickerController *imagePickerController = [QBImagePickerController new];
     imagePickerController.delegate = self;
     imagePickerController.allowsMultipleSelection = (indexPath.section == 1);
     
