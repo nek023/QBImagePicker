@@ -153,9 +153,6 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
 {
     _assetCollection = assetCollection;
     
-    // Set title
-    self.navigationItem.title = self.assetCollection.localizedTitle;
-    
     [self updateFetchRequest];
     [self.collectionView reloadData];
 }
@@ -534,13 +531,13 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     QBImagePickerController *imagePickerController = self.imagePickerController;
-    NSMutableOrderedSet *selectedAssets = imagePickerController.selectedAssets;
-    
-    // Add asset to set
     PHAsset *asset = self.fetchResult[indexPath.item];
-    [selectedAssets addObject:asset];
     
     if (imagePickerController.allowsMultipleSelection) {
+        // Add asset to set
+        NSMutableOrderedSet *selectedAssets = imagePickerController.selectedAssets;
+        [selectedAssets addObject:asset];
+        
         [self updateControlState];
         
         if (imagePickerController.showsNumberOfSelectedAssets) {
@@ -551,21 +548,23 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
                 [self.navigationController setToolbarHidden:NO animated:YES];
             }
         }
+    } else {
+        if ([imagePickerController.delegate respondsToSelector:@selector(qb_imagePickerController:didFinishPickingAssets:)]) {
+            [imagePickerController.delegate qb_imagePickerController:imagePickerController didFinishPickingAssets:@[asset]];
+        }
     }
     
     if ([imagePickerController.delegate respondsToSelector:@selector(qb_imagePickerController:didSelectAsset:)]) {
         [imagePickerController.delegate qb_imagePickerController:imagePickerController didSelectAsset:asset];
     }
-    
-    if (!imagePickerController.allowsMultipleSelection) {
-        if ([imagePickerController.delegate respondsToSelector:@selector(qb_imagePickerController:didFinishPickingAssets:)]) {
-            [imagePickerController.delegate qb_imagePickerController:imagePickerController didFinishPickingAssets:@[asset]];
-        }
-    }
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (!self.imagePickerController.allowsMultipleSelection) {
+        return;
+    }
+    
     QBImagePickerController *imagePickerController = self.imagePickerController;
     NSMutableOrderedSet *selectedAssets = imagePickerController.selectedAssets;
     
@@ -573,16 +572,14 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
     PHAsset *asset = self.fetchResult[indexPath.item];
     [selectedAssets removeObject:asset];
     
-    if (imagePickerController.allowsMultipleSelection) {
-        [self updateControlState];
+    [self updateControlState];
+    
+    if (imagePickerController.showsNumberOfSelectedAssets) {
+        [self updateSelectionInfo];
         
-        if (imagePickerController.showsNumberOfSelectedAssets) {
-            [self updateSelectionInfo];
-            
-            if (selectedAssets.count == 0) {
-                // Hide toolbar
-                [self.navigationController setToolbarHidden:YES animated:YES];
-            }
+        if (selectedAssets.count == 0) {
+            // Hide toolbar
+            [self.navigationController setToolbarHidden:YES animated:YES];
         }
     }
     

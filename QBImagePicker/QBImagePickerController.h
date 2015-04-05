@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Photos/Photos.h>
 
 @class QBImagePickerController;
-@class PHAsset;
 
 @protocol QBImagePickerControllerDelegate <NSObject>
 

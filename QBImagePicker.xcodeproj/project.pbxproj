@@ -167,10 +167,10 @@
 				AAF1CA3A1ACE765F005F6295 /* QBFooterView.m */,
 				AABBF08E1ACEDDFF003188A3 /* QBCheckmarkView.h */,
 				AABBF08F1ACEDDFF003188A3 /* QBCheckmarkView.m */,
-				AA3AD0711ACFA06700BF523E /* QBVideoIndicatorView.h */,
-				AA3AD0721ACFA06700BF523E /* QBVideoIndicatorView.m */,
 				AA3AD06D1ACF9A3A00BF523E /* QBVideoIconView.h */,
 				AA3AD06E1ACF9A3A00BF523E /* QBVideoIconView.m */,
+				AA3AD0711ACFA06700BF523E /* QBVideoIndicatorView.h */,
+				AA3AD0721ACFA06700BF523E /* QBVideoIndicatorView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
