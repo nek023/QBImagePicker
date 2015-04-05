@@ -2,7 +2,7 @@
 //  QBAssetsViewController.m
 //  QBImagePicker
 //
-//  Created by Katsuma Tanaka on 2015/04/03.
+//  Created by Katsuma Tanaka on 2015/04/06.
 //  Copyright (c) 2015 Katsuma Tanaka. All rights reserved.
 //
 
@@ -21,36 +21,6 @@
 
 @property (nonatomic, strong) ALAssetsLibrary *assetsLibrary;
 @property (nonatomic, strong) NSBundle *assetBundle;
-
-@end
-
-@implementation NSIndexSet (Convenience)
-
-- (NSArray *)qb_indexPathsFromIndexesWithSection:(NSUInteger)section
-{
-    NSMutableArray *indexPaths = [NSMutableArray arrayWithCapacity:self.count];
-    [self enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
-        [indexPaths addObject:[NSIndexPath indexPathForItem:idx inSection:section]];
-    }];
-    return indexPaths;
-}
-
-@end
-
-@implementation UICollectionView (Convenience)
-
-- (NSArray *)qb_indexPathsForElementsInRect:(CGRect)rect
-{
-    NSArray *allLayoutAttributes = [self.collectionViewLayout layoutAttributesForElementsInRect:rect];
-    if (allLayoutAttributes.count == 0) { return nil; }
-    
-    NSMutableArray *indexPaths = [NSMutableArray arrayWithCapacity:allLayoutAttributes.count];
-    for (UICollectionViewLayoutAttributes *layoutAttributes in allLayoutAttributes) {
-        NSIndexPath *indexPath = layoutAttributes.indexPath;
-        [indexPaths addObject:indexPath];
-    }
-    return indexPaths;
-}
 
 @end
 
@@ -440,17 +410,17 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     QBImagePickerController *imagePickerController = self.imagePickerController;
-    NSMutableOrderedSet *selectedAssetURLs = imagePickerController.selectedAssetURLs;
-    
-    // Add asset to set
     ALAsset *asset = self.assets[indexPath.item];
-    NSURL *assetURL = [asset valueForProperty:ALAssetPropertyAssetURL];
-    
-    [imagePickerController willChangeValueForKey:@"selectedAssetURLs"];
-    [selectedAssetURLs addObject:assetURL];
-    [imagePickerController didChangeValueForKey:@"selectedAssetURLs"];
     
     if (imagePickerController.allowsMultipleSelection) {
+        // Add asset to set
+        NSURL *assetURL = [asset valueForProperty:ALAssetPropertyAssetURL];
+        NSMutableOrderedSet *selectedAssetURLs = imagePickerController.selectedAssetURLs;
+        
+        [imagePickerController willChangeValueForKey:@"selectedAssetURLs"];
+        [selectedAssetURLs addObject:assetURL];
+        [imagePickerController didChangeValueForKey:@"selectedAssetURLs"];
+        
         [self updateControlState];
         
         if (imagePickerController.showsNumberOfSelectedAssets) {
@@ -461,9 +431,7 @@
                 [self.navigationController setToolbarHidden:NO animated:YES];
             }
         }
-    }
-    
-    if (!imagePickerController.allowsMultipleSelection) {
+    } else {
         if ([imagePickerController.delegate respondsToSelector:@selector(qb_imagePickerController:didSelectAsset:)]) {
             [imagePickerController.delegate qb_imagePickerController:imagePickerController didSelectAsset:asset];
         }
@@ -472,6 +440,10 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (!self.imagePickerController.allowsMultipleSelection) {
+        return;
+    }
+    
     QBImagePickerController *imagePickerController = self.imagePickerController;
     NSMutableOrderedSet *selectedAssetURLs = imagePickerController.selectedAssetURLs;
     
@@ -483,16 +455,14 @@
     [selectedAssetURLs removeObject:assetURL];
     [imagePickerController didChangeValueForKey:@"selectedAssetURLs"];
     
-    if (imagePickerController.allowsMultipleSelection) {
-        [self updateControlState];
+    [self updateControlState];
+    
+    if (imagePickerController.showsNumberOfSelectedAssets) {
+        [self updateSelectionInfo];
         
-        if (imagePickerController.showsNumberOfSelectedAssets) {
-            [self updateSelectionInfo];
-            
-            if (selectedAssetURLs.count == 0) {
-                // Hide toolbar
-                [self.navigationController setToolbarHidden:YES animated:YES];
-            }
+        if (selectedAssetURLs.count == 0) {
+            // Hide toolbar
+            [self.navigationController setToolbarHidden:YES animated:YES];
         }
     }
 }

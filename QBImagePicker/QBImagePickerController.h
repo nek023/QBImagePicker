@@ -1,6 +1,6 @@
 //
-//  QBImagePickerController.h
-//  QBImagePickerController
+//  QBImagePicker.h
+//  QBImagePicker
 //
 //  Created by Tanaka Katsuma on 2013/12/30.
 //  Copyright (c) 2013年 Katsuma Tanaka. All rights reserved.
@@ -17,6 +17,7 @@
 - (void)qb_imagePickerController:(QBImagePickerController *)imagePickerController didSelectAsset:(ALAsset *)asset;
 - (void)qb_imagePickerController:(QBImagePickerController *)imagePickerController didSelectAssets:(NSArray *)assets;
 - (void)qb_imagePickerControllerDidCancel:(QBImagePickerController *)imagePickerController;
+
 - (BOOL)qb_imagePickerController:(QBImagePickerController *)imagePickerController shouldSelectAsset:(ALAsset *)asset;
 
 @end

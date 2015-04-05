@@ -1,6 +1,6 @@
 //
-//  QBImagePickerController.m
-//  QBImagePickerController
+//  QBImagePicker.m
+//  QBImagePicker
 //
 //  Created by Tanaka Katsuma on 2013/12/30.
 //  Copyright (c) 2013年 Katsuma Tanaka. All rights reserved.
@@ -30,10 +30,10 @@
     if (self) {
         // Set default values
         self.groupTypes = @[
-                                  @(ALAssetsGroupSavedPhotos),
-                                  @(ALAssetsGroupPhotoStream),
-                                  @(ALAssetsGroupAlbum)
-                                  ];
+                            @(ALAssetsGroupSavedPhotos),
+                            @(ALAssetsGroupPhotoStream),
+                            @(ALAssetsGroupAlbum)
+                            ];
         self.filterType = QBImagePickerControllerFilterTypeNone;
         self.minimumNumberOfSelection = 1;
         self.numberOfColumnsInPortrait = 4;
