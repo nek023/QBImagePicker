@@ -306,7 +306,7 @@
 {
     QBAlbumCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AlbumCell" forIndexPath:indexPath];
     cell.tag = indexPath.row;
-    cell.borderWidth = 1.0 / self.traitCollection.displayScale;
+    cell.borderWidth = 1.0 / [[UIScreen mainScreen] scale];
     
     // Thumbnail
     ALAssetsGroup *assetsGroup = self.assetsGroups[indexPath.row];

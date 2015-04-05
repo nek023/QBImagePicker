@@ -65,6 +65,7 @@
 @property (nonatomic, assign) NSUInteger numberOfVideos;
 
 @property (nonatomic, assign) BOOL disableScrollToBottom;
+@property (nonatomic, strong) NSIndexPath *indexPathForLastVisibleItem;
 
 @end
 
@@ -117,6 +118,24 @@
     [super viewDidAppear:animated];
     
     self.disableScrollToBottom = NO;
+}
+
+
+#pragma mark - Handling Device Rotation
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    // Save indexPath for the last item
+    self.indexPathForLastVisibleItem = [[self.collectionView indexPathsForVisibleItems] lastObject];
+    
+    // Update layout
+    [self.collectionViewLayout invalidateLayout];
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    // Restore scroll position
+    [self.collectionView scrollToItemAtIndexPath:self.indexPathForLastVisibleItem atScrollPosition:UICollectionViewScrollPositionBottom animated:NO];
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
