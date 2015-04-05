@@ -36,8 +36,6 @@
 		AAF1CA301ACE6E46005F6295 /* QBAssetsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AAF1CA2E1ACE6E46005F6295 /* QBAssetsViewController.m */; };
 		AAF1CA331ACE6FB5005F6295 /* QBAssetCell.h in Headers */ = {isa = PBXBuildFile; fileRef = AAF1CA311ACE6FB5005F6295 /* QBAssetCell.h */; };
 		AAF1CA341ACE6FB5005F6295 /* QBAssetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AAF1CA321ACE6FB5005F6295 /* QBAssetCell.m */; };
-		AAF1CA3B1ACE765F005F6295 /* QBFooterView.h in Headers */ = {isa = PBXBuildFile; fileRef = AAF1CA391ACE765F005F6295 /* QBFooterView.h */; };
-		AAF1CA3C1ACE765F005F6295 /* QBFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = AAF1CA3A1ACE765F005F6295 /* QBFooterView.m */; };
 		AAF1CA411ACE8B2B005F6295 /* QBImagePicker.strings in Resources */ = {isa = PBXBuildFile; fileRef = AAF1CA3F1ACE8918005F6295 /* QBImagePicker.strings */; };
 /* End PBXBuildFile section */
 
@@ -116,8 +114,6 @@
 		AAF1CA2E1ACE6E46005F6295 /* QBAssetsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.c.objc; path = QBAssetsViewController.m; sourceTree = "<group>"; };
 		AAF1CA311ACE6FB5005F6295 /* QBAssetCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBAssetCell.h; sourceTree = "<group>"; };
 		AAF1CA321ACE6FB5005F6295 /* QBAssetCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBAssetCell.m; sourceTree = "<group>"; };
-		AAF1CA391ACE765F005F6295 /* QBFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBFooterView.h; sourceTree = "<group>"; };
-		AAF1CA3A1ACE765F005F6295 /* QBFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBFooterView.m; sourceTree = "<group>"; };
 		AAF1CA3E1ACE8918005F6295 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/QBImagePicker.strings; sourceTree = "<group>"; };
 		AAF1CA401ACE8A8B005F6295 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/QBImagePicker.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -163,8 +159,6 @@
 				AAF1CA191ACE5467005F6295 /* QBAlbumCell.m */,
 				AAF1CA311ACE6FB5005F6295 /* QBAssetCell.h */,
 				AAF1CA321ACE6FB5005F6295 /* QBAssetCell.m */,
-				AAF1CA391ACE765F005F6295 /* QBFooterView.h */,
-				AAF1CA3A1ACE765F005F6295 /* QBFooterView.m */,
 				AABBF08E1ACEDDFF003188A3 /* QBCheckmarkView.h */,
 				AABBF08F1ACEDDFF003188A3 /* QBCheckmarkView.m */,
 				AA3AD06D1ACF9A3A00BF523E /* QBVideoIconView.h */,
@@ -314,7 +308,6 @@
 			files = (
 				AA3AD0731ACFA06700BF523E /* QBVideoIndicatorView.h in Headers */,
 				AAF1CA331ACE6FB5005F6295 /* QBAssetCell.h in Headers */,
-				AAF1CA3B1ACE765F005F6295 /* QBFooterView.h in Headers */,
 				AAF1CA2F1ACE6E46005F6295 /* QBAssetsViewController.h in Headers */,
 				AAF1CA1A1ACE5467005F6295 /* QBAlbumCell.h in Headers */,
 				AAA8FE5B1ACDA554002A9710 /* QBAlbumsViewController.h in Headers */,
@@ -489,7 +482,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				AAF1CA341ACE6FB5005F6295 /* QBAssetCell.m in Sources */,
-				AAF1CA3C1ACE765F005F6295 /* QBFooterView.m in Sources */,
 				AA3AD0701ACF9A3A00BF523E /* QBVideoIconView.m in Sources */,
 				AABBF0911ACEDDFF003188A3 /* QBCheckmarkView.m in Sources */,
 				AAF1CA301ACE6E46005F6295 /* QBAssetsViewController.m in Sources */,

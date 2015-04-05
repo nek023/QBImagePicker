@@ -7,9 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "QBImagePickerController.h"
 
-@class PHImageManager;
+@class QBImagePickerController;
 @class PHAssetCollection;
 
 @interface QBAssetsViewController : UICollectionViewController

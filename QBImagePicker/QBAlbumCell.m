@@ -8,10 +8,6 @@
 
 #import "QBAlbumCell.h"
 
-@interface QBAlbumCell ()
-
-@end
-
 @implementation QBAlbumCell
 
 - (void)setBorderWidth:(CGFloat)borderWidth

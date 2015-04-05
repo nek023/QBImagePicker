@@ -10,8 +10,8 @@
 #import <Photos/Photos.h>
 
 // Views
+#import "QBImagePickerController.h"
 #import "QBAssetCell.h"
-#import "QBFooterView.h"
 #import "QBVideoIndicatorView.h"
 
 static CGSize CGSizeScale(CGSize size, CGFloat scale) {
@@ -459,9 +459,9 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
 {
     if (kind == UICollectionElementKindSectionFooter) {
-        QBFooterView *footerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter
-                                                                      withReuseIdentifier:@"FooterView"
-                                                                             forIndexPath:indexPath];
+        UICollectionReusableView *footerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter
+                                                                                  withReuseIdentifier:@"FooterView"
+                                                                                         forIndexPath:indexPath];
         
         // Number of assets
         UILabel *label = (UILabel *)[footerView viewWithTag:1];

@@ -13,6 +13,7 @@
 #import "QBAlbumCell.h"
 
 // ViewControllers
+#import "QBImagePickerController.h"
 #import "QBAssetsViewController.h"
 
 static CGSize CGSizeScale(CGSize size, CGFloat scale) {

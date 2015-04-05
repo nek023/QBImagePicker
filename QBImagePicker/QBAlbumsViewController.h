@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "QBImagePickerController.h"
+
+@class QBImagePickerController;
 
 @interface QBAlbumsViewController : UITableViewController
 
