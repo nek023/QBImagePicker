@@ -61,44 +61,36 @@ A clone of UIImagePickerController with multiple selection support.
 3. Set `self` to the `delegate` property
 4. Show the picker by using `presentViewController:animated:completion:`
 
-    QBImagePickerController *imagePickerController = [QBImagePickerController new];
-    imagePickerController.delegate = self;
+```
+QBImagePickerController *imagePickerController = [QBImagePickerController new];
+imagePickerController.delegate = self;
 
-    [self presentViewController:imagePickerController animated:YES completion:NULL];
+[self presentViewController:imagePickerController animated:YES completion:NULL];
+```
 
 
 ### Delegate Methods
 
-#### Getting the selected assets
+##### - qb_imagePickerController:didSelectAsset:
 
-Implement `qb_imagePickerController:didFinishPickingAssets:` to get the assets selected by the user.  
-This method will be called when the user finishes picking assets.
-
-    - (void)qb_imagePickerController:(QBImagePickerController *)imagePickerController didFinishPickingAssets:(NSArray *)assets {
-        for (ALAsset *asset in assets) {
-            // Do something with the asset
-        }
-
-        [self dismissViewControllerAnimated:YES completion:NULL];
-    }
+This method will be called when the user finished picking asset in **single** selection mode.  
+The second argument is `ALAsset` object.
 
 
-#### Getting notified when the user cancels
+##### - qb_imagePickerController:didSelectAssets:
 
-Implement `qb_imagePickerControllerDidCancel:` to get notified when the user hits "Cancel" button.
-
-    - (void)qb_imagePickerControllerDidCancel:(QBImagePickerController *)imagePickerController
-        [self dismissViewControllerAnimated:YES completion:NULL];
-    }
+This method will be called when the user finished picking asset in **multple** selection mode.  
+The second argument is an array of `ALAsset` object.
 
 
-#### Getting notified when the selection is changed
+##### - qb_imagePickerControllerDidCancel:
 
-You can handle the change of user's selection by implementing these methods.
+This method will be called when the user hits the "Cancel" button.
 
-    - (BOOL)qb_imagePickerController:(QBImagePickerController *)imagePickerController shouldSelectAsset:(ALAsset *)asset;
-    - (void)qb_imagePickerController:(QBImagePickerController *)imagePickerController didSelectAsset:(ALAsset *)asset;
-    - (void)qb_imagePickerController:(QBImagePickerController *)imagePickerController didDeselectAsset:(ALAsset *)asset;
+
+##### - qb_imagePickerController:shouldSelectAsset:
+
+By implementing this method you can decide the asset can be selected or not.
 
 
 ### Customization
@@ -119,10 +111,10 @@ The default value is `0`, which means the number of selection is unlimited.
 
 #### Specify the albums to be shown
 
-Use `assetsGroupTypes` property to specify the albums to be shown.  
+Use `groupTypes` property to specify the albums to be shown.  
 The code below shows the default value.
 
-    imagePickerController.assetsGroupTypes = @[
+    imagePickerController.groupTypes = @[
         @(ALAssetsGroupSavedPhotos), // Camera Roll
         @(ALAssetsGroupPhotoStream), // My Photo Stream
         @(ALAssetsGroupAlbum) // User Albums
@@ -133,10 +125,11 @@ The albums will be ordered as you specified.
 
 #### Specify the media type to be shown
 
-Use `mediaType` to filter the assets to be shown.  
-The default value is `QBImagePickerMediaTypeAny`.
+Use `filterType` to filter the assets to be shown.  
+The default value is `QBImagePickerControllerFilterTypeNone`.
 
-    imagePickerController.mediaType = QBImagePickerMediaTypeVideo;
+    // Show videos only
+    imagePickerController.filterType = QBImagePickerControllerFilterTypeVideos;
 
 
 #### Showing information
