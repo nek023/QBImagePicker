@@ -86,8 +86,8 @@
 - (IBAction)done:(id)sender
 {
     [self fetchAssetsFromSelectedAssetURLsWithCompletion:^(NSArray *assets) {
-        if ([self.imagePickerController.delegate respondsToSelector:@selector(qb_imagePickerController:didSelectAssets:)]) {
-            [self.imagePickerController.delegate qb_imagePickerController:self.imagePickerController didSelectAssets:assets];
+        if ([self.imagePickerController.delegate respondsToSelector:@selector(qb_imagePickerController:didFinishPickingAssets:)]) {
+            [self.imagePickerController.delegate qb_imagePickerController:self.imagePickerController didFinishPickingAssets:assets];
         }
     }];
 }

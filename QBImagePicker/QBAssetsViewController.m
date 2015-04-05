@@ -153,8 +153,8 @@
 - (IBAction)done:(id)sender
 {
     [self fetchAssetsFromSelectedAssetURLsWithCompletion:^(NSArray *assets) {
-        if ([self.imagePickerController.delegate respondsToSelector:@selector(qb_imagePickerController:didSelectAssets:)]) {
-            [self.imagePickerController.delegate qb_imagePickerController:self.imagePickerController didSelectAssets:assets];
+        if ([self.imagePickerController.delegate respondsToSelector:@selector(qb_imagePickerController:didFinishPickingAssets:)]) {
+            [self.imagePickerController.delegate qb_imagePickerController:self.imagePickerController didFinishPickingAssets:assets];
         }
     }];
 }
@@ -411,10 +411,10 @@
 
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-//    if ([self.imagePickerController.delegate respondsToSelector:@selector(qb_imagePickerController:shouldSelectAsset:)]) {
-//        PHAsset *asset = self.fetchResult[indexPath.item];
-//        return [self.imagePickerController.delegate qb_imagePickerController:self.imagePickerController shouldSelectAsset:asset];
-//    }
+    if ([self.imagePickerController.delegate respondsToSelector:@selector(qb_imagePickerController:shouldSelectAsset:)]) {
+        ALAsset *asset = self.assets[indexPath.item];
+        return [self.imagePickerController.delegate qb_imagePickerController:self.imagePickerController shouldSelectAsset:asset];
+    }
     
     return ![self isMaximumSelectionLimitReached];
 }
@@ -442,13 +442,13 @@
         }
     }
     
-//    if ([imagePickerController.delegate respondsToSelector:@selector(qb_imagePickerController:didSelectAsset:)]) {
-//        [imagePickerController.delegate qb_imagePickerController:imagePickerController didSelectAsset:asset];
-//    }
+    if ([imagePickerController.delegate respondsToSelector:@selector(qb_imagePickerController:didSelectAsset:)]) {
+        [imagePickerController.delegate qb_imagePickerController:imagePickerController didSelectAsset:asset];
+    }
     
     if (!imagePickerController.allowsMultipleSelection) {
-        if ([imagePickerController.delegate respondsToSelector:@selector(qb_imagePickerController:didSelectAsset:)]) {
-            [imagePickerController.delegate qb_imagePickerController:imagePickerController didSelectAsset:asset];
+        if ([imagePickerController.delegate respondsToSelector:@selector(qb_imagePickerController:didFinishPickingAssets:)]) {
+            [imagePickerController.delegate qb_imagePickerController:imagePickerController didFinishPickingAssets:@[asset]];
         }
     }
 }
@@ -476,9 +476,9 @@
         }
     }
     
-//    if ([imagePickerController.delegate respondsToSelector:@selector(qb_imagePickerController:didDeselectAsset:)]) {
-//        [imagePickerController.delegate qb_imagePickerController:imagePickerController didDeselectAsset:asset];
-//    }
+    if ([imagePickerController.delegate respondsToSelector:@selector(qb_imagePickerController:didDeselectAsset:)]) {
+        [imagePickerController.delegate qb_imagePickerController:imagePickerController didDeselectAsset:asset];
+    }
 }
 
 
