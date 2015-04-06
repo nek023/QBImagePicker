@@ -112,8 +112,8 @@
     
     [self updateAssets];
     
-    // Find previous selected item if needed
-    if ([self isAutoDeselectEnabled]) {
+    if ([self isAutoDeselectEnabled] && self.imagePickerController.selectedAssetURLs.count > 0) {
+        // Get index of previous selected asset
         NSURL *previousSelectedAssetURL = [self.imagePickerController.selectedAssetURLs firstObject];
         
         [self.assets enumerateObjectsUsingBlock:^(ALAsset *asset, NSUInteger index, BOOL *stop) {
@@ -128,7 +128,7 @@
     
     [self.collectionView reloadData];
 }
-//
+
 - (BOOL)isAutoDeselectEnabled
 {
     return (self.imagePickerController.maximumNumberOfSelection == 1
