@@ -31,7 +31,8 @@ A clone of UIImagePickerController with multiple selection support.
 
 ## Requirements
 
-- iOS 6.0 or later
+- Version `>= 3.0.0` : iOS 8 or later (Using PhotoKit)
+- Version `< 3.0.0` : iOS 6 or later (Using AssetsLibrary)
 
 
 
