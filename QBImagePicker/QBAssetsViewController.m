@@ -59,11 +59,13 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
 
 @property (nonatomic, strong) IBOutlet UIBarButtonItem *doneButton;
 
+@property (nonatomic, strong) PHFetchResult *fetchResult;
+
 @property (nonatomic, strong) PHCachingImageManager *imageManager;
 @property (nonatomic, assign) CGRect previousPreheatRect;
 
-@property (nonatomic, strong) PHFetchResult *fetchResult;
 @property (nonatomic, assign) BOOL disableScrollToBottom;
+@property (nonatomic, strong) NSIndexPath *lastSelectedItemIndexPath;
 
 @end
 
@@ -72,8 +74,6 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    self.imageManager = [PHCachingImageManager new];
     
     [self setUpToolbarItems];
     [self resetCachedAssets];
@@ -100,7 +100,7 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
         [self.navigationItem setRightBarButtonItem:nil animated:NO];
     }
     
-    [self updateControlState];
+    [self updateDoneButtonState];
     [self updateSelectionInfo];
     
     // Scroll to bottom
@@ -155,6 +155,21 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
     
     [self updateFetchRequest];
     [self.collectionView reloadData];
+}
+
+- (PHCachingImageManager *)imageManager
+{
+    if (_imageManager == nil) {
+        _imageManager = [PHCachingImageManager new];
+    }
+    
+    return _imageManager;
+}
+
+- (BOOL)isAutoDeselectEnabled
+{
+    return (self.imagePickerController.maximumNumberOfSelection == 1
+            && self.imagePickerController.maximumNumberOfSelection >= self.imagePickerController.minimumNumberOfSelection);
 }
 
 
@@ -230,6 +245,13 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
         }
         
         self.fetchResult = [PHAsset fetchAssetsInAssetCollection:self.assetCollection options:options];
+        
+        if ([self isAutoDeselectEnabled] && self.imagePickerController.selectedAssets.count > 0) {
+            // Get index of previous selected asset
+            PHAsset *asset = [self.imagePickerController.selectedAssets firstObject];
+            NSInteger assetIndex = [self.fetchResult indexOfObject:asset];
+            self.lastSelectedItemIndexPath = [NSIndexPath indexPathForItem:assetIndex inSection:0];
+        }
     } else {
         self.fetchResult = nil;
     }
@@ -254,7 +276,7 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
     return NO;
 }
 
-- (void)updateControlState
+- (void)updateDoneButtonState
 {
     self.doneButton.enabled = [self isMinimumSelectionLimitFulfilled];
 }
@@ -525,20 +547,37 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
         return [self.imagePickerController.delegate qb_imagePickerController:self.imagePickerController shouldSelectAsset:asset];
     }
     
+    if ([self isAutoDeselectEnabled]) {
+        return YES;
+    }
+    
     return ![self isMaximumSelectionLimitReached];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     QBImagePickerController *imagePickerController = self.imagePickerController;
+    NSMutableOrderedSet *selectedAssets = imagePickerController.selectedAssets;
+    
     PHAsset *asset = self.fetchResult[indexPath.item];
     
     if (imagePickerController.allowsMultipleSelection) {
+        if ([self isAutoDeselectEnabled] && selectedAssets.count > 0) {
+            // Remove previous selected asset from set
+            [selectedAssets removeObjectAtIndex:0];
+            
+            // Deselect previous selected asset
+            if (self.lastSelectedItemIndexPath) {
+                [collectionView deselectItemAtIndexPath:self.lastSelectedItemIndexPath animated:NO];
+            }
+        }
+        
         // Add asset to set
-        NSMutableOrderedSet *selectedAssets = imagePickerController.selectedAssets;
         [selectedAssets addObject:asset];
         
-        [self updateControlState];
+        self.lastSelectedItemIndexPath = indexPath;
+        
+        [self updateDoneButtonState];
         
         if (imagePickerController.showsNumberOfSelectedAssets) {
             [self updateSelectionInfo];
@@ -568,11 +607,14 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
     QBImagePickerController *imagePickerController = self.imagePickerController;
     NSMutableOrderedSet *selectedAssets = imagePickerController.selectedAssets;
     
-    // Remove asset from set
     PHAsset *asset = self.fetchResult[indexPath.item];
+    
+    // Remove asset from set
     [selectedAssets removeObject:asset];
     
-    [self updateControlState];
+    self.lastSelectedItemIndexPath = nil;
+    
+    [self updateDoneButtonState];
     
     if (imagePickerController.showsNumberOfSelectedAssets) {
         [self updateSelectionInfo];
