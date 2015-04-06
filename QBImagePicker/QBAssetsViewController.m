@@ -34,6 +34,7 @@
 
 @property (nonatomic, assign) BOOL disableScrollToBottom;
 @property (nonatomic, strong) NSIndexPath *indexPathForLastVisibleItem;
+@property (nonatomic, strong) NSIndexPath *lastSelectedItemIndexPath;
 
 @end
 
@@ -70,7 +71,7 @@
         [self.navigationItem setRightBarButtonItem:nil animated:NO];
     }
     
-    [self updateControlState];
+    [self updateDoneButtonState];
     [self updateSelectionInfo];
     
     // Scroll to bottom
@@ -110,6 +111,21 @@
     _assetsGroup = assetsGroup;
     
     [self updateAssets];
+    
+    // Find previous selected item if needed
+    if ([self isAutoDeselectEnabled]) {
+        NSURL *previousSelectedAssetURL = [self.imagePickerController.selectedAssetURLs firstObject];
+        
+        [self.assets enumerateObjectsUsingBlock:^(ALAsset *asset, NSUInteger index, BOOL *stop) {
+            NSURL *assetURL = [asset valueForProperty:ALAssetPropertyAssetURL];
+            
+            if ([assetURL isEqual:previousSelectedAssetURL]) {
+                self.lastSelectedItemIndexPath = [NSIndexPath indexPathForItem:index inSection:0];
+                *stop = YES;
+            }
+        }];
+    }
+    
     [self.collectionView reloadData];
 }
 
@@ -310,7 +326,7 @@
     return NO;
 }
 
-- (void)updateControlState
+- (void)updateDoneButtonState
 {
     self.doneButton.enabled = [self isMinimumSelectionLimitFulfilled];
 }
@@ -425,11 +441,21 @@
 
 #pragma mark - UICollectionViewDelegate
 
+- (BOOL)isAutoDeselectEnabled
+{
+    return (self.imagePickerController.maximumNumberOfSelection == 1
+            && self.imagePickerController.maximumNumberOfSelection >= self.imagePickerController.minimumNumberOfSelection);
+}
+
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     if ([self.imagePickerController.delegate respondsToSelector:@selector(qb_imagePickerController:shouldSelectAsset:)]) {
         ALAsset *asset = self.assets[indexPath.item];
         return [self.imagePickerController.delegate qb_imagePickerController:self.imagePickerController shouldSelectAsset:asset];
+    }
+    
+    if ([self isAutoDeselectEnabled]) {
+        return YES;
     }
     
     return ![self isMaximumSelectionLimitReached];
@@ -441,15 +467,31 @@
     ALAsset *asset = self.assets[indexPath.item];
     
     if (imagePickerController.allowsMultipleSelection) {
+        NSMutableOrderedSet *selectedAssetURLs = imagePickerController.selectedAssetURLs;
+        
+        if ([self isAutoDeselectEnabled] && selectedAssetURLs.count > 0) {
+            // Remove previous selected item
+            [imagePickerController willChangeValueForKey:@"selectedAssetURLs"];
+            [selectedAssetURLs removeObjectAtIndex:0];
+            [imagePickerController didChangeValueForKey:@"selectedAssetURLs"];
+            
+            // Deselect previous selected item
+            if (self.lastSelectedItemIndexPath) {
+                [[collectionView cellForItemAtIndexPath:self.lastSelectedItemIndexPath] setSelected:NO];
+                [collectionView deselectItemAtIndexPath:self.lastSelectedItemIndexPath animated:NO];
+            }
+        }
+        
         // Add asset to set
         NSURL *assetURL = [asset valueForProperty:ALAssetPropertyAssetURL];
-        NSMutableOrderedSet *selectedAssetURLs = imagePickerController.selectedAssetURLs;
         
         [imagePickerController willChangeValueForKey:@"selectedAssetURLs"];
         [selectedAssetURLs addObject:assetURL];
         [imagePickerController didChangeValueForKey:@"selectedAssetURLs"];
         
-        [self updateControlState];
+        self.lastSelectedItemIndexPath = indexPath;
+        
+        [self updateDoneButtonState];
         
         if (imagePickerController.showsNumberOfSelectedAssets) {
             [self updateSelectionInfo];
@@ -483,7 +525,9 @@
     [selectedAssetURLs removeObject:assetURL];
     [imagePickerController didChangeValueForKey:@"selectedAssetURLs"];
     
-    [self updateControlState];
+    self.lastSelectedItemIndexPath = nil;
+    
+    [self updateDoneButtonState];
     
     if (imagePickerController.showsNumberOfSelectedAssets) {
         [self updateSelectionInfo];
