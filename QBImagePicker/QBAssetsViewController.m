@@ -34,6 +34,7 @@
 
 @property (nonatomic, assign) BOOL disableScrollToBottom;
 @property (nonatomic, strong) NSIndexPath *indexPathForLastVisibleItem;
+@property (nonatomic, strong) NSIndexPath *lastSelectedItemIndexPath;
 
 @end
 
@@ -70,7 +71,7 @@
         [self.navigationItem setRightBarButtonItem:nil animated:NO];
     }
     
-    [self updateControlState];
+    [self updateDoneButtonState];
     [self updateSelectionInfo];
     
     // Scroll to bottom
@@ -110,7 +111,28 @@
     _assetsGroup = assetsGroup;
     
     [self updateAssets];
+    
+    // Find previous selected item if needed
+    if ([self isAutoDeselectEnabled]) {
+        NSURL *previousSelectedAssetURL = [self.imagePickerController.selectedAssetURLs firstObject];
+        
+        [self.assets enumerateObjectsUsingBlock:^(ALAsset *asset, NSUInteger index, BOOL *stop) {
+            NSURL *assetURL = [asset valueForProperty:ALAssetPropertyAssetURL];
+            
+            if ([assetURL isEqual:previousSelectedAssetURL]) {
+                self.lastSelectedItemIndexPath = [NSIndexPath indexPathForItem:index inSection:0];
+                *stop = YES;
+            }
+        }];
+    }
+    
     [self.collectionView reloadData];
+}
+//
+- (BOOL)isAutoDeselectEnabled
+{
+    return (self.imagePickerController.maximumNumberOfSelection == 1
+            && self.imagePickerController.maximumNumberOfSelection >= self.imagePickerController.minimumNumberOfSelection);
 }
 
 
@@ -310,7 +332,7 @@
     return NO;
 }
 
-- (void)updateControlState
+- (void)updateDoneButtonState
 {
     self.doneButton.enabled = [self isMinimumSelectionLimitFulfilled];
 }
@@ -432,24 +454,42 @@
         return [self.imagePickerController.delegate qb_imagePickerController:self.imagePickerController shouldSelectAsset:asset];
     }
     
+    if ([self isAutoDeselectEnabled]) {
+        return YES;
+    }
+    
     return ![self isMaximumSelectionLimitReached];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     QBImagePickerController *imagePickerController = self.imagePickerController;
+    NSMutableOrderedSet *selectedAssetURLs = imagePickerController.selectedAssetURLs;
+    
     ALAsset *asset = self.assets[indexPath.item];
+    NSURL *assetURL = [asset valueForProperty:ALAssetPropertyAssetURL];
     
     if (imagePickerController.allowsMultipleSelection) {
-        // Add asset to set
-        NSURL *assetURL = [asset valueForProperty:ALAssetPropertyAssetURL];
-        NSMutableOrderedSet *selectedAssetURLs = imagePickerController.selectedAssetURLs;
+        if ([self isAutoDeselectEnabled] && selectedAssetURLs.count > 0) {
+            // Remove previous selected asset from set
+            [imagePickerController willChangeValueForKey:@"selectedAssetURLs"];
+            [selectedAssetURLs removeObjectAtIndex:0];
+            [imagePickerController didChangeValueForKey:@"selectedAssetURLs"];
+            
+            // Deselect previous selected asset
+            if (self.lastSelectedItemIndexPath) {
+                [collectionView deselectItemAtIndexPath:self.lastSelectedItemIndexPath animated:NO];
+            }
+        }
         
+        // Add asset to set
         [imagePickerController willChangeValueForKey:@"selectedAssetURLs"];
         [selectedAssetURLs addObject:assetURL];
         [imagePickerController didChangeValueForKey:@"selectedAssetURLs"];
         
-        [self updateControlState];
+        self.lastSelectedItemIndexPath = indexPath;
+        
+        [self updateDoneButtonState];
         
         if (imagePickerController.showsNumberOfSelectedAssets) {
             [self updateSelectionInfo];
@@ -483,7 +523,9 @@
     [selectedAssetURLs removeObject:assetURL];
     [imagePickerController didChangeValueForKey:@"selectedAssetURLs"];
     
-    [self updateControlState];
+    self.lastSelectedItemIndexPath = nil;
+    
+    [self updateDoneButtonState];
     
     if (imagePickerController.showsNumberOfSelectedAssets) {
         [self updateSelectionInfo];
