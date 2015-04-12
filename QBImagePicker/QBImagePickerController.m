@@ -23,6 +23,12 @@
 
 @implementation QBImagePickerController
 
++ (BOOL)isAccessible
+{
+    return ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary] &&
+            [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeSavedPhotosAlbum]);
+}
+
 - (instancetype)init
 {
     self = [super init];

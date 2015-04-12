@@ -49,4 +49,6 @@ typedef NS_ENUM(NSUInteger, QBImagePickerControllerFilterType) {
 
 @property (nonatomic, assign) BOOL showsCancelButton __attribute__((deprecated));
 
++ (BOOL)isAccessible;
+
 @end
