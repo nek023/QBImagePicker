@@ -370,8 +370,10 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
     
     NSMutableArray *assets = [NSMutableArray arrayWithCapacity:indexPaths.count];
     for (NSIndexPath *indexPath in indexPaths) {
-        PHAsset *asset = self.fetchResult[indexPath.item];
-        [assets addObject:asset];
+        if (indexPath.item < self.fetchResult.count) {
+            PHAsset *asset = self.fetchResult[indexPath.item];
+            [assets addObject:asset];
+        }
     }
     return assets;
 }
