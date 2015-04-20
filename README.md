@@ -11,12 +11,19 @@ A clone of UIImagePickerController with multiple selection support.
 
 ## Features
 
-- Allows multiple selection of photos and videos, even from the different albums
-- Fast and memory-efficient scrolling powered by **PhotoKit**
+- Allows multiple selection of photos and videos
+- Fast and memory-efficient scrolling
 - Provides similar user interface to the built-in image picker
 - Customizable (grid size, navigation message, etc.)
 - Supports both portrait mode and landscape mode
 - Compatible with iPhone 6/6Plus, and iPad
+
+
+
+## Requirements
+
+- Version `>= 3.0.0` : iOS 8 or later (Using PhotoKit)
+- Version `< 3.0.0` : iOS 6 or later (Using AssetsLibrary)
 
 
 
@@ -29,14 +36,6 @@ A clone of UIImagePickerController with multiple selection support.
     imagePickerController.showsNumberOfSelectedAssets = YES;
 
     [self presentViewController:imagePickerController animated:YES completion:NULL];
-
-
-
-## Requirements
-
-- Version `>= 3.0.0` : iOS 8 or later (Using PhotoKit)
-- Version `< 3.0.0` : iOS 6 or later (Using AssetsLibrary)
-
 
 
 
