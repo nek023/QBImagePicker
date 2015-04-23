@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1514" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7531" systemVersion="14D131" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -151,6 +151,14 @@
                                                         <constraint firstAttribute="height" constant="8" id="d0g-9I-F2s"/>
                                                     </constraints>
                                                 </view>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1We-cC-Ruu" customClass="QBSlomoIconView">
+                                                    <rect key="frame" x="5" y="3" width="12" height="12"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="12" id="1qd-FB-w1Q"/>
+                                                        <constraint firstAttribute="width" constant="12" id="iWE-jc-2Za"/>
+                                                    </constraints>
+                                                </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JBs-FX-TZQ">
                                                     <rect key="frame" x="23" y="3" width="50" height="15"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
@@ -164,11 +172,15 @@
                                                 <constraint firstItem="JBs-FX-TZQ" firstAttribute="leading" secondItem="rKh-6o-xw7" secondAttribute="trailing" constant="4" id="8p9-Gp-fI0"/>
                                                 <constraint firstAttribute="centerY" secondItem="rKh-6o-xw7" secondAttribute="centerY" id="NiG-4S-82w"/>
                                                 <constraint firstAttribute="trailing" secondItem="JBs-FX-TZQ" secondAttribute="trailing" constant="5" id="UzI-el-RsC"/>
+                                                <constraint firstItem="1We-cC-Ruu" firstAttribute="leading" secondItem="rKh-6o-xw7" secondAttribute="leading" id="bXl-KW-8bH"/>
                                                 <constraint firstAttribute="height" constant="20" id="of9-Tc-hn8"/>
                                                 <constraint firstItem="rKh-6o-xw7" firstAttribute="leading" secondItem="BwJ-KE-LWZ" secondAttribute="leading" constant="5" id="wdo-1w-Evf"/>
+                                                <constraint firstItem="1We-cC-Ruu" firstAttribute="top" secondItem="rKh-6o-xw7" secondAttribute="top" constant="-3" id="wvh-r6-9Ty"/>
                                             </constraints>
                                             <connections>
+                                                <outlet property="slomoIcon" destination="1We-cC-Ruu" id="6g0-tK-SgN"/>
                                                 <outlet property="timeLabel" destination="JBs-FX-TZQ" id="MRp-1Z-69e"/>
+                                                <outlet property="videoIcon" destination="rKh-6o-xw7" id="5VY-OW-Y7V"/>
                                             </connections>
                                         </view>
                                         <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uyS-Tg-Iyl">
