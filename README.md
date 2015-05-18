@@ -60,7 +60,7 @@ A clone of UIImagePickerController with multiple selection support.
 
 ### Basic
 
-1. Implement `QBImagePickerDelegate` methods
+1. Implement `QBImagePickerControllerDelegate` methods
 2. Create `QBImagePickerController` object
 3. Set `self` to the `delegate` property
 4. Show the picker by using `presentViewController:animated:completion:`
