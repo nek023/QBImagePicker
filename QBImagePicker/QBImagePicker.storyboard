@@ -15,8 +15,10 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="AlbumCell" rowHeight="86" id="dSc-nm-apo" customClass="QBAlbumCell">
+                                <rect key="frame" x="0.0" y="86" width="600" height="86"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dSc-nm-apo" id="7lA-qJ-5l4">
+                                    <rect key="frame" x="0.0" y="0.0" width="567" height="86"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kTm-zK-fPP">
@@ -71,13 +73,13 @@
                                     </subviews>
                                     <constraints>
                                         <constraint firstAttribute="centerY" secondItem="kTm-zK-fPP" secondAttribute="centerY" id="6QC-SU-kOo"/>
-                                        <constraint firstItem="SeB-hL-cJJ" firstAttribute="leading" secondItem="kTm-zK-fPP" secondAttribute="trailing" constant="18" id="Whp-Ou-I3l"/>
-                                        <constraint firstItem="SeB-hL-cJJ" firstAttribute="leading" secondItem="PTi-mB-UBX" secondAttribute="leading" id="b9V-nb-06z"/>
+                                        <constraint firstItem="SeB-hL-cJJ" firstAttribute="left" secondItem="kTm-zK-fPP" secondAttribute="right" constant="18" id="Whp-Ou-I3l"/>
+                                        <constraint firstItem="SeB-hL-cJJ" firstAttribute="left" secondItem="PTi-mB-UBX" secondAttribute="left" id="b9V-nb-06z"/>
                                         <constraint firstItem="PTi-mB-UBX" firstAttribute="top" secondItem="SeB-hL-cJJ" secondAttribute="bottom" constant="3" id="ifo-Ls-t1q"/>
-                                        <constraint firstItem="SeB-hL-cJJ" firstAttribute="trailing" secondItem="PTi-mB-UBX" secondAttribute="trailing" id="kPp-m3-EB1"/>
+                                        <constraint firstItem="SeB-hL-cJJ" firstAttribute="right" secondItem="PTi-mB-UBX" secondAttribute="right" id="kPp-m3-EB1"/>
                                         <constraint firstItem="SeB-hL-cJJ" firstAttribute="top" secondItem="7lA-qJ-5l4" secondAttribute="topMargin" constant="14" id="qZJ-aU-Bes"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="SeB-hL-cJJ" secondAttribute="trailing" id="u0T-eN-4yh"/>
-                                        <constraint firstItem="kTm-zK-fPP" firstAttribute="leading" secondItem="7lA-qJ-5l4" secondAttribute="leadingMargin" constant="8" id="zuV-Ye-IiO"/>
+                                        <constraint firstAttribute="rightMargin" secondItem="SeB-hL-cJJ" secondAttribute="right" id="u0T-eN-4yh"/>
+                                        <constraint firstItem="kTm-zK-fPP" firstAttribute="left" secondItem="7lA-qJ-5l4" secondAttribute="leftMargin" constant="8" id="zuV-Ye-IiO"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
@@ -131,7 +133,7 @@
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="AssetCell" id="fc0-k1-HNL" customClass="QBAssetCell">
-                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                <rect key="frame" x="0.0" y="72" width="78" height="78"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="78" height="78"/>
@@ -198,7 +200,7 @@
                                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.40000000000000002" colorSpace="calibratedRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="bottom" secondItem="m99-yj-HSc" secondAttribute="bottom" constant="4" id="Hyd-Pf-4Ni"/>
-                                                <constraint firstAttribute="trailing" secondItem="m99-yj-HSc" secondAttribute="trailing" constant="4" id="aQv-HN-dQG"/>
+                                                <constraint firstAttribute="right" secondItem="m99-yj-HSc" secondAttribute="right" constant="4" id="aQv-HN-dQG"/>
                                             </constraints>
                                         </view>
                                     </subviews>
@@ -231,7 +233,7 @@
                             </collectionViewCell>
                         </cells>
                         <collectionReusableView key="sectionFooterView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="FooterView" id="sqR-h3-lW1">
-                            <rect key="frame" x="0.0" y="146" width="600" height="66"/>
+                            <rect key="frame" x="0.0" y="152" width="600" height="66"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Number of Photos and Videos" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m2s-7T-bnL">
@@ -242,9 +244,9 @@
                                 </label>
                             </subviews>
                             <constraints>
-                                <constraint firstItem="m2s-7T-bnL" firstAttribute="leading" secondItem="sqR-h3-lW1" secondAttribute="leading" id="8fv-Sl-lhe"/>
+                                <constraint firstItem="m2s-7T-bnL" firstAttribute="left" secondItem="sqR-h3-lW1" secondAttribute="left" id="8fv-Sl-lhe"/>
                                 <constraint firstAttribute="centerY" secondItem="m2s-7T-bnL" secondAttribute="centerY" id="DrY-pC-Gfi"/>
-                                <constraint firstAttribute="trailing" secondItem="m2s-7T-bnL" secondAttribute="trailing" id="lng-sP-3aa"/>
+                                <constraint firstAttribute="right" secondItem="m2s-7T-bnL" secondAttribute="right" id="lng-sP-3aa"/>
                             </constraints>
                         </collectionReusableView>
                         <connections>
