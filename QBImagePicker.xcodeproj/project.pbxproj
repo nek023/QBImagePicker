@@ -93,6 +93,9 @@
 		AA7444BE1AD14A5E006DE404 /* QBAssetCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBAssetCell.m; sourceTree = "<group>"; };
 		AA7444BF1AD14A5E006DE404 /* QBAssetsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBAssetsViewController.h; sourceTree = "<group>"; };
 		AA7444C01AD14A5E006DE404 /* QBAssetsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBAssetsViewController.m; sourceTree = "<group>"; };
+		AA8229A01B57B284008BFB6E /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/QBImagePicker.strings"; sourceTree = "<group>"; };
+		AA8229A11B57B296008BFB6E /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/QBImagePicker.strings; sourceTree = "<group>"; };
+		AA8229A21B57B29E008BFB6E /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/QBImagePicker.strings; sourceTree = "<group>"; };
 		AA875F511AF8AFBD00719736 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/QBImagePicker.strings; sourceTree = "<group>"; };
 		AA9EF8A71AD1304900FA72A3 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/QBImagePicker.strings; sourceTree = "<group>"; };
 		AACD2EEE1AD12DB10029BE0B /* QBImagePicker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = QBImagePicker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -426,6 +429,9 @@
 				en,
 				Base,
 				ja,
+				"zh-Hans",
+				es,
+				de,
 			);
 			mainGroup = AACD2EE41AD12DB10029BE0B;
 			productRefGroup = AACD2EEF1AD12DB10029BE0B /* Products */;
@@ -544,6 +550,9 @@
 			children = (
 				AA9EF8A71AD1304900FA72A3 /* ja */,
 				AA875F511AF8AFBD00719736 /* en */,
+				AA8229A01B57B284008BFB6E /* zh-Hans */,
+				AA8229A11B57B296008BFB6E /* es */,
+				AA8229A21B57B29E008BFB6E /* de */,
 			);
 			name = QBImagePicker.strings;
 			sourceTree = "<group>";
