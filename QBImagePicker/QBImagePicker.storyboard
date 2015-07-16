@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14C1514" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
@@ -70,15 +70,15 @@
                                         </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="tmU-WT-HVS" firstAttribute="leading" secondItem="KSh-gM-21m" secondAttribute="leading" id="FAT-mK-OOf"/>
+                                        <constraint firstItem="tmU-WT-HVS" firstAttribute="left" secondItem="KSh-gM-21m" secondAttribute="left" id="FAT-mK-OOf"/>
                                         <constraint firstAttribute="centerY" secondItem="K15-QT-84m" secondAttribute="centerY" id="FiC-XG-ndj"/>
                                         <constraint firstItem="KSh-gM-21m" firstAttribute="top" secondItem="tmU-WT-HVS" secondAttribute="bottom" constant="3" id="IPH-Jm-qHa"/>
-                                        <constraint firstItem="tmU-WT-HVS" firstAttribute="leading" secondItem="K15-QT-84m" secondAttribute="trailing" constant="18" id="Luy-ym-eXv"/>
-                                        <constraint firstItem="tmU-WT-HVS" firstAttribute="leading" secondItem="KSh-gM-21m" secondAttribute="leading" id="Ndc-6K-qLa"/>
-                                        <constraint firstItem="tmU-WT-HVS" firstAttribute="trailing" secondItem="KSh-gM-21m" secondAttribute="trailing" id="Nuq-hu-Brn"/>
-                                        <constraint firstItem="tmU-WT-HVS" firstAttribute="trailing" secondItem="KSh-gM-21m" secondAttribute="trailing" id="XdL-3v-qLb"/>
-                                        <constraint firstAttribute="trailing" secondItem="tmU-WT-HVS" secondAttribute="trailing" id="fgD-26-e0C"/>
-                                        <constraint firstItem="K15-QT-84m" firstAttribute="leading" secondItem="35j-da-VM3" secondAttribute="leading" constant="16" id="uN3-ge-sLh"/>
+                                        <constraint firstItem="tmU-WT-HVS" firstAttribute="left" secondItem="K15-QT-84m" secondAttribute="right" constant="18" id="Luy-ym-eXv"/>
+                                        <constraint firstItem="tmU-WT-HVS" firstAttribute="left" secondItem="KSh-gM-21m" secondAttribute="left" id="Ndc-6K-qLa"/>
+                                        <constraint firstItem="tmU-WT-HVS" firstAttribute="right" secondItem="KSh-gM-21m" secondAttribute="right" id="Nuq-hu-Brn"/>
+                                        <constraint firstItem="tmU-WT-HVS" firstAttribute="right" secondItem="KSh-gM-21m" secondAttribute="right" id="XdL-3v-qLb"/>
+                                        <constraint firstAttribute="right" secondItem="tmU-WT-HVS" secondAttribute="right" id="fgD-26-e0C"/>
+                                        <constraint firstItem="K15-QT-84m" firstAttribute="left" secondItem="35j-da-VM3" secondAttribute="left" constant="16" id="uN3-ge-sLh"/>
                                         <constraint firstItem="KSh-gM-21m" firstAttribute="top" secondItem="tmU-WT-HVS" secondAttribute="bottom" constant="3" id="z63-JF-wJq"/>
                                         <constraint firstItem="tmU-WT-HVS" firstAttribute="top" secondItem="35j-da-VM3" secondAttribute="top" constant="22" id="zlZ-z9-21v"/>
                                     </constraints>
