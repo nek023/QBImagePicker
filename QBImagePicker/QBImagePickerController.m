@@ -16,7 +16,6 @@
 @property (nonatomic, strong) UINavigationController *albumsNavigationController;
 
 @property (nonatomic, strong) ALAssetsLibrary *assetsLibrary;
-@property (nonatomic, strong, readwrite) NSMutableOrderedSet *selectedAssetURLs;
 @property (nonatomic, strong) NSBundle *assetBundle;
 
 @end
