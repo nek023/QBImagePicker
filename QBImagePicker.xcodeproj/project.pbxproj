@@ -37,6 +37,11 @@
 		AACD2F461AD12E010029BE0B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AACD2F451AD12E010029BE0B /* Images.xcassets */; };
 		AACD2F491AD12E010029BE0B /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = AACD2F471AD12E010029BE0B /* LaunchScreen.xib */; };
 		AACD2F551AD12E010029BE0B /* QBImagePickerDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AACD2F541AD12E010029BE0B /* QBImagePickerDemoTests.m */; };
+		F22D0AEA1B5F98550087B710 /* ALAssetsLibrary+Singleton.h in Headers */ = {isa = PBXBuildFile; fileRef = F22D0AE81B5F98550087B710 /* ALAssetsLibrary+Singleton.h */; };
+		F22D0AEB1B5F98550087B710 /* ALAssetsLibrary+Singleton.m in Sources */ = {isa = PBXBuildFile; fileRef = F22D0AE91B5F98550087B710 /* ALAssetsLibrary+Singleton.m */; };
+		F22D0AEC1B5F98550087B710 /* ALAssetsLibrary+Singleton.m in Sources */ = {isa = PBXBuildFile; fileRef = F22D0AE91B5F98550087B710 /* ALAssetsLibrary+Singleton.m */; };
+		F22D0AED1B5F98550087B710 /* ALAssetsLibrary+Singleton.m in Sources */ = {isa = PBXBuildFile; fileRef = F22D0AE91B5F98550087B710 /* ALAssetsLibrary+Singleton.m */; };
+		F22D0AEE1B5F98550087B710 /* ALAssetsLibrary+Singleton.m in Sources */ = {isa = PBXBuildFile; fileRef = F22D0AE91B5F98550087B710 /* ALAssetsLibrary+Singleton.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -119,6 +124,8 @@
 		AACD2F4E1AD12E010029BE0B /* QBImagePickerDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QBImagePickerDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AACD2F531AD12E010029BE0B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AACD2F541AD12E010029BE0B /* QBImagePickerDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QBImagePickerDemoTests.m; sourceTree = "<group>"; };
+		F22D0AE81B5F98550087B710 /* ALAssetsLibrary+Singleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ALAssetsLibrary+Singleton.h"; sourceTree = "<group>"; };
+		F22D0AE91B5F98550087B710 /* ALAssetsLibrary+Singleton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ALAssetsLibrary+Singleton.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -229,6 +236,8 @@
 		AACD2EF01AD12DB10029BE0B /* QBImagePicker */ = {
 			isa = PBXGroup;
 			children = (
+				F22D0AE81B5F98550087B710 /* ALAssetsLibrary+Singleton.h */,
+				F22D0AE91B5F98550087B710 /* ALAssetsLibrary+Singleton.m */,
 				AACD2EF31AD12DB10029BE0B /* QBImagePicker.h */,
 				AA21073F1AD163D6002B3E46 /* Views */,
 				AA21073E1AD163CF002B3E46 /* ViewControllers */,
@@ -311,6 +320,7 @@
 			files = (
 				AA21073A1AD15B74002B3E46 /* QBVideoIconView.h in Headers */,
 				AA7444C11AD14A5E006DE404 /* QBAssetCell.h in Headers */,
+				F22D0AEA1B5F98550087B710 /* ALAssetsLibrary+Singleton.h in Headers */,
 				AA7444B51AD13948006DE404 /* QBAlbumsViewController.h in Headers */,
 				AACD2F2C1AD12DD30029BE0B /* QBImagePickerController.h in Headers */,
 				AACD2EF41AD12DB10029BE0B /* QBImagePicker.h in Headers */,
@@ -493,6 +503,7 @@
 				AACD2F2D1AD12DD30029BE0B /* QBImagePickerController.m in Sources */,
 				AA7444C41AD14A5E006DE404 /* QBAssetsViewController.m in Sources */,
 				AA21073B1AD15B74002B3E46 /* QBVideoIconView.m in Sources */,
+				F22D0AEB1B5F98550087B710 /* ALAssetsLibrary+Singleton.m in Sources */,
 				AA7444B41AD13948006DE404 /* QBAlbumCell.m in Sources */,
 				AA7444B61AD13948006DE404 /* QBAlbumsViewController.m in Sources */,
 			);
@@ -503,6 +514,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AACD2F011AD12DB10029BE0B /* QBImagePickerTests.m in Sources */,
+				F22D0AEC1B5F98550087B710 /* ALAssetsLibrary+Singleton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -511,6 +523,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AACD2F411AD12E010029BE0B /* ViewController.m in Sources */,
+				F22D0AED1B5F98550087B710 /* ALAssetsLibrary+Singleton.m in Sources */,
 				AACD2F3E1AD12E010029BE0B /* AppDelegate.m in Sources */,
 				AACD2F3B1AD12E010029BE0B /* main.m in Sources */,
 			);
@@ -521,6 +534,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AACD2F551AD12E010029BE0B /* QBImagePickerDemoTests.m in Sources */,
+				F22D0AEE1B5F98550087B710 /* ALAssetsLibrary+Singleton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
