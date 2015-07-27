@@ -193,6 +193,7 @@
     if ([self.imagePickerController.delegate respondsToSelector:@selector(qb_imagePickerController:didSelectAssets:)]) {
         [self fetchAssetsFromSelectedAssetURLsWithCompletion:^(NSArray *assets) {
             [self.imagePickerController.delegate qb_imagePickerController:self.imagePickerController didSelectAssets:assets];
+            [self.navigationController popToRootViewControllerAnimated:YES];
         }];
     }
 }
