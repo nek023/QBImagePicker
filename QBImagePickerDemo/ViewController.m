@@ -10,7 +10,9 @@
 #import <QBImagePicker/QBImagePicker.h>
 
 @interface ViewController () <QBImagePickerControllerDelegate>
-
+{
+    QBImagePickerController *imagePickerController;
+}
 @end
 
 @implementation ViewController
@@ -25,8 +27,11 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    QBImagePickerController *imagePickerController = [QBImagePickerController new];
-    imagePickerController.delegate = self;
+    if (imagePickerController == nil) {
+        imagePickerController = [QBImagePickerController new];
+        imagePickerController.delegate = self;
+    }
+    
     imagePickerController.allowsMultipleSelection = (indexPath.section == 1);
     imagePickerController.showsNumberOfSelectedAssets = YES;
     

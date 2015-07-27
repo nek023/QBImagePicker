@@ -10,13 +10,13 @@
 
 // ViewControllers
 #import "QBAlbumsViewController.h"
+#import "ALAssetsLibrary+Singleton.h"
 
 @interface QBImagePickerController ()
 
 @property (nonatomic, strong) UINavigationController *albumsNavigationController;
 
 @property (nonatomic, strong) ALAssetsLibrary *assetsLibrary;
-@property (nonatomic, strong, readwrite) NSMutableOrderedSet *selectedAssetURLs;
 @property (nonatomic, strong) NSBundle *assetBundle;
 
 @end
@@ -45,7 +45,7 @@
         self.numberOfColumnsInPortrait = 4;
         self.numberOfColumnsInLandscape = 7;
         
-        self.assetsLibrary = [ALAssetsLibrary new];
+        self.assetsLibrary = [ALAssetsLibrary defaultAssetsLibrary];
         self.selectedAssetURLs = [NSMutableOrderedSet orderedSet];
         
         // Get asset bundle
@@ -79,6 +79,11 @@
     [navigationController didMoveToParentViewController:self];
     
     self.albumsNavigationController = navigationController;
+}
+
+- (void)dealloc
+{
+    [ALAssetsLibrary clean];
 }
 
 @end
