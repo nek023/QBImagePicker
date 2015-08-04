@@ -22,7 +22,6 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
 
 @interface QBImagePickerController (Private)
 
-@property (nonatomic, strong) NSMutableOrderedSet *selectedAssets;
 @property (nonatomic, strong) NSBundle *assetBundle;
 
 @end
