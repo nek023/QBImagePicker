@@ -101,6 +101,7 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
     
     [self updateDoneButtonState];
     [self updateSelectionInfo];
+    [self.collectionView reloadData];
     
     // Scroll to bottom
     if (self.fetchResult.count > 0 && self.isMovingToParentViewController && !self.disableScrollToBottom) {
