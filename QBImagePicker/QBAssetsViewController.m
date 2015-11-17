@@ -229,7 +229,6 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
 {
     if (self.assetCollection) {
         PHFetchOptions *options = [PHFetchOptions new];
-        options.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:YES]];
         
         switch (self.imagePickerController.mediaType) {
             case QBImagePickerMediaTypeImage:
