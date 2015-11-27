@@ -105,8 +105,12 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
     
     // Scroll to bottom
     if (self.fetchResult.count > 0 && self.isMovingToParentViewController && !self.disableScrollToBottom) {
-        NSIndexPath *indexPath = [NSIndexPath indexPathForItem:(self.fetchResult.count - 1) inSection:0];
-        [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionTop animated:NO];
+        // self.collectionView layout invalidate timing issue
+        // http://stackoverflow.com/questions/14020027/how-do-i-know-that-the-uicollectionview-has-been-loaded-completely
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSIndexPath *indexPath = [NSIndexPath indexPathForItem:(self.fetchResult.count - 1) inSection:0];
+            [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionTop animated:NO];
+        });
     }
 }
 
