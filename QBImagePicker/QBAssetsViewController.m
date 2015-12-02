@@ -363,9 +363,14 @@
     
     // Video indicator
     NSString *assetType = [asset valueForProperty:ALAssetPropertyType];
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    dateFormat.timeStyle = NSDateFormatterShortStyle;
+    dateFormat.dateStyle = NSDateIntervalFormatterLongStyle;
     
     if ([assetType isEqualToString:ALAssetTypeVideo]) {
         cell.videoIndicatorView.hidden = NO;
+        NSDate* videoCreationDate = [asset valueForProperty:ALAssetPropertyDate];
+        cell.label = [NSString stringWithFormat: @"video %@", [dateFormat stringFromDate:videoCreationDate]];
         
         NSTimeInterval duration = [[asset valueForProperty:ALAssetPropertyDuration] doubleValue];
         NSInteger minutes = (NSInteger)(duration / 60.0);
@@ -373,6 +378,8 @@
         cell.videoIndicatorView.timeLabel.text = [NSString stringWithFormat:@"%02ld:%02ld", (long)minutes, (long)seconds];
     } else {
         cell.videoIndicatorView.hidden = YES;
+        NSDate* pictureCreationDate = [asset valueForProperty:ALAssetPropertyDate];
+        cell.label = [NSString stringWithFormat: @"picture %@", [dateFormat stringFromDate:pictureCreationDate]];
     }
     
     // Selection state
@@ -555,3 +562,4 @@
 }
 
 @end
+

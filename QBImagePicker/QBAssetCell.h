@@ -14,7 +14,8 @@
 
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 @property (weak, nonatomic) IBOutlet QBVideoIndicatorView *videoIndicatorView;
-
 @property (nonatomic, assign) BOOL showsOverlayViewWhenSelected;
+@property  NSString *label;
 
 @end
+

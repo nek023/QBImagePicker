@@ -24,4 +24,22 @@
     self.overlayView.hidden = !(selected && self.showsOverlayViewWhenSelected);
 }
 
+- (BOOL)isAccessibilityElement
+{
+    return YES;
+}
+
+- (NSString *)accessibilityLabel {
+    if(self.selected) {
+        return [@"Selected " stringByAppendingString: _label];
+    } else {
+        return _label;
+    }
+}
+
+- (UIAccessibilityTraits)accessibilityTraits {
+    return UIAccessibilityTraitAllowsDirectInteraction;
+}
+
 @end
+
