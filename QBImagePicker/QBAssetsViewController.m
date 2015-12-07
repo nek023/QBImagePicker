@@ -319,7 +319,7 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
         NSArray *assetsToStopCaching = [self assetsAtIndexPaths:removedIndexPaths];
         
         CGSize itemSize = [(UICollectionViewFlowLayout *)self.collectionViewLayout itemSize];
-        CGSize targetSize = CGSizeScale(itemSize, self.traitCollection.displayScale);
+        CGSize targetSize = CGSizeScale(itemSize, [[UIScreen mainScreen] scale]);
         
         [self.imageManager startCachingImagesForAssets:assetsToStartCaching
                                             targetSize:targetSize
