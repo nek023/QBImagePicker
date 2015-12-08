@@ -276,7 +276,7 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
 {
     QBAlbumCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AlbumCell" forIndexPath:indexPath];
     cell.tag = indexPath.row;
-    cell.borderWidth = 1.0 / self.traitCollection.displayScale;
+    cell.borderWidth = 1.0 / [[UIScreen mainScreen] scale];
     
     // Thumbnail
     PHAssetCollection *assetCollection = self.assetCollections[indexPath.row];
@@ -303,7 +303,7 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
         cell.imageView3.hidden = NO;
         
         [imageManager requestImageForAsset:fetchResult[fetchResult.count - 3]
-                                targetSize:CGSizeScale(cell.imageView3.frame.size, self.traitCollection.displayScale)
+                                targetSize:CGSizeScale(cell.imageView3.frame.size, [[UIScreen mainScreen] scale])
                                contentMode:PHImageContentModeAspectFill
                                    options:nil
                              resultHandler:^(UIImage *result, NSDictionary *info) {
@@ -319,7 +319,7 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
         cell.imageView2.hidden = NO;
         
         [imageManager requestImageForAsset:fetchResult[fetchResult.count - 2]
-                                targetSize:CGSizeScale(cell.imageView2.frame.size, self.traitCollection.displayScale)
+                                targetSize:CGSizeScale(cell.imageView2.frame.size, [[UIScreen mainScreen] scale])
                                contentMode:PHImageContentModeAspectFill
                                    options:nil
                              resultHandler:^(UIImage *result, NSDictionary *info) {
@@ -333,7 +333,7 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
     
     if (fetchResult.count >= 1) {
         [imageManager requestImageForAsset:fetchResult[fetchResult.count - 1]
-                                targetSize:CGSizeScale(cell.imageView1.frame.size, self.traitCollection.displayScale)
+                                targetSize:CGSizeScale(cell.imageView1.frame.size, [[UIScreen mainScreen] scale])
                                contentMode:PHImageContentModeAspectFill
                                    options:nil
                              resultHandler:^(UIImage *result, NSDictionary *info) {
