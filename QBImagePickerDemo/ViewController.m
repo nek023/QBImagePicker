@@ -10,10 +10,18 @@
 #import <QBImagePicker/QBImagePicker.h>
 
 @interface ViewController () <QBImagePickerControllerDelegate>
+@property (nonatomic, strong) ALAssetsLibrary *assetsLibrary;
 
 @end
 
 @implementation ViewController
+
+-(ALAssetsLibrary *)assetsLibrary {
+    if(!_assetsLibrary) {
+        _assetsLibrary = [ALAssetsLibrary new];
+    }
+    return _assetsLibrary;
+}
 
 - (void)viewDidLoad
 {
@@ -29,6 +37,10 @@
     imagePickerController.delegate = self;
     imagePickerController.allowsMultipleSelection = (indexPath.section == 1);
     imagePickerController.showsNumberOfSelectedAssets = YES;
+
+    //It is recommended to inject the assets library into the QBImageController to avoid crashing issues on iOS 8.
+    //Refer to: http://stackoverflow.com/questions/18901984/alassetslibrary-error-too-many-contexts-no-space-in-contextlist
+    imagePickerController.assetsLibrary = [self assetsLibrary];
     
     if (indexPath.section == 1) {
         switch (indexPath.row) {
