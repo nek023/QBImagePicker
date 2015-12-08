@@ -10,6 +10,7 @@
 
 // ViewControllers
 #import "QBAlbumsViewController.h"
+#import "ALAssetsLibrary+Singleton.h"
 
 @interface QBImagePickerController ()
 
@@ -45,7 +46,7 @@
         self.numberOfColumnsInPortrait = 4;
         self.numberOfColumnsInLandscape = 7;
         
-        self.assetsLibrary = [ALAssetsLibrary new];
+        self.assetsLibrary = [ALAssetsLibrary defaultAssetsLibrary];
         self.selectedAssetURLs = [NSMutableOrderedSet orderedSet];
         
         // Get asset bundle

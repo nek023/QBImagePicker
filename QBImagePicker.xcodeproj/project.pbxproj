@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2CBC498F95A91A38C3E39BB3 /* ALAssetsLibrary+Singleton.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CBC448D44507A9877BE2578 /* ALAssetsLibrary+Singleton.m */; };
+		2CBC4FF91E01774F652C0D56 /* ALAssetsLibrary+Singleton.h in Headers */ = {isa = PBXBuildFile; fileRef = 2CBC49598EA416A801FE45C3 /* ALAssetsLibrary+Singleton.h */; };
 		AA2107381AD15B74002B3E46 /* QBCheckmarkView.h in Headers */ = {isa = PBXBuildFile; fileRef = AA2107321AD15B74002B3E46 /* QBCheckmarkView.h */; };
 		AA2107391AD15B74002B3E46 /* QBCheckmarkView.m in Sources */ = {isa = PBXBuildFile; fileRef = AA2107331AD15B74002B3E46 /* QBCheckmarkView.m */; };
 		AA21073A1AD15B74002B3E46 /* QBVideoIconView.h in Headers */ = {isa = PBXBuildFile; fileRef = AA2107341AD15B74002B3E46 /* QBVideoIconView.h */; };
@@ -78,6 +80,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		2CBC448D44507A9877BE2578 /* ALAssetsLibrary+Singleton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ALAssetsLibrary+Singleton.m"; sourceTree = "<group>"; };
+		2CBC49598EA416A801FE45C3 /* ALAssetsLibrary+Singleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ALAssetsLibrary+Singleton.h"; sourceTree = "<group>"; };
 		AA2107321AD15B74002B3E46 /* QBCheckmarkView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBCheckmarkView.h; sourceTree = "<group>"; };
 		AA2107331AD15B74002B3E46 /* QBCheckmarkView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBCheckmarkView.m; sourceTree = "<group>"; };
 		AA2107341AD15B74002B3E46 /* QBVideoIconView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBVideoIconView.h; sourceTree = "<group>"; };
@@ -234,6 +238,8 @@
 				AA21073E1AD163CF002B3E46 /* ViewControllers */,
 				AA2107401AD163E3002B3E46 /* Resources */,
 				AACD2EF11AD12DB10029BE0B /* Supporting Files */,
+				2CBC448D44507A9877BE2578 /* ALAssetsLibrary+Singleton.m */,
+				2CBC49598EA416A801FE45C3 /* ALAssetsLibrary+Singleton.h */,
 			);
 			path = QBImagePicker;
 			sourceTree = "<group>";
@@ -318,6 +324,7 @@
 				AA7444C31AD14A5E006DE404 /* QBAssetsViewController.h in Headers */,
 				AA2107381AD15B74002B3E46 /* QBCheckmarkView.h in Headers */,
 				AA7444B31AD13948006DE404 /* QBAlbumCell.h in Headers */,
+				2CBC4FF91E01774F652C0D56 /* ALAssetsLibrary+Singleton.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -495,6 +502,7 @@
 				AA21073B1AD15B74002B3E46 /* QBVideoIconView.m in Sources */,
 				AA7444B41AD13948006DE404 /* QBAlbumCell.m in Sources */,
 				AA7444B61AD13948006DE404 /* QBAlbumsViewController.m in Sources */,
+				2CBC498F95A91A38C3E39BB3 /* ALAssetsLibrary+Singleton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
