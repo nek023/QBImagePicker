@@ -389,23 +389,32 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
             // Get the new fetch result
             self.fetchResult = [collectionChanges fetchResultAfterChanges];
             
-            if (![collectionChanges hasIncrementalChanges] || [collectionChanges hasMoves]) {
+            NSIndexSet *removedIndexes = [collectionChanges removedIndexes];
+            NSIndexSet *insertedIndexes = [collectionChanges insertedIndexes];
+            NSIndexSet *changedIndexes = [collectionChanges changedIndexes];
+            
+            // In some rare cases removedIndexes & changedIndexes contains the same indexes. The result is NSInternalInconsistencyException. Sollution is to reload collectionView data.
+            __block BOOL incrementalDiffsAreCorrupt = NO;
+            [removedIndexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
+                if ([changedIndexes containsIndex:idx]) {
+                    incrementalDiffsAreCorrupt = YES;
+                }
+            }];
+            
+            if (![collectionChanges hasIncrementalChanges] || [collectionChanges hasMoves] || incrementalDiffsAreCorrupt ) {
                 // We need to reload all if the incremental diffs are not available
                 [self.collectionView reloadData];
             } else {
                 // If we have incremental diffs, tell the collection view to animate insertions and deletions
                 [self.collectionView performBatchUpdates:^{
-                    NSIndexSet *removedIndexes = [collectionChanges removedIndexes];
                     if ([removedIndexes count]) {
                         [self.collectionView deleteItemsAtIndexPaths:[removedIndexes qb_indexPathsFromIndexesWithSection:0]];
                     }
                     
-                    NSIndexSet *insertedIndexes = [collectionChanges insertedIndexes];
                     if ([insertedIndexes count]) {
                         [self.collectionView insertItemsAtIndexPaths:[insertedIndexes qb_indexPathsFromIndexesWithSection:0]];
                     }
                     
-                    NSIndexSet *changedIndexes = [collectionChanges changedIndexes];
                     if ([changedIndexes count]) {
                         [self.collectionView reloadItemsAtIndexPaths:[changedIndexes qb_indexPathsFromIndexesWithSection:0]];
                     }
