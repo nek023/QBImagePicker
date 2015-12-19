@@ -19,3 +19,10 @@
 
 "assets.toolbar.item-selected" = "选择了%ld项";
 "assets.toolbar.items-selected" = "选择了%ld项";
+
+"sheet.title" = "标题";
+"sheet.message" = "按摩";
+"sheet.select_all" = "全选";
+"sheet.deselect_all" = "取消选择所有";
+"sheet.cancel" = "取消";
+

@@ -229,6 +229,7 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
 {
     if (self.assetCollection) {
         PHFetchOptions *options = [PHFetchOptions new];
+        // options.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:YES]];
         
         switch (self.imagePickerController.mediaType) {
             case QBImagePickerMediaTypeImage:
@@ -655,6 +656,82 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
     CGFloat width = (CGRectGetWidth(self.view.frame) - 2.0 * (numberOfColumns - 1)) / numberOfColumns;
     
     return CGSizeMake(width, width);
+}
+
+- (IBAction)longPressedAction:(id)sender
+{
+    
+    switch (((UILongPressGestureRecognizer *)sender).state) {
+        case UIGestureRecognizerStateEnded: {
+            //NSLog(@"長押し終了時");
+        }   break;
+            
+        case UIGestureRecognizerStateBegan: {
+            
+            if (!self.imagePickerController.allowsMultipleSelection)
+                break;
+            
+            NSInteger maxCount = self.imagePickerController.maximumNumberOfSelection;
+            if (maxCount == 0) maxCount = NSIntegerMax;
+            NSUInteger  cellCount = self.fetchResult.count;
+            
+            NSMutableArray *assets = [NSMutableArray new];
+            [self.fetchResult enumerateObjectsUsingBlock:^(PHAsset *asset, NSUInteger idx, BOOL *stop) {
+                [assets addObject:asset];
+            }];
+            NSMutableOrderedSet *selectedArray  = self.imagePickerController.selectedAssets.mutableCopy;
+            NSMutableOrderedSet *nonSelectedArray = assets.mutableCopy;
+            NSMutableOrderedSet *tmpArray = self.imagePickerController.selectedAssets.mutableCopy;
+            [tmpArray removeObjectsInArray:assets];
+            [selectedArray removeObjectsInArray:[tmpArray array]];
+            [nonSelectedArray removeObjectsInArray:[selectedArray array]];
+            
+            UIAlertController *alertController =
+            [UIAlertController alertControllerWithTitle:NSLocalizedStringFromTableInBundle(@"sheet.title", @"QBImagePicker", self.imagePickerController.assetBundle, nil)
+                                                message:NSLocalizedStringFromTableInBundle(@"sheet.message", @"QBImagePicker", self.imagePickerController.assetBundle, nil)
+                                         preferredStyle:UIAlertControllerStyleActionSheet];
+            if (selectedArray.count <cellCount && self.imagePickerController.selectedAssets.count <maxCount)
+            {
+                [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedStringFromTableInBundle(@"sheet.select_all", @"QBImagePicker", self.imagePickerController.assetBundle, nil)
+                                                                    style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                                                                        
+                                                                        for (PHAsset *asset in nonSelectedArray)
+                                                                        {
+                                                                            NSUInteger index = [assets indexOfObject:asset];
+                                                                            NSIndexPath *indexPath = [NSIndexPath indexPathForItem:index inSection:0];
+                                                                            if (![self collectionView:self.collectionView shouldSelectItemAtIndexPath:indexPath])
+                                                                                continue;
+                                                                            
+                                                                            [self.imagePickerController.selectedAssets addObject:asset];
+                                                                            [self collectionView:self.collectionView didSelectItemAtIndexPath:indexPath];
+                                                                        }
+                                                                        [self.collectionView reloadData];
+                                                                    }]];
+            }
+            if (selectedArray.count >0)
+            {
+                [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedStringFromTableInBundle(@"sheet.deselect_all", @"QBImagePicker", self.imagePickerController.assetBundle, nil)
+                                                                    style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                                                                        for (PHAsset *asset in selectedArray)
+                                                                        {
+                                                                            NSUInteger index = [assets indexOfObject:asset];
+                                                                            NSIndexPath *indexPath = [NSIndexPath indexPathForItem:index inSection:0];
+                                                                            [self.imagePickerController.selectedAssets removeObject:asset];
+                                                                            [self collectionView:self.collectionView didDeselectItemAtIndexPath:indexPath];
+                                                                        }
+                                                                        [self.collectionView reloadData];
+                                                                    }]];
+            }
+            [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedStringFromTableInBundle(@"sheet.cancel", @"QBImagePicker", self.imagePickerController.assetBundle, nil)
+                                                                style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+                                                                }]];
+            [self presentViewController:alertController animated:YES completion:nil];
+            
+        }   break;
+            
+        default:
+            break;
+    }
 }
 
 @end
