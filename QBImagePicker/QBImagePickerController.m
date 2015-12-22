@@ -28,13 +28,15 @@
     
     if (self) {
         // Set default values
-        self.assetCollectionSubtypes = @[
-                                         @(PHAssetCollectionSubtypeSmartAlbumUserLibrary),
-                                         @(PHAssetCollectionSubtypeAlbumMyPhotoStream),
-                                         @(PHAssetCollectionSubtypeSmartAlbumPanoramas),
-                                         @(PHAssetCollectionSubtypeSmartAlbumVideos),
-                                         @(PHAssetCollectionSubtypeSmartAlbumBursts)
-                                         ];
+        self.assetCollectionSubtypes = nil;     // nil to include all subtypes
+//        Else, set subtypes to filter
+//        self.assetCollectionSubtypes = @[
+//                                         @(PHAssetCollectionSubtypeSmartAlbumUserLibrary),
+//                                         @(PHAssetCollectionSubtypeAlbumMyPhotoStream),
+//                                         @(PHAssetCollectionSubtypeSmartAlbumPanoramas),
+//                                         @(PHAssetCollectionSubtypeSmartAlbumVideos),
+//                                         @(PHAssetCollectionSubtypeSmartAlbumBursts)
+//                                         ];
         self.minimumNumberOfSelection = 1;
         self.numberOfColumnsInPortrait = 4;
         self.numberOfColumnsInLandscape = 7;
