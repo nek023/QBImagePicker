@@ -44,8 +44,8 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
     [self setUpToolbarItems];
     
     // Fetch user albums and smart albums
-    PHFetchResult *smartAlbums = [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeSmartAlbum subtype:PHAssetCollectionSubtypeAny options:nil];
-    PHFetchResult *userAlbums = [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeAlbum subtype:PHAssetCollectionSubtypeAny options:nil];
+    PHFetchResult *smartAlbums = [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeSmartAlbum subtype:PHAssetCollectionSubtypeAny options:self.fetchOptionsForCollection];
+    PHFetchResult *userAlbums = [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeAlbum subtype:PHAssetCollectionSubtypeAny options:self.fetchOptionsForCollection];
     self.fetchResults = @[smartAlbums, userAlbums];
     
     [self updateAssetCollections];
@@ -185,10 +185,12 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
         }
 
         // Create the Moments album
-        NSBundle *bundle = self.imagePickerController.assetBundle;
-        NSString *momentsTitle = NSLocalizedStringFromTableInBundle(@"moments.title", @"QBImagePicker", bundle, nil);
-        PHAssetCollection *momentsCollection = [PHAssetCollection transientAssetCollectionWithAssets:assets title:momentsTitle];
-        [assetCollections addObject:momentsCollection];
+        if (assets.count > 0) {
+            NSBundle *bundle = self.imagePickerController.assetBundle;
+            NSString *momentsTitle = NSLocalizedStringFromTableInBundle(@"moments.title", @"QBImagePicker", bundle, nil);
+            PHAssetCollection *momentsCollection = [PHAssetCollection transientAssetCollectionWithAssets:assets title:momentsTitle];
+            [assetCollections addObject:momentsCollection];
+        }
     }
         
     // Fetch smart albums
@@ -295,6 +297,12 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
         default:
             break;
     }
+    return options;
+}
+
+- (PHFetchOptions*)fetchOptionsForCollection {
+    PHFetchOptions *options = [PHFetchOptions new];
+    options.predicate = [NSPredicate predicateWithFormat:@"estimatedAssetCount > 0"];
     return options;
 }
 
