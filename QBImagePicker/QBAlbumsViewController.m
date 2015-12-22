@@ -151,28 +151,8 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
 
 - (void)updateAssetCollections
 {
-    // Filter albums
-    NSArray *assetCollectionSubtypes = self.imagePickerController.assetCollectionSubtypes;
-    NSMutableDictionary *smartAlbums = [NSMutableDictionary dictionaryWithCapacity:assetCollectionSubtypes.count];
-    NSMutableArray *userAlbums = [NSMutableArray array];
-    
-    for (PHFetchResult *fetchResult in self.fetchResults) {
-        [fetchResult enumerateObjectsUsingBlock:^(PHAssetCollection *assetCollection, NSUInteger index, BOOL *stop) {
-            PHAssetCollectionSubtype subtype = assetCollection.assetCollectionSubtype;
-            
-            if (subtype == PHAssetCollectionSubtypeAlbumRegular) {
-                [userAlbums addObject:assetCollection];
-            } else if ([assetCollectionSubtypes containsObject:@(subtype)]) {
-                if (!smartAlbums[@(subtype)]) {
-                    smartAlbums[@(subtype)] = [NSMutableArray array];
-                }
-                [smartAlbums[@(subtype)] addObject:assetCollection];
-            }
-        }];
-    }
-    
     NSMutableArray *assetCollections = [NSMutableArray array];
-
+    
     // Add Moments as an album, if to include
     if (self.imagePickerController.includeMoments) {
         NSMutableArray *assets = [NSMutableArray array];
@@ -183,7 +163,7 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
                 [assets addObject:asset];
             }
         }
-
+        
         // Create the Moments album
         if (assets.count > 0) {
             NSBundle *bundle = self.imagePickerController.assetBundle;
@@ -192,20 +172,23 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
             [assetCollections addObject:momentsCollection];
         }
     }
-        
-    // Fetch smart albums
-    for (NSNumber *assetCollectionSubtype in assetCollectionSubtypes) {
-        NSArray *collections = smartAlbums[assetCollectionSubtype];
-        
-        if (collections) {
-            [assetCollections addObjectsFromArray:collections];
-        }
+
+    // Filter albums that are not in assetCollectionSubtypes
+    NSArray *assetCollectionSubtypes = self.imagePickerController.assetCollectionSubtypes;
+    for (PHFetchResult *fetchResult in self.fetchResults) {
+        [fetchResult enumerateObjectsUsingBlock:^(PHAssetCollection *assetCollection, NSUInteger index, BOOL *stop) {
+            if (assetCollectionSubtypes == nil) {
+                // If no assetCollectionSubtypes declared, just add
+                [assetCollections addObject:assetCollection];
+            } else {
+                PHAssetCollectionSubtype subtype = assetCollection.assetCollectionSubtype;
+                NSLog(@"%li", (long)subtype);
+                if ([assetCollectionSubtypes containsObject:@(subtype)]) {
+                    [assetCollections addObject:assetCollection];
+                }
+            }
+        }];
     }
-    
-    // Fetch user albums
-    [userAlbums enumerateObjectsUsingBlock:^(PHAssetCollection *assetCollection, NSUInteger index, BOOL *stop) {
-        [assetCollections addObject:assetCollection];
-    }];
     
     self.assetCollections = assetCollections;
 }
