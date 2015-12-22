@@ -19,3 +19,5 @@
 
 "assets.toolbar.item-selected" = "%ld 項目を選択中";
 "assets.toolbar.items-selected" = "%ld 項目を選択中";
+
+"moments.title" = "Moments";

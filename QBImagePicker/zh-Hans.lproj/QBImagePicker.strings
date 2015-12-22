@@ -19,3 +19,5 @@
 
 "assets.toolbar.item-selected" = "选择了%ld项";
 "assets.toolbar.items-selected" = "选择了%ld项";
+
+"moments.title" = "Moments";
