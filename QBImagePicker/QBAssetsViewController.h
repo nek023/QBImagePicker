@@ -10,10 +10,12 @@
 
 @class QBImagePickerController;
 @class PHAssetCollection;
+@class ALAssetsGroup;
 
 @interface QBAssetsViewController : UICollectionViewController
 
 @property (nonatomic, weak) QBImagePickerController *imagePickerController;
 @property (nonatomic, strong) PHAssetCollection *assetCollection;
+@property (nonatomic, strong) ALAssetsGroup *assetsGroup;
 
 @end
