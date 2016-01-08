@@ -7,10 +7,10 @@
 //
 
 #import "QBImagePickerController.h"
-#import <Photos/Photos.h>
 
 // ViewControllers
 #import "QBAlbumsViewController.h"
+
 
 @interface QBImagePickerController ()
 
@@ -22,19 +22,24 @@
 
 @implementation QBImagePickerController
 
++ (BOOL) usingPhotosLibrary {
+
+    return (NSFoundationVersionNumber >= NSFoundationVersionNumber_iOS_8_0);
+}
+
 - (instancetype)init
 {
     self = [super init];
     
     if (self) {
-        // Set default values
-        self.assetCollectionSubtypes = @[
-                                         @(PHAssetCollectionSubtypeSmartAlbumUserLibrary),
-                                         @(PHAssetCollectionSubtypeAlbumMyPhotoStream),
-                                         @(PHAssetCollectionSubtypeSmartAlbumPanoramas),
-                                         @(PHAssetCollectionSubtypeSmartAlbumVideos),
-                                         @(PHAssetCollectionSubtypeSmartAlbumBursts)
-                                         ];
+        
+        if ([QBImagePickerController usingPhotosLibrary] == NO) {
+    
+            self.assetsLibrary = [ALAssetsLibrary new];
+        }
+        
+        self.collectionSubtypes = @[@(QBImagePickerCollectionSubtypeAll)];
+        
         self.minimumNumberOfSelection = 1;
         self.numberOfColumnsInPortrait = 4;
         self.numberOfColumnsInLandscape = 7;
