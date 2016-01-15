@@ -49,12 +49,12 @@
 }
 
 - (void)createLoadingIndicator {
-    const static int indicatorSide = 77;
-    const static int topOffset = 32;
+    const static NSInteger indicatorSide = 77;
+    const static CGFloat topOffset = 32;
     float screenWidth = CGRectGetWidth(self.view.frame);
     float screenHeight = CGRectGetHeight(self.view.frame);
 
-    UIActivityIndicatorView *activityIndicator= [[UIActivityIndicatorView alloc]initWithFrame:CGRectMake((screenWidth - indicatorSide) / 2, (screenHeight - indicatorSide) / 2 - topOffset, indicatorSide, indicatorSide)];
+    UIActivityIndicatorView *activityIndicator = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake((screenWidth - indicatorSide) / 2, (screenHeight - indicatorSide) / 2 - topOffset, indicatorSide, indicatorSide)];
     activityIndicator.layer.cornerRadius = 10;
     activityIndicator.opaque = NO;
     activityIndicator.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.8];
