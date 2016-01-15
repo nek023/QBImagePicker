@@ -51,8 +51,8 @@
 - (void)createLoadingIndicator {
     const static NSInteger indicatorSide = 77;
     const static CGFloat topOffset = 32;
-    float screenWidth = CGRectGetWidth(self.view.frame);
-    float screenHeight = CGRectGetHeight(self.view.frame);
+    CGFloat screenWidth = CGRectGetWidth(self.view.frame);
+    CGFloat screenHeight = CGRectGetHeight(self.view.frame);
 
     UIActivityIndicatorView *activityIndicator = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake((screenWidth - indicatorSide) / 2, (screenHeight - indicatorSide) / 2 - topOffset, indicatorSide, indicatorSide)];
     activityIndicator.layer.cornerRadius = 10;
