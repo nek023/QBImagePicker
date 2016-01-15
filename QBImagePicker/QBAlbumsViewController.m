@@ -25,7 +25,6 @@
 @interface QBAlbumsViewController ()
 
 @property (nonatomic, strong) IBOutlet UIBarButtonItem *doneButton;
-
 @property (nonatomic, copy) NSArray *assetsGroups;
 
 @end
@@ -47,6 +46,21 @@
                                              selector:@selector(assetsLibraryChanged:)
                                                  name:ALAssetsLibraryChangedNotification
                                                object:nil];
+}
+
+- (void)createLoadingIndicator {
+    const static int indicatorSide = 77;
+    const static int topOffset = 32;
+    float screenWidth = CGRectGetWidth(self.view.frame);
+    float screenHeight = CGRectGetHeight(self.view.frame);
+
+    UIActivityIndicatorView *activityIndicator= [[UIActivityIndicatorView alloc]initWithFrame:CGRectMake((screenWidth - indicatorSide) / 2, (screenHeight - indicatorSide) / 2 - topOffset, indicatorSide, indicatorSide)];
+    activityIndicator.layer.cornerRadius = 10;
+    activityIndicator.opaque = NO;
+    activityIndicator.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.8];
+    activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
+    [self.view addSubview: activityIndicator];
+    [activityIndicator startAnimating];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -110,6 +124,8 @@
 
 - (IBAction)done:(id)sender
 {
+    self.doneButton.enabled = NO;
+    [self createLoadingIndicator];
     if ([self.imagePickerController.delegate respondsToSelector:@selector(qb_imagePickerController:didSelectAssets:)]) {
         [self fetchAssetsFromSelectedAssetURLsWithCompletion:^(NSArray *assets) {
             [self.imagePickerController.delegate qb_imagePickerController:self.imagePickerController didSelectAssets:assets];
