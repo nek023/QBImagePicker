@@ -15,7 +15,6 @@
 
 @property (nonatomic, strong) UINavigationController *albumsNavigationController;
 
-@property (nonatomic, strong) ALAssetsLibrary *assetsLibrary;
 @property (nonatomic, strong, readwrite) NSMutableOrderedSet *selectedAssetURLs;
 @property (nonatomic, strong) NSBundle *assetBundle;
 
@@ -27,6 +26,15 @@
 {
     return ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary] &&
             [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeSavedPhotosAlbum]);
+}
+
+-(void)viewDidLoad {
+    [super viewDidLoad];
+
+    //If assets library hasn't been injected yet, then do so now
+    if(!_assetsLibrary){
+        _assetsLibrary = [ALAssetsLibrary new];
+    }
 }
 
 - (instancetype)init
@@ -44,8 +52,7 @@
         self.minimumNumberOfSelection = 1;
         self.numberOfColumnsInPortrait = 4;
         self.numberOfColumnsInLandscape = 7;
-        
-        self.assetsLibrary = [ALAssetsLibrary new];
+
         self.selectedAssetURLs = [NSMutableOrderedSet orderedSet];
         
         // Get asset bundle

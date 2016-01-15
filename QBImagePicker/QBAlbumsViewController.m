@@ -25,7 +25,6 @@
 @interface QBAlbumsViewController ()
 
 @property (nonatomic, strong) IBOutlet UIBarButtonItem *doneButton;
-
 @property (nonatomic, copy) NSArray *assetsGroups;
 
 @end

@@ -186,10 +186,28 @@
 }
 
 
+- (void)createLoadingIndicator {
+    const static NSInteger indicatorSide = 77;
+    const static CGFloat topOffset = 32;
+    CGFloat screenWidth = CGRectGetWidth(self.view.frame);
+    CGFloat screenHeight = CGRectGetHeight(self.view.frame);
+
+    UIActivityIndicatorView *activityIndicator = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake((screenWidth - indicatorSide) / 2, (screenHeight - indicatorSide) / 2 - topOffset, indicatorSide, indicatorSide)];
+    activityIndicator.layer.cornerRadius = 10;
+    activityIndicator.opaque = NO;
+    activityIndicator.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.8];
+    activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
+    [self.view addSubview: activityIndicator];
+    [activityIndicator startAnimating];
+}
+
+
 #pragma mark - Actions
 
 - (IBAction)done:(id)sender
 {
+    self.doneButton.enabled = NO;
+    [self createLoadingIndicator];
     if ([self.imagePickerController.delegate respondsToSelector:@selector(qb_imagePickerController:didSelectAssets:)]) {
         [self fetchAssetsFromSelectedAssetURLsWithCompletion:^(NSArray *assets) {
             [self.imagePickerController.delegate qb_imagePickerController:self.imagePickerController didSelectAssets:assets];
