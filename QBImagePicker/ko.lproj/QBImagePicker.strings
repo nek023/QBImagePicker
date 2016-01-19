@@ -1,0 +1,21 @@
+/* 
+  QBImagePicker.strings
+  QBImagePicker
+
+  Created by Mark MinYoung Kim on 2016/01/19.
+  Copyright (c) 2015 Katsuma Tanaka. All rights reserved.
+*/
+
+"albums.title" = "사진첩";
+
+"assets.footer.photo" = "%ld개의 사진";
+"assets.footer.photos" = "%ld개의 사진";
+"assets.footer.video" = "%ld개의 비디오";
+"assets.footer.videos" = "%ld개의 비디오";
+"assets.footer.photo-and-video" = "%ld개의 사진, %ld개의 비디오";
+"assets.footer.photos-and-video" = "%ld개의 사진, %ld개의 비디오";
+"assets.footer.photo-and-videos" = "%ld개의 사진, %ld개의 비디오";
+"assets.footer.photos-and-videos" = "%ld개의 사진, %ld개의 비디오";
+
+"assets.toolbar.item-selected" = "%ld개가 선택됨";
+"assets.toolbar.items-selected" = "%ld개가 선택됨";
