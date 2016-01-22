@@ -187,8 +187,49 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
         [assetCollections addObject:assetCollection];
     }];
     
-    self.assetCollections = [assetCollections filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(PHAssetCollection * _Nonnull evaluatedObject, NSDictionary<NSString *,id> * _Nullable bindings) {
-        return YES;
+    self.assetCollections = [assetCollections filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(PHAssetCollection * _Nonnull assetCollection, NSDictionary<NSString *,id> * _Nullable bindings) {
+        
+        if (!self.imagePickerController.excludeEmptyAlbums)
+        {
+            return YES;
+        }
+        
+        PHFetchOptions *options = [PHFetchOptions new];
+        NSPredicate *mediaTypePredicate;
+        switch (self.imagePickerController.mediaType) {
+            case QBImagePickerMediaTypeImage:
+                mediaTypePredicate = [NSPredicate predicateWithFormat:@"mediaType == %ld", PHAssetMediaTypeImage];
+                break;
+                
+            case QBImagePickerMediaTypeVideo:
+                mediaTypePredicate = [NSPredicate predicateWithFormat:@"mediaType == %ld", PHAssetMediaTypeVideo];
+                break;
+                
+            default:
+                break;
+        }
+        
+        NSPredicate *mediaSubTtypePredicate;
+        if (self.imagePickerController.assetMediaSubtypes)
+        {
+            mediaSubTtypePredicate = [NSPredicate predicateWithFormat:@"mediaSubtype in %@ ", self.imagePickerController.assetMediaSubtypes];
+        }
+        NSMutableArray *predicates = [@[] mutableCopy];
+        if (mediaTypePredicate)
+        {
+            [predicates addObject:mediaTypePredicate];
+        }
+        if (mediaSubTtypePredicate)
+        {
+            [predicates addObject:mediaSubTtypePredicate];
+        }
+        if (predicates.count > 0)
+        {
+            NSCompoundPredicate *preidcate = [NSCompoundPredicate andPredicateWithSubpredicates:predicates];
+            options.predicate = preidcate;
+        }
+        PHFetchResult *fetchResult = [PHAsset fetchAssetsInAssetCollection:assetCollection options:options];
+        return fetchResult.count > 0;
     }]];
 }
 
