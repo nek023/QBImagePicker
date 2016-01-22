@@ -187,7 +187,9 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
         [assetCollections addObject:assetCollection];
     }];
     
-    self.assetCollections = assetCollections;
+    self.assetCollections = [assetCollections filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(PHAssetCollection * _Nonnull evaluatedObject, NSDictionary<NSString *,id> * _Nullable bindings) {
+        return YES;
+    }]];
 }
 
 - (UIImage *)placeholderImageWithSize:(CGSize)size
@@ -272,6 +274,11 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
     return self.assetCollections.count;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     QBAlbumCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AlbumCell" forIndexPath:indexPath];
@@ -282,19 +289,40 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
     PHAssetCollection *assetCollection = self.assetCollections[indexPath.row];
     
     PHFetchOptions *options = [PHFetchOptions new];
-    
+    NSPredicate *mediaTypePredicate;
     switch (self.imagePickerController.mediaType) {
         case QBImagePickerMediaTypeImage:
-            options.predicate = [NSPredicate predicateWithFormat:@"mediaType == %ld", PHAssetMediaTypeImage];
+            mediaTypePredicate = [NSPredicate predicateWithFormat:@"mediaType == %ld", PHAssetMediaTypeImage];
             break;
             
         case QBImagePickerMediaTypeVideo:
-            options.predicate = [NSPredicate predicateWithFormat:@"mediaType == %ld", PHAssetMediaTypeVideo];
+            mediaTypePredicate = [NSPredicate predicateWithFormat:@"mediaType == %ld", PHAssetMediaTypeVideo];
             break;
             
         default:
             break;
     }
+    
+    NSPredicate *mediaSubTtypePredicate;
+    if (self.imagePickerController.assetMediaSubtypes)
+    {
+        mediaSubTtypePredicate = [NSPredicate predicateWithFormat:@"mediaSubtype in %@ ", self.imagePickerController.assetMediaSubtypes];
+    }
+    NSMutableArray *predicates = [@[] mutableCopy];
+    if (mediaTypePredicate)
+    {
+        [predicates addObject:mediaTypePredicate];
+    }
+    if (mediaSubTtypePredicate)
+    {
+        [predicates addObject:mediaSubTtypePredicate];
+    }
+    if (predicates.count > 0)
+    {
+        NSCompoundPredicate *preidcate = [NSCompoundPredicate andPredicateWithSubpredicates:predicates];
+        options.predicate = preidcate;
+    }
+
     
     PHFetchResult *fetchResult = [PHAsset fetchAssetsInAssetCollection:assetCollection options:options];
     PHImageManager *imageManager = [PHImageManager defaultManager];

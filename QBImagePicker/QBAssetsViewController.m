@@ -229,18 +229,38 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
 {
     if (self.assetCollection) {
         PHFetchOptions *options = [PHFetchOptions new];
-        
+        NSPredicate *mediaTypePredicate;
         switch (self.imagePickerController.mediaType) {
             case QBImagePickerMediaTypeImage:
-                options.predicate = [NSPredicate predicateWithFormat:@"mediaType == %ld", PHAssetMediaTypeImage];
+                mediaTypePredicate = [NSPredicate predicateWithFormat:@"mediaType == %ld", PHAssetMediaTypeImage];
                 break;
                 
             case QBImagePickerMediaTypeVideo:
-                options.predicate = [NSPredicate predicateWithFormat:@"mediaType == %ld", PHAssetMediaTypeVideo];
+                mediaTypePredicate = [NSPredicate predicateWithFormat:@"mediaType == %ld", PHAssetMediaTypeVideo];
                 break;
                 
             default:
                 break;
+        }
+        
+        NSPredicate *mediaSubTtypePredicate;
+        if (self.imagePickerController.assetMediaSubtypes)
+        {
+            mediaSubTtypePredicate = [NSPredicate predicateWithFormat:@"mediaSubtype in %@ ", self.imagePickerController.assetMediaSubtypes];
+        }
+        NSMutableArray *predicates = [@[] mutableCopy];
+        if (mediaTypePredicate)
+        {
+            [predicates addObject:mediaTypePredicate];
+        }
+        if (mediaSubTtypePredicate)
+        {
+            [predicates addObject:mediaSubTtypePredicate];
+        }
+        if (predicates.count > 0)
+        {
+            NSCompoundPredicate *preidcate = [NSCompoundPredicate andPredicateWithSubpredicates:predicates];
+            options.predicate = preidcate;
         }
         
         self.fetchResult = [PHAsset fetchAssetsInAssetCollection:self.assetCollection options:options];
@@ -539,6 +559,7 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
                 label.text = [NSString stringWithFormat:format, numberOfVideos];
             }
                 break;
+                
         }
         
         return footerView;

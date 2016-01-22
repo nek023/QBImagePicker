@@ -27,7 +27,8 @@
 {
     QBImagePickerController *imagePickerController = [QBImagePickerController new];
     imagePickerController.delegate = self;
-    imagePickerController.mediaType = QBImagePickerMediaTypeAny;
+    imagePickerController.mediaType = QBImagePickerMediaTypeImage;
+    imagePickerController.assetMediaSubtypes = @[@(PHAssetMediaSubtypePhotoLive)];
     imagePickerController.allowsMultipleSelection = (indexPath.section == 1);
     imagePickerController.showsNumberOfSelectedAssets = YES;
     
