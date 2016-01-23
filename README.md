@@ -7,8 +7,6 @@ A clone of UIImagePickerController with multiple selection support.
 ![screenshot01.png](screenshot01.png)
 ![screenshot02.png](screenshot02.png)
 
-
-
 ## Features
 
 - Allows multiple selection of photos and videos
@@ -18,16 +16,13 @@ A clone of UIImagePickerController with multiple selection support.
 - Supports both portrait mode and landscape mode
 - Compatible with iPhone 6/6Plus, and iPad
 
-
-
 ## Requirements
 
 - Version `>= 3.0.0` : iOS 8 or later (Using PhotoKit)
 - Version `< 3.0.0` : iOS 6 or later (Using AssetsLibrary)
 
-
-
 ### Example
+&nbsp;
 ```objective-c
 QBImagePickerController *imagePickerController = [QBImagePickerController new];
 imagePickerController.delegate = self;
@@ -38,7 +33,6 @@ imagePickerController.showsNumberOfSelectedAssets = YES;
 [self presentViewController:imagePickerController animated:YES completion:NULL];
 ```
 
-
 ## Installation
 
 ### CocoaPods
@@ -47,17 +41,13 @@ imagePickerController.showsNumberOfSelectedAssets = YES;
 2. Run `pod install`
 3. Add `#import <QBImagePickerController/QBImagePickerController.h>` to your code
 
-
 ### Carthage
 
 1. Add `github "questbeat/QBImagePicker"` to Cartfile
 2. Run `carthage update`
 3. Add `#import <QBImagePicker/QBImagePicker.h>` to your code
 
-
-
 ## Usage
-
 ### Basic
 
 1. Implement `QBImagePickerControllerDelegate` methods
@@ -65,7 +55,8 @@ imagePickerController.showsNumberOfSelectedAssets = YES;
 3. Set `self` to the `delegate` property
 4. Show the picker by using `presentViewController:animated:completion:`
 
-### Example
+### Example 
+&nbsp;
 ```objective-c
 QBImagePickerController *imagePickerController = [QBImagePickerController new];
 imagePickerController.delegate = self;
@@ -73,23 +64,20 @@ imagePickerController.delegate = self;
 [self presentViewController:imagePickerController animated:YES completion:NULL];
 ```
 
-
 ### Delegate Methods
-
 #### Getting the selected assets
 
 Implement `qb_imagePickerController:didFinishPickingAssets:` to get the assets selected by the user.  
 This method will be called when the user finishes picking assets.
+&nbsp;
 ```objective-c
-    - (void)qb_imagePickerController:(QBImagePickerController *)imagePickerController didFinishPickingAssets:(NSArray *)assets {
-        for (PHAsset *asset in assets) {
-            // Do something with the asset
-        }
-
-        [self dismissViewControllerAnimated:YES completion:NULL];
+- (void)qb_imagePickerController:(QBImagePickerController *)imagePickerController didFinishPickingAssets:(NSArray *)assets {
+    for (PHAsset *asset in assets) {
+        // Do something with the asset
     }
+    [self dismissViewControllerAnimated:YES completion:NULL];
+}
 ```
-
 
 #### Getting notified when the user cancels
 
@@ -100,10 +88,10 @@ Implement `qb_imagePickerControllerDidCancel:` to get notified when the user hit
 }
 ```
 
-
 #### Getting notified when the selection is changed
 
 You can handle the change of user's selection by implementing these methods.
+&nbsp;
 ```objective-c
 - (BOOL)qb_imagePickerController:(QBImagePickerController *)imagePickerController shouldSelectAsset:(PHAsset *)asset;
 - (void)qb_imagePickerController:(QBImagePickerController *)imagePickerController didSelectAsset:(PHAsset *)asset;
