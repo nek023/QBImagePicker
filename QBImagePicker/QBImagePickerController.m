@@ -13,6 +13,7 @@
 #import "QBAlbumsViewController.h"
 
 @interface QBImagePickerController ()
+@property (nonatomic, strong) PHFetchOptions *defaultFetchOptions;
 
 @property (nonatomic, strong) UINavigationController *albumsNavigationController;
 
@@ -73,6 +74,54 @@
     [navigationController didMoveToParentViewController:self];
     
     self.albumsNavigationController = navigationController;
+}
+
+- (PHFetchOptions *)fetchOptions
+{
+    if (!_fetchOptions)
+    {
+        if (self.defaultFetchOptions)
+        {
+            return self.defaultFetchOptions;
+        }
+        PHFetchOptions *options = [PHFetchOptions new];
+        NSPredicate *mediaTypePredicate;
+        switch (self.mediaType) {
+            case QBImagePickerMediaTypeImage:
+                mediaTypePredicate = [NSPredicate predicateWithFormat:@"mediaType == %ld", PHAssetMediaTypeImage];
+                break;
+                
+            case QBImagePickerMediaTypeVideo:
+                mediaTypePredicate = [NSPredicate predicateWithFormat:@"mediaType == %ld", PHAssetMediaTypeVideo];
+                break;
+                
+            default:
+                break;
+        }
+        
+        NSPredicate *mediaSubTtypePredicate;
+        if (self.assetMediaSubtypes)
+        {
+            mediaSubTtypePredicate = [NSPredicate predicateWithFormat:@"mediaSubtype in %@ ", self.assetMediaSubtypes];
+        }
+        NSMutableArray *predicates = [@[] mutableCopy];
+        if (mediaTypePredicate)
+        {
+            [predicates addObject:mediaTypePredicate];
+        }
+        if (mediaSubTtypePredicate)
+        {
+            [predicates addObject:mediaSubTtypePredicate];
+        }
+        if (predicates.count > 0)
+        {
+            NSCompoundPredicate *preidcate = [NSCompoundPredicate andPredicateWithSubpredicates:predicates];
+            options.predicate = preidcate;
+        }
+        self.defaultFetchOptions = options;
+        return options;
+    }
+    return _fetchOptions;
 }
 
 @end

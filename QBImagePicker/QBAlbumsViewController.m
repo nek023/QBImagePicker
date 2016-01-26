@@ -194,40 +194,7 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
             return YES;
         }
         
-        PHFetchOptions *options = [PHFetchOptions new];
-        NSPredicate *mediaTypePredicate;
-        switch (self.imagePickerController.mediaType) {
-            case QBImagePickerMediaTypeImage:
-                mediaTypePredicate = [NSPredicate predicateWithFormat:@"mediaType == %ld", PHAssetMediaTypeImage];
-                break;
-                
-            case QBImagePickerMediaTypeVideo:
-                mediaTypePredicate = [NSPredicate predicateWithFormat:@"mediaType == %ld", PHAssetMediaTypeVideo];
-                break;
-                
-            default:
-                break;
-        }
-        
-        NSPredicate *mediaSubTtypePredicate;
-        if (self.imagePickerController.assetMediaSubtypes)
-        {
-            mediaSubTtypePredicate = [NSPredicate predicateWithFormat:@"mediaSubtype in %@ ", self.imagePickerController.assetMediaSubtypes];
-        }
-        NSMutableArray *predicates = [@[] mutableCopy];
-        if (mediaTypePredicate)
-        {
-            [predicates addObject:mediaTypePredicate];
-        }
-        if (mediaSubTtypePredicate)
-        {
-            [predicates addObject:mediaSubTtypePredicate];
-        }
-        if (predicates.count > 0)
-        {
-            NSCompoundPredicate *preidcate = [NSCompoundPredicate andPredicateWithSubpredicates:predicates];
-            options.predicate = preidcate;
-        }
+        PHFetchOptions *options = self.imagePickerController.fetchOptions;
         PHFetchResult *fetchResult = [PHAsset fetchAssetsInAssetCollection:assetCollection options:options];
         return fetchResult.count > 0;
     }]];
