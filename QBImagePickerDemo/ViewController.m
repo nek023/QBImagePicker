@@ -30,6 +30,7 @@
     imagePickerController.mediaType = QBImagePickerMediaTypeAny;
     imagePickerController.allowsMultipleSelection = (indexPath.section == 1);
     imagePickerController.showsNumberOfSelectedAssets = YES;
+    imagePickerController.allowsShowingEmptyAlbums = NO;
     
     if (indexPath.section == 1) {
         switch (indexPath.row) {

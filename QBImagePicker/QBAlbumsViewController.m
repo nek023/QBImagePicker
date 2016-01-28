@@ -156,6 +156,20 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
     NSMutableDictionary *smartAlbums = [NSMutableDictionary dictionaryWithCapacity:assetCollectionSubtypes.count];
     NSMutableArray *userAlbums = [NSMutableArray array];
     
+    PHFetchOptions *options = [PHFetchOptions new];
+    switch (self.imagePickerController.mediaType) {
+        case QBImagePickerMediaTypeImage:
+            options.predicate = [NSPredicate predicateWithFormat:@"mediaType == %ld", PHAssetMediaTypeImage];
+            break;
+            
+        case QBImagePickerMediaTypeVideo:
+            options.predicate = [NSPredicate predicateWithFormat:@"mediaType == %ld", PHAssetMediaTypeVideo];
+            break;
+            
+        default:
+            break;
+    }
+    
     for (PHFetchResult *fetchResult in self.fetchResults) {
         [fetchResult enumerateObjectsUsingBlock:^(PHAssetCollection *assetCollection, NSUInteger index, BOOL *stop) {
             PHAssetCollectionSubtype subtype = assetCollection.assetCollectionSubtype;
@@ -174,17 +188,28 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
     NSMutableArray *assetCollections = [NSMutableArray array];
 
     // Fetch smart albums
+    __weak typeof(self) weakSelf = self;
     for (NSNumber *assetCollectionSubtype in assetCollectionSubtypes) {
         NSArray *collections = smartAlbums[assetCollectionSubtype];
         
         if (collections) {
-            [assetCollections addObjectsFromArray:collections];
+            [collections enumerateObjectsUsingBlock:^(PHAssetCollection *assetCollection, NSUInteger idx, BOOL *stop) {
+                PHFetchResult *fetchResult = [PHAsset fetchAssetsInAssetCollection:assetCollection options:options];
+                NSUInteger fetchCount = [fetchResult count];
+                if(weakSelf.imagePickerController.allowsShowingEmptyAlbums || (weakSelf.imagePickerController.allowsShowingEmptyAlbums == NO && fetchCount > 0)) {
+                    [assetCollections addObject:assetCollection];
+                }
+            }];
         }
     }
     
     // Fetch user albums
     [userAlbums enumerateObjectsUsingBlock:^(PHAssetCollection *assetCollection, NSUInteger index, BOOL *stop) {
-        [assetCollections addObject:assetCollection];
+        PHFetchResult *fetchResult = [PHAsset fetchAssetsInAssetCollection:assetCollection options:options];
+        NSUInteger fetchCount = [fetchResult count];
+        if(weakSelf.imagePickerController.allowsShowingEmptyAlbums || (weakSelf.imagePickerController.allowsShowingEmptyAlbums == NO && fetchCount > 0)) {
+            [assetCollections addObject:assetCollection];
+        }
     }];
     
     self.assetCollections = assetCollections;
