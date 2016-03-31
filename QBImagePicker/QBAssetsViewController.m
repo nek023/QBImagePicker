@@ -246,6 +246,7 @@
     __block NSUInteger numberOfPhotos = 0;
     __block NSUInteger numberOfVideos = 0;
     
+    
     [self.assetsGroup enumerateAssetsUsingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop) {
         if (result) {
             numberOfAssets++;
@@ -254,7 +255,9 @@
             if ([type isEqualToString:ALAssetTypePhoto]) numberOfPhotos++;
             else if ([type isEqualToString:ALAssetTypeVideo]) numberOfVideos++;
             
-            [assets addObject:result];
+//            [assets addObject:result];
+            //modify
+            [assets insertObject:result atIndex:0];
         }
     }];
     
