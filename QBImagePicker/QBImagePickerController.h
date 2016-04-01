@@ -45,7 +45,7 @@ typedef NS_ENUM(NSUInteger, QBImagePickerControllerFilterType) {
 @property (nonatomic, assign) NSUInteger numberOfColumnsInPortrait;
 @property (nonatomic, assign) NSUInteger numberOfColumnsInLandscape;
 
-@property (nonatomic, strong, readonly) NSMutableOrderedSet *selectedAssetURLs;
+@property (nonatomic, strong) NSMutableOrderedSet *selectedAssetURLs;
 
 @property (nonatomic, assign) BOOL showsCancelButton __attribute__((deprecated));
 
