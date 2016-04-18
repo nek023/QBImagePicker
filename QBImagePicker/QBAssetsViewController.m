@@ -46,8 +46,10 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
     
     NSMutableArray *indexPaths = [NSMutableArray arrayWithCapacity:allLayoutAttributes.count];
     for (UICollectionViewLayoutAttributes *layoutAttributes in allLayoutAttributes) {
-        NSIndexPath *indexPath = layoutAttributes.indexPath;
-        [indexPaths addObject:indexPath];
+        if (layoutAttributes.representedElementCategory == UICollectionElementCategoryCell) {
+            NSIndexPath *indexPath = layoutAttributes.indexPath;
+            [indexPaths addObject:indexPath];
+        }
     }
     return indexPaths;
 }
