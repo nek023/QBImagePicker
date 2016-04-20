@@ -6,7 +6,7 @@
   Copyright (c) 2016 Zdenek Topic. All rights reserved.
 */
 
-"albums.title" = "Photos";
+"albums.title" = "Fotky";
 
 "assets.footer.photo" = "%ld fotka";
 "assets.footer.photos" = "%ld fotek";
