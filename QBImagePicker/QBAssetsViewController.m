@@ -317,7 +317,7 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
         NSArray *assetsToStartCaching = [self assetsAtIndexPaths:addedIndexPaths];
         NSArray *assetsToStopCaching = [self assetsAtIndexPaths:removedIndexPaths];
         
-        CGSize itemSize = [(UICollectionViewFlowLayout *)self.collectionViewLayout itemSize];
+        CGSize itemSize = [self collectionView:self.collectionView layout:self.collectionViewLayout sizeForItemAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
         CGSize targetSize = CGSizeScale(itemSize, [[UIScreen mainScreen] scale]);
         
         [self.imageManager startCachingImagesForAssets:assetsToStartCaching
@@ -446,7 +446,7 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
     
     // Image
     PHAsset *asset = self.fetchResult[indexPath.item];
-    CGSize itemSize = [(UICollectionViewFlowLayout *)collectionView.collectionViewLayout itemSize];
+    CGSize itemSize = cell.frame.size;
     CGSize targetSize = CGSizeScale(itemSize, [[UIScreen mainScreen] scale]);
     
     [self.imageManager requestImageForAsset:asset
