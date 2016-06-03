@@ -40,6 +40,16 @@
     
     [self updateAssetsGroupsWithCompletion:^{
         [self.tableView reloadData];
+        
+        if (self.imagePickerController.assetsMode) {
+            
+            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"QBImagePicker" bundle:self.imagePickerController.assetBundle];
+            QBAssetsViewController *assetsViewController = [storyboard instantiateViewControllerWithIdentifier:@"AssetsViewController"];
+            assetsViewController.imagePickerController = self.imagePickerController;
+            assetsViewController.assetsGroup = self.assetsGroups[0];
+            [self.navigationController pushViewController:assetsViewController animated:NO];
+        }
+        
     }];
     
     // Register observer

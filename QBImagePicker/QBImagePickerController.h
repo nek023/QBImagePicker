@@ -51,4 +51,7 @@ typedef NS_ENUM(NSUInteger, QBImagePickerControllerFilterType) {
 
 + (BOOL)isAccessible;
 
+/** 直接进入默认相册(默认NO) */
+@property (nonatomic, assign) BOOL assetsMode;
+
 @end
