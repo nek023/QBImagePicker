@@ -102,11 +102,13 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
     [self updateDoneButtonState];
     [self updateSelectionInfo];
     [self.collectionView reloadData];
-    
+
     // Scroll to bottom
     if (self.fetchResult.count > 0 && self.isMovingToParentViewController && !self.disableScrollToBottom) {
-        NSIndexPath *indexPath = [NSIndexPath indexPathForItem:(self.fetchResult.count - 1) inSection:0];
-        [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionTop animated:NO];
+        [self.collectionView performBatchUpdates:^{} completion: ^(BOOL finished){
+            NSIndexPath *indexPath = [NSIndexPath indexPathForItem:(self.fetchResult.count - 1) inSection:0];
+            [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionTop animated:NO];
+        }];
     }
 }
 
