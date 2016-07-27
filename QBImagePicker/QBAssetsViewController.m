@@ -405,7 +405,9 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
                         [self.collectionView insertItemsAtIndexPaths:[insertedIndexes qb_indexPathsFromIndexesWithSection:0]];
                     }
                     
-                    NSIndexSet *changedIndexes = [collectionChanges changedIndexes];
+                    NSMutableIndexSet *changedIndexes = [collectionChanges changedIndexes].mutableCopy;
+                    // due https://rink.hockeyapp.net/manage/apps/45585/app_versions/44/crash_reasons/130056083
+                    [changedIndexes removeIndexes:removedIndexes];
                     if ([changedIndexes count]) {
                         [self.collectionView reloadItemsAtIndexPaths:[changedIndexes qb_indexPathsFromIndexesWithSection:0]];
                     }
