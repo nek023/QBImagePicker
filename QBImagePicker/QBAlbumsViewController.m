@@ -5,6 +5,10 @@
 //  Created by Katsuma Tanaka on 2015/04/03.
 //  Copyright (c) 2015 Katsuma Tanaka. All rights reserved.
 //
+//dimafr: check if iOS9 or later
+#define SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
+
+
 
 #import "QBAlbumsViewController.h"
 #import <Photos/Photos.h>
@@ -158,16 +162,26 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
     
     for (PHFetchResult *fetchResult in self.fetchResults) {
         [fetchResult enumerateObjectsUsingBlock:^(PHAssetCollection *assetCollection, NSUInteger index, BOOL *stop) {
-            PHAssetCollectionSubtype subtype = assetCollection.assetCollectionSubtype;
-            
-            if (subtype == PHAssetCollectionSubtypeAlbumRegular) {
-                [userAlbums addObject:assetCollection];
-            } else if ([assetCollectionSubtypes containsObject:@(subtype)]) {
-                if (!smartAlbums[@(subtype)]) {
-                    smartAlbums[@(subtype)] = [NSMutableArray array];
-                }
-                [smartAlbums[@(subtype)] addObject:assetCollection];
+        //dimafr check if album has pictures if yes display
+           PHFetchOptions *options;
+            if SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"9.0") {
+                 options.fetchLimit =1;
             }
+           
+            PHFetchResult *fetch = [PHAsset fetchAssetsInAssetCollection: assetCollection options:options];
+            if (fetch.firstObject != nil) {
+                [userAlbums addObject:assetCollection];
+            }
+            // dimafr old code
+            // PHAssetCollectionSubtype subtype = assetCollection.assetCollectionSubtype;
+            // if (subtype == PHAssetCollectionSubtypeAlbumRegular) {
+            //     [userAlbums addObject:assetCollection];
+            // } else if ([assetCollectionSubtypes containsObject:@(subtype)]) {
+            //     if (!smartAlbums[@(subtype)]) {
+            //         smartAlbums[@(subtype)] = [NSMutableArray array];
+            //     }
+            //     [smartAlbums[@(subtype)] addObject:assetCollection];
+            // }
         }];
     }
     
