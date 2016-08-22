@@ -454,7 +454,7 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
                                 contentMode:PHImageContentModeAspectFill
                                     options:nil
                               resultHandler:^(UIImage *result, NSDictionary *info) {
-                                  if (cell.tag == indexPath.item) {
+                                  if (cell.tag == indexPath.item && result != nil) {
                                       cell.imageView.image = result;
                                   }
                               }];
