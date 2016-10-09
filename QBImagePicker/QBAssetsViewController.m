@@ -188,13 +188,11 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
 }
 
 - (void) showLoader {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        UIActivityIndicatorView * activityIndicator = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
-        UIBarButtonItem * loadingView = [[UIBarButtonItem alloc] initWithCustomView:activityIndicator];
-        activityIndicator.color = [UIColor blackColor];
-        [self.navigationItem setRightBarButtonItem:loadingView animated:NO];
-        [activityIndicator startAnimating];
-    });
+    UIActivityIndicatorView * activityIndicator = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
+    UIBarButtonItem * loadingView = [[UIBarButtonItem alloc] initWithCustomView:activityIndicator];
+    activityIndicator.color = [UIColor blackColor];
+    [self.navigationItem setRightBarButtonItem:loadingView animated:NO];
+    [activityIndicator startAnimating];
 }
 
 
