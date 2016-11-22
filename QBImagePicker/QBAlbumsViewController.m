@@ -296,7 +296,8 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
     // Thumbnail
     PHAssetCollection *assetCollection = self.assetCollections[indexPath.row];
     
-    PHFetchResult *fetchResult = [PHAsset fetchAssetsInAssetCollection:assetCollection options:self.imagePickerController.fetchOptions];
+    PHFetchOptions* options = self.imagePickerController.fetchOptions;
+    PHFetchResult *fetchResult = [PHAsset fetchAssetsInAssetCollection:assetCollection options:options];
     PHImageManager *imageManager = [PHImageManager defaultManager];
     
     if (fetchResult.count >= 3) {
