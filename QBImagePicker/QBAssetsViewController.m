@@ -105,8 +105,10 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
     
     // Scroll to bottom
     if (self.fetchResult.count > 0 && self.isMovingToParentViewController && !self.disableScrollToBottom) {
-        NSIndexPath *indexPath = [NSIndexPath indexPathForItem:(self.fetchResult.count - 1) inSection:0];
-        [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionTop animated:NO];
+        [self.collectionView performBatchUpdates:^{} completion: ^(BOOL finished){
+            NSIndexPath *indexPath = [NSIndexPath indexPathForItem:(self.fetchResult.count - 1) inSection:0];
+            [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionTop animated:NO];
+        }];
     }
 }
 
@@ -261,17 +263,17 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
 
 - (BOOL)isMinimumSelectionLimitFulfilled
 {
-   return (self.imagePickerController.minimumNumberOfSelection <= self.imagePickerController.selectedAssets.count);
+    return (self.imagePickerController.minimumNumberOfSelection <= self.imagePickerController.selectedAssets.count);
 }
 
 - (BOOL)isMaximumSelectionLimitReached
 {
     NSUInteger minimumNumberOfSelection = MAX(1, self.imagePickerController.minimumNumberOfSelection);
-   
+    
     if (minimumNumberOfSelection <= self.imagePickerController.maximumNumberOfSelection) {
         return (self.imagePickerController.maximumNumberOfSelection <= self.imagePickerController.selectedAssets.count);
     }
-   
+    
     return NO;
 }
 
