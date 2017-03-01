@@ -19,3 +19,10 @@
 
 "assets.toolbar.item-selected" = "%ld items seleccionados";
 "assets.toolbar.items-selected" = "%ld items seleccionados";
+
+"sheet.title" = "title";
+"sheet.message" = "masaje";
+"sheet.select_all" = "seleccionar todo";
+"sheet.deselect_all" = "anular la selección de todos";
+"sheet.cancel" = "cancel";
+

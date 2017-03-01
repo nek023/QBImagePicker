@@ -19,3 +19,10 @@
 
 "assets.toolbar.item-selected" = "%ld 項目を選択中";
 "assets.toolbar.items-selected" = "%ld 項目を選択中";
+
+"sheet.title" = "タイトル";
+"sheet.message" = "メッセージ";
+"sheet.select_all" = "全選択";
+"sheet.deselect_all" = "全解除";
+"sheet.cancel" = "キャンセル";
+

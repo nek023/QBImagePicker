@@ -77,4 +77,20 @@
     [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
+- (BOOL)qb_imagePickerController:(QBImagePickerController *)imagePickerController shouldSelectAsset:(PHAsset *)asset
+{
+    NSLog(@"shouldSelectAsset");
+    return YES;
+}
+
+- (void)qb_imagePickerController:(QBImagePickerController *)imagePickerController didSelectAsset:(PHAsset *)asset
+{
+    NSLog(@"didSelectAsset");
+}
+
+- (void)qb_imagePickerController:(QBImagePickerController *)imagePickerController didDeselectAsset:(PHAsset *)asset
+{
+    NSLog(@"didDeselectAsset");
+}
+
 @end

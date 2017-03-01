@@ -19,3 +19,10 @@
 
 "assets.toolbar.item-selected" = "%ld zaznaczona rzecz";
 "assets.toolbar.items-selected" = "Zaznaczonych rzeczy: %ld";
+
+"sheet.title" = "tytuł";
+"sheet.message" = "masaż";
+"sheet.select_all" = "zaznacz wszystko";
+"sheet.deselect_all" = "usunąć zaznaczenie wszystkich";
+"sheet.cancel" = "cancel";
+
