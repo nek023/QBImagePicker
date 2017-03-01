@@ -39,15 +39,17 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
 
 @implementation UICollectionView (Convenience)
 
-- (NSArray *)qb_indexPathsForElementsInRect:(CGRect)rect
+- (NSArray *)qb_indexPathsForCellsInRect:(CGRect)rect
 {
     NSArray *allLayoutAttributes = [self.collectionViewLayout layoutAttributesForElementsInRect:rect];
     if (allLayoutAttributes.count == 0) { return nil; }
     
     NSMutableArray *indexPaths = [NSMutableArray arrayWithCapacity:allLayoutAttributes.count];
     for (UICollectionViewLayoutAttributes *layoutAttributes in allLayoutAttributes) {
-        NSIndexPath *indexPath = layoutAttributes.indexPath;
-        [indexPaths addObject:indexPath];
+        if (layoutAttributes.representedElementCategory == UICollectionElementCategoryCell) {
+            NSIndexPath *indexPath = layoutAttributes.indexPath;
+            [indexPaths addObject:indexPath];
+        }
     }
     return indexPaths;
 }
@@ -311,10 +313,10 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
         NSMutableArray *removedIndexPaths = [NSMutableArray array];
         
         [self computeDifferenceBetweenRect:self.previousPreheatRect andRect:preheatRect addedHandler:^(CGRect addedRect) {
-            NSArray *indexPaths = [self.collectionView qb_indexPathsForElementsInRect:addedRect];
+            NSArray *indexPaths = [self.collectionView qb_indexPathsForCellsInRect:addedRect];
             [addedIndexPaths addObjectsFromArray:indexPaths];
         } removedHandler:^(CGRect removedRect) {
-            NSArray *indexPaths = [self.collectionView qb_indexPathsForElementsInRect:removedRect];
+            NSArray *indexPaths = [self.collectionView qb_indexPathsForCellsInRect:removedRect];
             [removedIndexPaths addObjectsFromArray:indexPaths];
         }];
         
