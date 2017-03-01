@@ -19,3 +19,5 @@
 
 "assets.toolbar.item-selected" = "%ld zaznaczona rzecz";
 "assets.toolbar.items-selected" = "Zaznaczonych rzeczy: %ld";
+
+"moments.title" = "Moments";

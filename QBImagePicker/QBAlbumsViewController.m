@@ -173,6 +173,24 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
     
     NSMutableArray *assetCollections = [NSMutableArray array];
 
+    // Add Moments as an album, if to include
+    if (self.imagePickerController.includeMoments) {
+        NSMutableArray *assets = [NSMutableArray array];
+        PHFetchResult *fetchResult = [PHAssetCollection fetchMomentsWithOptions:nil];
+        for (PHAssetCollection *aMomentsCollection in fetchResult) {
+            PHFetchResult *assetsFetchResults = [PHAsset fetchAssetsInAssetCollection:aMomentsCollection options:self.fetchOptions];
+            for (PHAsset *asset in assetsFetchResults) {
+                [assets addObject:asset];
+            }
+        }
+
+        // Create the Moments album
+        NSBundle *bundle = self.imagePickerController.assetBundle;
+        NSString *momentsTitle = NSLocalizedStringFromTableInBundle(@"moments.title", @"QBImagePicker", bundle, nil);
+        PHAssetCollection *momentsCollection = [PHAssetCollection transientAssetCollectionWithAssets:assets title:momentsTitle];
+        [assetCollections addObject:momentsCollection];
+    }
+        
     // Fetch smart albums
     for (NSNumber *assetCollectionSubtype in assetCollectionSubtypes) {
         NSArray *collections = smartAlbums[assetCollectionSubtype];
@@ -260,6 +278,26 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
 }
 
 
+#pragma mark - Fetch Options
+
+- (PHFetchOptions*)fetchOptions {
+    PHFetchOptions *options = [PHFetchOptions new];
+    
+    switch (self.imagePickerController.mediaType) {
+        case QBImagePickerMediaTypeImage:
+            options.predicate = [NSPredicate predicateWithFormat:@"mediaType == %ld", PHAssetMediaTypeImage];
+            break;
+            
+        case QBImagePickerMediaTypeVideo:
+            options.predicate = [NSPredicate predicateWithFormat:@"mediaType == %ld", PHAssetMediaTypeVideo];
+            break;
+            
+        default:
+            break;
+    }
+    return options;
+}
+
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -281,22 +319,7 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
     // Thumbnail
     PHAssetCollection *assetCollection = self.assetCollections[indexPath.row];
     
-    PHFetchOptions *options = [PHFetchOptions new];
-    
-    switch (self.imagePickerController.mediaType) {
-        case QBImagePickerMediaTypeImage:
-            options.predicate = [NSPredicate predicateWithFormat:@"mediaType == %ld", PHAssetMediaTypeImage];
-            break;
-            
-        case QBImagePickerMediaTypeVideo:
-            options.predicate = [NSPredicate predicateWithFormat:@"mediaType == %ld", PHAssetMediaTypeVideo];
-            break;
-            
-        default:
-            break;
-    }
-    
-    PHFetchResult *fetchResult = [PHAsset fetchAssetsInAssetCollection:assetCollection options:options];
+    PHFetchResult *fetchResult = [PHAsset fetchAssetsInAssetCollection:assetCollection options:self.fetchOptions];
     PHImageManager *imageManager = [PHImageManager defaultManager];
     
     if (fetchResult.count >= 3) {
