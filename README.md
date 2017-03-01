@@ -7,8 +7,6 @@ A clone of UIImagePickerController with multiple selection support.
 ![screenshot01.png](screenshot01.png)
 ![screenshot02.png](screenshot02.png)
 
-
-
 ## Features
 
 - Allows multiple selection of photos and videos
@@ -18,26 +16,22 @@ A clone of UIImagePickerController with multiple selection support.
 - Supports both portrait mode and landscape mode
 - Compatible with iPhone 6/6Plus, and iPad
 
-
-
 ## Requirements
 
 - Version `>= 3.0.0` : iOS 8 or later (Using PhotoKit)
 - Version `< 3.0.0` : iOS 6 or later (Using AssetsLibrary)
 
+### Example
+&nbsp;
+```objective-c
+QBImagePickerController *imagePickerController = [QBImagePickerController new];
+imagePickerController.delegate = self;
+imagePickerController.allowsMultipleSelection = YES;
+imagePickerController.maximumNumberOfSelection = 6;
+imagePickerController.showsNumberOfSelectedAssets = YES;
 
-
-## Example
-
-    QBImagePickerController *imagePickerController = [QBImagePickerController new];
-    imagePickerController.delegate = self;
-    imagePickerController.allowsMultipleSelection = YES;
-    imagePickerController.maximumNumberOfSelection = 6;
-    imagePickerController.showsNumberOfSelectedAssets = YES;
-
-    [self presentViewController:imagePickerController animated:YES completion:NULL];
-
-
+[self presentViewController:imagePickerController animated:YES completion:NULL];
+```
 
 ## Installation
 
@@ -47,17 +41,13 @@ A clone of UIImagePickerController with multiple selection support.
 2. Run `pod install`
 3. Add `#import <QBImagePickerController/QBImagePickerController.h>` to your code
 
-
 ### Carthage
 
 1. Add `github "questbeat/QBImagePicker"` to Cartfile
 2. Run `carthage update`
 3. Add `#import <QBImagePicker/QBImagePicker.h>` to your code
 
-
-
 ## Usage
-
 ### Basic
 
 1. Implement `QBImagePickerControllerDelegate` methods
@@ -65,45 +55,48 @@ A clone of UIImagePickerController with multiple selection support.
 3. Set `self` to the `delegate` property
 4. Show the picker by using `presentViewController:animated:completion:`
 
-    QBImagePickerController *imagePickerController = [QBImagePickerController new];
-    imagePickerController.delegate = self;
+### Example 
+&nbsp;
+```objective-c
+QBImagePickerController *imagePickerController = [QBImagePickerController new];
+imagePickerController.delegate = self;
 
-    [self presentViewController:imagePickerController animated:YES completion:NULL];
-
+[self presentViewController:imagePickerController animated:YES completion:NULL];
+```
 
 ### Delegate Methods
-
 #### Getting the selected assets
 
 Implement `qb_imagePickerController:didFinishPickingAssets:` to get the assets selected by the user.  
 This method will be called when the user finishes picking assets.
-
-    - (void)qb_imagePickerController:(QBImagePickerController *)imagePickerController didFinishPickingAssets:(NSArray *)assets {
-        for (PHAsset *asset in assets) {
-            // Do something with the asset
-        }
-
-        [self dismissViewControllerAnimated:YES completion:NULL];
+&nbsp;
+```objective-c
+- (void)qb_imagePickerController:(QBImagePickerController *)imagePickerController didFinishPickingAssets:(NSArray *)assets {
+    for (PHAsset *asset in assets) {
+        // Do something with the asset
     }
-
+    [self dismissViewControllerAnimated:YES completion:NULL];
+}
+```
 
 #### Getting notified when the user cancels
 
 Implement `qb_imagePickerControllerDidCancel:` to get notified when the user hits "Cancel" button.
-
-    - (void)qb_imagePickerControllerDidCancel:(QBImagePickerController *)imagePickerController {
-        [self dismissViewControllerAnimated:YES completion:NULL];
-    }
-
+```objective-c
+- (void)qb_imagePickerControllerDidCancel:(QBImagePickerController *)imagePickerController {
+    [self dismissViewControllerAnimated:YES completion:NULL];
+}
+```
 
 #### Getting notified when the selection is changed
 
 You can handle the change of user's selection by implementing these methods.
-
-    - (BOOL)qb_imagePickerController:(QBImagePickerController *)imagePickerController shouldSelectAsset:(PHAsset *)asset;
-    - (void)qb_imagePickerController:(QBImagePickerController *)imagePickerController didSelectAsset:(PHAsset *)asset;
-    - (void)qb_imagePickerController:(QBImagePickerController *)imagePickerController didDeselectAsset:(PHAsset *)asset;
-
+&nbsp;
+```objective-c
+- (BOOL)qb_imagePickerController:(QBImagePickerController *)imagePickerController shouldSelectAsset:(PHAsset *)asset;
+- (void)qb_imagePickerController:(QBImagePickerController *)imagePickerController didSelectAsset:(PHAsset *)asset;
+- (void)qb_imagePickerController:(QBImagePickerController *)imagePickerController didDeselectAsset:(PHAsset *)asset;
+```
 
 ### Customization
 
@@ -111,28 +104,31 @@ You can handle the change of user's selection by implementing these methods.
 
 When `allowsMultipleSelection` is `YES`, the user can select multiple photos.  
 The default value is `NO`.
-
-    imagePickerController.allowsMultipleSelection = YES;
+```objective-c
+imagePickerController.allowsMultipleSelection = YES;
+```
 
 You can limit the number of selection by using `minimumNumberOfSelection` and `maximumNumberOfSelection` property.  
 The default value is `0`, which means the number of selection is unlimited.
-
-    imagePickerController.minimumNumberOfSelection = 3;
-    imagePickerController.maximumNumberOfSelection = 6;
+```objective-c
+imagePickerController.minimumNumberOfSelection = 3;
+imagePickerController.maximumNumberOfSelection = 6;
+```
 
 
 #### Specify the albums to be shown
 
 Use `assetCollectionSubtypes` property to specify the albums to be shown.  
 The code below shows the default value.
-
-    imagePickerController.assetCollectionSubtypes = @[
-        @(PHAssetCollectionSubtypeSmartAlbumUserLibrary), // Camera Roll
-        @(PHAssetCollectionSubtypeAlbumMyPhotoStream), // My Photo Stream
-        @(PHAssetCollectionSubtypeSmartAlbumPanoramas), // Panoramas
-        @(PHAssetCollectionSubtypeSmartAlbumVideos), // Videos
-        @(PHAssetCollectionSubtypeSmartAlbumBursts) // Bursts
-    ];
+```objective-c
+imagePickerController.assetCollectionSubtypes = @[
+    @(PHAssetCollectionSubtypeSmartAlbumUserLibrary), // Camera Roll
+    @(PHAssetCollectionSubtypeAlbumMyPhotoStream), // My Photo Stream
+    @(PHAssetCollectionSubtypeSmartAlbumPanoramas), // Panoramas
+    @(PHAssetCollectionSubtypeSmartAlbumVideos), // Videos
+    @(PHAssetCollectionSubtypeSmartAlbumBursts) // Bursts
+];
+```
 
 The albums will be ordered as you specified.  
 User's albums are always shown after the smart albums.
@@ -142,26 +138,26 @@ User's albums are always shown after the smart albums.
 
 Use `mediaType` to filter the assets to be shown.  
 The default value is `QBImagePickerMediaTypeAny`.
-
-    imagePickerController.mediaType = QBImagePickerMediaTypeVideo;
-
+```objective-c
+imagePickerController.mediaType = QBImagePickerMediaTypeVideo;
+```
 
 #### Showing information
 
 There are some properties to show helpful information.
-
-    imagePickerController.prompt = @"Select the photos you want to upload!";
-    imagePickerController.showsNumberOfSelectedAssets = YES;
-
+```objective-c
+imagePickerController.prompt = @"Select the photos you want to upload!";
+imagePickerController.showsNumberOfSelectedAssets = YES;
+```
 
 #### Grid size
 
 Use `numberOfColumnsInPortrait` and `numberOfColumnsInLandscape` to change the grid size.  
 The code below shows the default value.
-
-    imagePickerController.numberOfColumnsInPortrait = 4;
-    imagePickerController.numberOfColumnsInLandscape = 7;
-
+```objective-c
+imagePickerController.numberOfColumnsInPortrait = 4;
+imagePickerController.numberOfColumnsInLandscape = 7;
+```
 
 
 ## License
