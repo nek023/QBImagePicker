@@ -42,7 +42,7 @@
         _selectedAssets = [NSMutableOrderedSet orderedSet];
         
         // Get asset bundle
-        self.assetBundle = [NSBundle bundleForClass:[self class]];
+        self.assetBundle = [NSBundle bundleForClass:[QBImagePickerController class]];
         NSString *bundlePath = [self.assetBundle pathForResource:@"QBImagePicker" ofType:@"bundle"];
         if (bundlePath) {
             self.assetBundle = [NSBundle bundleWithPath:bundlePath];
