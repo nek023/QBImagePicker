@@ -44,8 +44,8 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
     [self setUpToolbarItems];
     
     // Fetch user albums and smart albums
-    PHFetchResult *smartAlbums = [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeSmartAlbum subtype:PHAssetCollectionSubtypeAny options:nil];
-    PHFetchResult *userAlbums = [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeAlbum subtype:PHAssetCollectionSubtypeAny options:nil];
+    PHFetchResult *smartAlbums = [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeSmartAlbum subtype:PHAssetCollectionSubtypeAny options:self.fetchOptionsForCollection];
+    PHFetchResult *userAlbums = [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeAlbum subtype:PHAssetCollectionSubtypeAny options:self.fetchOptionsForCollection];
     self.fetchResults = @[smartAlbums, userAlbums];
     
     [self updateAssetCollections];
@@ -151,41 +151,44 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
 
 - (void)updateAssetCollections
 {
-    // Filter albums
-    NSArray *assetCollectionSubtypes = self.imagePickerController.assetCollectionSubtypes;
-    NSMutableDictionary *smartAlbums = [NSMutableDictionary dictionaryWithCapacity:assetCollectionSubtypes.count];
-    NSMutableArray *userAlbums = [NSMutableArray array];
+    NSMutableArray *assetCollections = [NSMutableArray array];
     
+    // Add Moments as an album, if to include
+    if (self.imagePickerController.includeMoments) {
+        NSMutableArray *assets = [NSMutableArray array];
+        PHFetchResult *fetchResult = [PHAssetCollection fetchMomentsWithOptions:nil];
+        for (PHAssetCollection *aMomentsCollection in fetchResult) {
+            PHFetchResult *assetsFetchResults = [PHAsset fetchAssetsInAssetCollection:aMomentsCollection options:self.fetchOptions];
+            for (PHAsset *asset in assetsFetchResults) {
+                [assets addObject:asset];
+            }
+        }
+        
+        // Create the Moments album
+        if (assets.count > 0) {
+            NSBundle *bundle = self.imagePickerController.assetBundle;
+            NSString *momentsTitle = NSLocalizedStringFromTableInBundle(@"moments.title", @"QBImagePicker", bundle, nil);
+            PHAssetCollection *momentsCollection = [PHAssetCollection transientAssetCollectionWithAssets:assets title:momentsTitle];
+            [assetCollections addObject:momentsCollection];
+        }
+    }
+
+    // Filter albums that are not in assetCollectionSubtypes
+    NSArray *assetCollectionSubtypes = self.imagePickerController.assetCollectionSubtypes;
     for (PHFetchResult *fetchResult in self.fetchResults) {
         [fetchResult enumerateObjectsUsingBlock:^(PHAssetCollection *assetCollection, NSUInteger index, BOOL *stop) {
-            PHAssetCollectionSubtype subtype = assetCollection.assetCollectionSubtype;
-            
-            if (subtype == PHAssetCollectionSubtypeAlbumRegular) {
-                [userAlbums addObject:assetCollection];
-            } else if ([assetCollectionSubtypes containsObject:@(subtype)]) {
-                if (!smartAlbums[@(subtype)]) {
-                    smartAlbums[@(subtype)] = [NSMutableArray array];
+            if (assetCollectionSubtypes == nil) {
+                // If no assetCollectionSubtypes declared, just add
+                [assetCollections addObject:assetCollection];
+            } else {
+                PHAssetCollectionSubtype subtype = assetCollection.assetCollectionSubtype;
+                NSLog(@"%li", (long)subtype);
+                if ([assetCollectionSubtypes containsObject:@(subtype)]) {
+                    [assetCollections addObject:assetCollection];
                 }
-                [smartAlbums[@(subtype)] addObject:assetCollection];
             }
         }];
     }
-    
-    NSMutableArray *assetCollections = [NSMutableArray array];
-
-    // Fetch smart albums
-    for (NSNumber *assetCollectionSubtype in assetCollectionSubtypes) {
-        NSArray *collections = smartAlbums[assetCollectionSubtype];
-        
-        if (collections) {
-            [assetCollections addObjectsFromArray:collections];
-        }
-    }
-    
-    // Fetch user albums
-    [userAlbums enumerateObjectsUsingBlock:^(PHAssetCollection *assetCollection, NSUInteger index, BOOL *stop) {
-        [assetCollections addObject:assetCollection];
-    }];
     
     self.assetCollections = assetCollections;
 }
@@ -260,6 +263,32 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
 }
 
 
+#pragma mark - Fetch Options
+
+- (PHFetchOptions*)fetchOptions {
+    PHFetchOptions *options = [PHFetchOptions new];
+    
+    switch (self.imagePickerController.mediaType) {
+        case QBImagePickerMediaTypeImage:
+            options.predicate = [NSPredicate predicateWithFormat:@"mediaType == %ld", PHAssetMediaTypeImage];
+            break;
+            
+        case QBImagePickerMediaTypeVideo:
+            options.predicate = [NSPredicate predicateWithFormat:@"mediaType == %ld", PHAssetMediaTypeVideo];
+            break;
+            
+        default:
+            break;
+    }
+    return options;
+}
+
+- (PHFetchOptions*)fetchOptionsForCollection {
+    PHFetchOptions *options = [PHFetchOptions new];
+    options.predicate = [NSPredicate predicateWithFormat:@"estimatedAssetCount > 0"];
+    return options;
+}
+
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -281,22 +310,7 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
     // Thumbnail
     PHAssetCollection *assetCollection = self.assetCollections[indexPath.row];
     
-    PHFetchOptions *options = [PHFetchOptions new];
-    
-    switch (self.imagePickerController.mediaType) {
-        case QBImagePickerMediaTypeImage:
-            options.predicate = [NSPredicate predicateWithFormat:@"mediaType == %ld", PHAssetMediaTypeImage];
-            break;
-            
-        case QBImagePickerMediaTypeVideo:
-            options.predicate = [NSPredicate predicateWithFormat:@"mediaType == %ld", PHAssetMediaTypeVideo];
-            break;
-            
-        default:
-            break;
-    }
-    
-    PHFetchResult *fetchResult = [PHAsset fetchAssetsInAssetCollection:assetCollection options:options];
+    PHFetchResult *fetchResult = [PHAsset fetchAssetsInAssetCollection:assetCollection options:self.fetchOptions];
     PHImageManager *imageManager = [PHImageManager defaultManager];
     
     if (fetchResult.count >= 3) {
