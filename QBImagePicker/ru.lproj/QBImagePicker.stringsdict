@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+   QBImagePicker.stringsdict.plist
+   QBImagePicker
+
+   Created by Alexander Malnev on 19/12/2016.
+   Copyright (c) 2016 Katsuma Tanaka. All rights reserved.
+-->
+<plist version="1.0">
+    <dict>
+        <key>assets.toolbar.items-selected</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@photos@</string>
+            <key>photos</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>ld</string>
+                <key>one</key>
+                <string>Выбран %ld элемент</string>
+                <key>many</key>
+                <string>Выбрано %ld элементов</string>
+                <key>other</key>
+                <string>Выбрано %ld элемента</string>
+            </dict>
+        </dict>
+    </dict>
+</plist>
