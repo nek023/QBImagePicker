@@ -392,30 +392,33 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
         if (collectionChanges) {
             // Get the new fetch result
             self.fetchResult = [collectionChanges fetchResultAfterChanges];
-            
-            if (![collectionChanges hasIncrementalChanges] || [collectionChanges hasMoves]) {
-                // We need to reload all if the incremental diffs are not available
-                [self.collectionView reloadData];
-            } else {
-                // If we have incremental diffs, tell the collection view to animate insertions and deletions
-                [self.collectionView performBatchUpdates:^{
-                    NSIndexSet *removedIndexes = [collectionChanges removedIndexes];
-                    if ([removedIndexes count]) {
-                        [self.collectionView deleteItemsAtIndexPaths:[removedIndexes qb_indexPathsFromIndexesWithSection:0]];
-                    }
-                    
-                    NSIndexSet *insertedIndexes = [collectionChanges insertedIndexes];
-                    if ([insertedIndexes count]) {
-                        [self.collectionView insertItemsAtIndexPaths:[insertedIndexes qb_indexPathsFromIndexesWithSection:0]];
-                    }
-                    
-                    NSIndexSet *changedIndexes = [collectionChanges changedIndexes];
-                    if ([changedIndexes count]) {
-                        [self.collectionView reloadItemsAtIndexPaths:[changedIndexes qb_indexPathsFromIndexesWithSection:0]];
-                    }
-                } completion:NULL];
-            }
-            
+            [self.collectionView reloadData];
+            // Frequent random crashes on proper animation
+            // https://rink.hockeyapp.net/manage/apps/45585/app_versions/42/crash_reasons/123652251
+//            if (![collectionChanges hasIncrementalChanges] || [collectionChanges hasMoves]) {
+//                // We need to reload all if the incremental diffs are not available
+//                [self.collectionView reloadData];
+//            } else {
+//                // If we have incremental diffs, tell the collection view to animate insertions and deletions
+//                [self.collectionView performBatchUpdates:^{
+//                    NSIndexSet *removedIndexes = [collectionChanges removedIndexes];
+//                    if ([removedIndexes count]) {
+//                        [self.collectionView deleteItemsAtIndexPaths:[removedIndexes qb_indexPathsFromIndexesWithSection:0]];
+//                    }
+//                    
+//                    NSIndexSet *insertedIndexes = [collectionChanges insertedIndexes];
+//                    if ([insertedIndexes count]) {
+//                        [self.collectionView insertItemsAtIndexPaths:[insertedIndexes qb_indexPathsFromIndexesWithSection:0]];
+//                    }
+//                    
+//                    NSMutableIndexSet *changedIndexes = [collectionChanges changedIndexes].mutableCopy;
+//                    // due https://rink.hockeyapp.net/manage/apps/45585/app_versions/44/crash_reasons/130056083
+//                    [changedIndexes removeIndexes:removedIndexes];
+//                    if ([changedIndexes count]) {
+//                        [self.collectionView reloadItemsAtIndexPaths:[changedIndexes qb_indexPathsFromIndexesWithSection:0]];
+//                    }
+//                } completion:NULL];
+//            }
             [self resetCachedAssets];
         }
     });
@@ -458,6 +461,9 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
                                 contentMode:PHImageContentModeAspectFill
                                     options:nil
                               resultHandler:^(UIImage *result, NSDictionary *info) {
+                                  if(!result){
+                                      return;
+                                  }
                                   if (cell.tag == indexPath.item) {
                                       cell.imageView.image = result;
                                   }
@@ -656,8 +662,7 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
         numberOfColumns = self.imagePickerController.numberOfColumnsInLandscape;
     }
     
-    CGFloat width = (CGRectGetWidth(self.view.frame) - 2.0 * (numberOfColumns - 1)) / numberOfColumns;
-    
+    CGFloat width = MAX(1,(CGRectGetWidth(self.view.frame) - 2.0 * (numberOfColumns - 1)) / numberOfColumns);
     return CGSizeMake(width, width);
 }
 
