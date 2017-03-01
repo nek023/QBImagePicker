@@ -187,7 +187,17 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
         [assetCollections addObject:assetCollection];
     }];
     
-    self.assetCollections = assetCollections;
+    self.assetCollections = [assetCollections filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(PHAssetCollection * _Nonnull assetCollection, NSDictionary<NSString *,id> * _Nullable bindings) {
+        
+        if (!self.imagePickerController.excludeEmptyAlbums)
+        {
+            return YES;
+        }
+        
+        PHFetchOptions *options = self.imagePickerController.fetchOptions;
+        PHFetchResult *fetchResult = [PHAsset fetchAssetsInAssetCollection:assetCollection options:options];
+        return fetchResult.count > 0;
+    }]];
 }
 
 - (UIImage *)placeholderImageWithSize:(CGSize)size
@@ -272,6 +282,11 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
     return self.assetCollections.count;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     QBAlbumCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AlbumCell" forIndexPath:indexPath];
@@ -281,21 +296,7 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
     // Thumbnail
     PHAssetCollection *assetCollection = self.assetCollections[indexPath.row];
     
-    PHFetchOptions *options = [PHFetchOptions new];
-    
-    switch (self.imagePickerController.mediaType) {
-        case QBImagePickerMediaTypeImage:
-            options.predicate = [NSPredicate predicateWithFormat:@"mediaType == %ld", PHAssetMediaTypeImage];
-            break;
-            
-        case QBImagePickerMediaTypeVideo:
-            options.predicate = [NSPredicate predicateWithFormat:@"mediaType == %ld", PHAssetMediaTypeVideo];
-            break;
-            
-        default:
-            break;
-    }
-    
+    PHFetchOptions* options = self.imagePickerController.fetchOptions;
     PHFetchResult *fetchResult = [PHAsset fetchAssetsInAssetCollection:assetCollection options:options];
     PHImageManager *imageManager = [PHImageManager defaultManager];
     

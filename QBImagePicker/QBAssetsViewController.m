@@ -232,21 +232,7 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
 - (void)updateFetchRequest
 {
     if (self.assetCollection) {
-        PHFetchOptions *options = [PHFetchOptions new];
-        
-        switch (self.imagePickerController.mediaType) {
-            case QBImagePickerMediaTypeImage:
-                options.predicate = [NSPredicate predicateWithFormat:@"mediaType == %ld", PHAssetMediaTypeImage];
-                break;
-                
-            case QBImagePickerMediaTypeVideo:
-                options.predicate = [NSPredicate predicateWithFormat:@"mediaType == %ld", PHAssetMediaTypeVideo];
-                break;
-                
-            default:
-                break;
-        }
-        
+        PHFetchOptions *options = self.imagePickerController.fetchOptions;
         self.fetchResult = [PHAsset fetchAssetsInAssetCollection:self.assetCollection options:options];
         
         if ([self isAutoDeselectEnabled] && self.imagePickerController.selectedAssets.count > 0) {
@@ -543,6 +529,7 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
                 label.text = [NSString stringWithFormat:format, numberOfVideos];
             }
                 break;
+                
         }
         
         return footerView;
