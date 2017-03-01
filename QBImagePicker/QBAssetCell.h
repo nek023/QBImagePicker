@@ -16,5 +16,6 @@
 @property (weak, nonatomic) IBOutlet QBVideoIndicatorView *videoIndicatorView;
 
 @property (nonatomic, assign) BOOL showsOverlayViewWhenSelected;
+@property (nonatomic) UIColor* checkmarkColor;
 
 @end
