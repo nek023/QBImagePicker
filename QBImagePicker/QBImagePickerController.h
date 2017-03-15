@@ -9,6 +9,10 @@
 #import <UIKit/UIKit.h>
 #import <Photos/Photos.h>
 
+typedef enum {
+    ByLatestAsset, ByOldestAsset
+} Sort;
+
 @class QBImagePickerController;
 
 @protocol QBImagePickerControllerDelegate <NSObject>
@@ -47,5 +51,7 @@ typedef NS_ENUM(NSUInteger, QBImagePickerMediaType) {
 
 @property (nonatomic, assign) NSUInteger numberOfColumnsInPortrait;
 @property (nonatomic, assign) NSUInteger numberOfColumnsInLandscape;
+
+@property (nonatomic, assign) Sort sortOrder;
 
 @end
