@@ -57,6 +57,8 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
 @interface QBAssetsViewController () <PHPhotoLibraryChangeObserver, UICollectionViewDelegateFlowLayout>
 
 @property (nonatomic, strong) IBOutlet UIBarButtonItem *doneButton;
+@property (weak, nonatomic) IBOutlet UIView *activityContainerView;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 
 @property (nonatomic, strong) PHFetchResult *fetchResult;
 
@@ -73,12 +75,36 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+
     [self setUpToolbarItems];
     [self resetCachedAssets];
+    if (self.imagePickerController.downloadiCloudPhotos) {
+        [self setupActivityContainerView];
+    }
     
     // Register observer
     [[PHPhotoLibrary sharedPhotoLibrary] registerChangeObserver:self];
+}
+
+- (void)setupActivityContainerView {
+    [self.view addSubview:self.activityContainerView];
+    [self addConstriantsToActivityView:self.activityContainerView subView:self.view];
+}
+
+- (void)addConstriantsToActivityView:(UIView *)subView subView: (UIView *)superView {
+    subView.translatesAutoresizingMaskIntoConstraints = false;
+
+    NSLayoutConstraint *leadingConstraint = [NSLayoutConstraint constraintWithItem:subView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:superView attribute:NSLayoutAttributeLeading multiplier:1.0 constant:0.0];
+
+    NSLayoutConstraint *trailingConstraint = [NSLayoutConstraint constraintWithItem:subView attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:superView attribute:NSLayoutAttributeTrailing multiplier:1.0 constant:0.0];
+
+    NSLayoutConstraint *bottomConstraint = [NSLayoutConstraint constraintWithItem:subView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:superView attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0];
+
+    NSLayoutConstraint *topConstraint = [NSLayoutConstraint constraintWithItem:subView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:superView attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.0];
+
+    NSLayoutConstraint *heightConstraint = [NSLayoutConstraint constraintWithItem:subView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:[[UIScreen mainScreen] bounds].size.height];
+
+    [superView addConstraints:@[leadingConstraint, trailingConstraint, topConstraint, bottomConstraint, heightConstraint]];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -603,13 +629,33 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
         }
     } else {
         if ([imagePickerController.delegate respondsToSelector:@selector(qb_imagePickerController:didFinishPickingAssets:)]) {
-            [imagePickerController.delegate qb_imagePickerController:imagePickerController didFinishPickingAssets:@[asset]];
+
+            if ([asset isKindOfClass:[PHAsset class]] && self.imagePickerController.downloadiCloudPhotos) {
+                [self showActivityIndicator:true];
+                PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];
+                [options setNetworkAccessAllowed:true];
+                [[PHImageManager defaultManager] requestImageDataForAsset:asset options:options resultHandler:^(NSData * _Nullable imageData, NSString * _Nullable dataUTI, UIImageOrientation orientation, NSDictionary * _Nullable info) {
+                    UIImage *image = [UIImage imageWithData:imageData scale:1.0];
+                    if (image) {
+                        [self showActivityIndicator:false];
+                        [imagePickerController.delegate qb_imagePickerController:imagePickerController didFinishPickingAssets:@[asset]];
+                    }
+                }];
+            } else {
+                [imagePickerController.delegate qb_imagePickerController:imagePickerController didFinishPickingAssets:@[asset]];
+            }
         }
     }
     
     if ([imagePickerController.delegate respondsToSelector:@selector(qb_imagePickerController:didSelectAsset:)]) {
         [imagePickerController.delegate qb_imagePickerController:imagePickerController didSelectAsset:asset];
     }
+}
+
+- (void)showActivityIndicator:(BOOL) show {
+    [self.view bringSubviewToFront:self.activityContainerView];
+    self.activityContainerView.hidden = !show;
+    (show ? [self.activityIndicator startAnimating] : [self.activityIndicator stopAnimating]);
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
