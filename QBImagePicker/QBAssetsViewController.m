@@ -78,7 +78,9 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
 
     [self setUpToolbarItems];
     [self resetCachedAssets];
-    [self setupActivityContainerView];
+    if (self.imagePickerController.downloadiCloudPhotos) {
+        [self setupActivityContainerView];
+    }
     
     // Register observer
     [[PHPhotoLibrary sharedPhotoLibrary] registerChangeObserver:self];
@@ -628,17 +630,20 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
     } else {
         if ([imagePickerController.delegate respondsToSelector:@selector(qb_imagePickerController:didFinishPickingAssets:)]) {
 
-            [self showActivityIndicator:true];
-            PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];
-            [options setNetworkAccessAllowed:true];
-            [[PHImageManager defaultManager] requestImageDataForAsset:asset options:options resultHandler:^(NSData * _Nullable imageData, NSString * _Nullable dataUTI, UIImageOrientation orientation, NSDictionary * _Nullable info) {
-                UIImage *image = [UIImage imageWithData:imageData scale:1.0];
-                if (image) {
-                    [self showActivityIndicator:false];
-                    [imagePickerController.delegate qb_imagePickerController:imagePickerController didFinishPickingAssets:@[asset]];
-                }
-
-            }];
+            if ([asset isKindOfClass:[PHAsset class]] && self.imagePickerController.downloadiCloudPhotos) {
+                [self showActivityIndicator:true];
+                PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];
+                [options setNetworkAccessAllowed:true];
+                [[PHImageManager defaultManager] requestImageDataForAsset:asset options:options resultHandler:^(NSData * _Nullable imageData, NSString * _Nullable dataUTI, UIImageOrientation orientation, NSDictionary * _Nullable info) {
+                    UIImage *image = [UIImage imageWithData:imageData scale:1.0];
+                    if (image) {
+                        [self showActivityIndicator:false];
+                        [imagePickerController.delegate qb_imagePickerController:imagePickerController didFinishPickingAssets:@[asset]];
+                    }
+                }];
+            } else {
+                [imagePickerController.delegate qb_imagePickerController:imagePickerController didFinishPickingAssets:@[asset]];
+            }
         }
     }
     
