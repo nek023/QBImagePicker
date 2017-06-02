@@ -409,7 +409,10 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
                     
                     NSIndexSet *changedIndexes = [collectionChanges changedIndexes];
                     if ([changedIndexes count]) {
-                        [self.collectionView reloadItemsAtIndexPaths:[changedIndexes qb_indexPathsFromIndexesWithSection:0]];
+                        //[self.collectionView reloadItemsAtIndexPaths:[changedIndexes qb_indexPathsFromIndexesWithSection:0]];
+                        NSMutableIndexSet *changedWithoutRemovalsIndexes = [changedIndexes mutableCopy];
+                        [changedWithoutRemovalsIndexes removeIndexes:removedIndexes];
+                        [self.collectionView reloadItemsAtIndexPaths:[changedWithoutRemovalsIndexes qb_indexPathsFromIndexesWithSection:0]];
                     }
                 } completion:NULL];
             }
