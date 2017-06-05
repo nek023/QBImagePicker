@@ -26,6 +26,12 @@
 {
     self = [super init];
     
+    PHAuthorizationStatus status = [PHPhotoLibrary authorizationStatus];
+    if (status == PHAuthorizationStatusDenied) {
+        printf("Status denied");
+    }
+    printf("Works");
+    
     if (self) {
         // Set default values
         self.assetCollectionSubtypes = @[
