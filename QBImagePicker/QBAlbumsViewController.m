@@ -66,6 +66,7 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
     
     PHAuthorizationStatus status = [PHPhotoLibrary authorizationStatus];
     if (status == PHAuthorizationStatusDenied) {
+        [self showPermissionsPopup];
         printf("Status denied");
     }
     printf("View will appear Imagepicker");
@@ -80,6 +81,7 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
     [self updateControlState];
     [self updateSelectionInfo];
 }
+
 
 - (void)dealloc
 {
@@ -151,6 +153,45 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
         [(UIBarButtonItem *)self.toolbarItems[1] setTitle:title];
     } else {
         [(UIBarButtonItem *)self.toolbarItems[1] setTitle:@""];
+    }
+}
+#pragma mark - Permissions request popup
+
+- (void)showPermissionsPopup {
+    UIAlertController * alert=[UIAlertController alertControllerWithTitle:@"Go to setting to allow Shop101 access for Gallery"
+                                                                  message:@"Used for uploading images for products"
+                                                           preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* yesButton = [UIAlertAction actionWithTitle:@"Go"
+                                                        style:UIAlertActionStyleDefault
+                                                      handler:^(UIAlertAction * action)
+    {
+        [self openAppSettings];
+        /** What we write here???????? **/
+        NSLog(@"you pressed Yes, please button");
+        
+        // call method whatever u need
+    }];
+    
+    UIAlertAction* noButton = [UIAlertAction actionWithTitle:@"No, thanks"
+                                                       style:UIAlertActionStyleDefault
+                                                     handler:^(UIAlertAction * action)
+    {
+        /** What we write here???????? **/
+        NSLog(@"you pressed No, thanks button");
+        // call method whatever u need
+    }];
+    
+    [alert addAction:yesButton];
+    [alert addAction:noButton];
+    
+    [self presentViewController:alert animated:YES completion:nil];
+}
+- (void)openAppSettings {
+    BOOL canOpenSettings = (&UIApplicationOpenSettingsURLString != NULL);
+    if (canOpenSettings) {
+        NSURL *url = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
+        [[UIApplication sharedApplication] openURL:url];
     }
 }
 
