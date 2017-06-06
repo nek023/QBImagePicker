@@ -26,6 +26,7 @@
 {
     self = [super init];
     
+    
     if (self) {
         // Set default values
         self.assetCollectionSubtypes = @[

@@ -43,6 +43,7 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
     
     [self setUpToolbarItems];
     
+    
     // Fetch user albums and smart albums
     PHFetchResult *smartAlbums = [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeSmartAlbum subtype:PHAssetCollectionSubtypeAny options:nil];
     PHFetchResult *userAlbums = [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeAlbum subtype:PHAssetCollectionSubtypeAny options:nil];
@@ -72,6 +73,16 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
     [self updateControlState];
     [self updateSelectionInfo];
 }
+
+- (void)viewDidAppear:(BOOL)animated {
+    PHAuthorizationStatus status = [PHPhotoLibrary authorizationStatus];
+    if (status == PHAuthorizationStatusDenied) {
+        [self showPermissionsPopup];
+        printf("Status denied");
+    }
+    printf("View did appear Imagepicker");
+}
+
 
 - (void)dealloc
 {
@@ -143,6 +154,47 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
         [(UIBarButtonItem *)self.toolbarItems[1] setTitle:title];
     } else {
         [(UIBarButtonItem *)self.toolbarItems[1] setTitle:@""];
+    }
+}
+#pragma mark - Permissions request popup
+
+- (void)showPermissionsPopup {
+    printf("Popup shown");
+    NSLog(@"Popup shown");
+    UIAlertController * alert=[UIAlertController alertControllerWithTitle:@"Shop101 does not have access to your Photos. To enable access, tap Settings and turn on Photos"
+                                                                  message: NULL
+                                                           preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* yesButton = [UIAlertAction actionWithTitle:@"Settings"
+                                                        style:UIAlertActionStyleDefault
+                                                      handler:^(UIAlertAction * action)
+    {
+        [self openAppSettings];
+        /** What we write here???????? **/
+        NSLog(@"you pressed Yes, please button");
+        
+        // call method whatever u need
+    }];
+    
+    UIAlertAction* noButton = [UIAlertAction actionWithTitle:@"Cancel"
+                                                       style:UIAlertActionStyleDefault
+                                                     handler:^(UIAlertAction * action)
+    {
+        /** What we write here???????? **/
+        NSLog(@"you pressed No, thanks button");
+        // call method whatever u need
+    }];
+    
+    [alert addAction:yesButton];
+    [alert addAction:noButton];
+    
+    [self presentViewController:alert animated:YES completion:nil];
+}
+- (void)openAppSettings {
+    BOOL canOpenSettings = (&UIApplicationOpenSettingsURLString != NULL);
+    if (canOpenSettings) {
+        NSURL *url = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
+        [[UIApplication sharedApplication] openURL:url];
     }
 }
 
