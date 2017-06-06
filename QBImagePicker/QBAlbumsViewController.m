@@ -43,6 +43,7 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
     
     [self setUpToolbarItems];
     
+    
     // Fetch user albums and smart albums
     PHFetchResult *smartAlbums = [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeSmartAlbum subtype:PHAssetCollectionSubtypeAny options:nil];
     PHFetchResult *userAlbums = [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeAlbum subtype:PHAssetCollectionSubtypeAny options:nil];
@@ -61,6 +62,13 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
     // Configure navigation item
     self.navigationItem.title = NSLocalizedStringFromTableInBundle(@"albums.title", @"QBImagePicker", self.imagePickerController.assetBundle, nil);
     self.navigationItem.prompt = self.imagePickerController.prompt;
+    
+    
+    PHAuthorizationStatus status = [PHPhotoLibrary authorizationStatus];
+    if (status == PHAuthorizationStatusDenied) {
+        printf("Status denied");
+    }
+    printf("View will appear Imagepicker");
     
     // Show/hide 'Done' button
     if (self.imagePickerController.allowsMultipleSelection) {
