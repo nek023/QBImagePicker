@@ -63,14 +63,6 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
     self.navigationItem.title = NSLocalizedStringFromTableInBundle(@"albums.title", @"QBImagePicker", self.imagePickerController.assetBundle, nil);
     self.navigationItem.prompt = self.imagePickerController.prompt;
     
-    
-    PHAuthorizationStatus status = [PHPhotoLibrary authorizationStatus];
-    if (status == PHAuthorizationStatusDenied) {
-        [self showPermissionsPopup];
-        printf("Status denied");
-    }
-    printf("View will appear Imagepicker");
-    
     // Show/hide 'Done' button
     if (self.imagePickerController.allowsMultipleSelection) {
         [self.navigationItem setRightBarButtonItem:self.doneButton animated:NO];
@@ -80,6 +72,15 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
     
     [self updateControlState];
     [self updateSelectionInfo];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    PHAuthorizationStatus status = [PHPhotoLibrary authorizationStatus];
+    if (status == PHAuthorizationStatusDenied) {
+        [self showPermissionsPopup];
+        printf("Status denied");
+    }
+    printf("View did appear Imagepicker");
 }
 
 
@@ -158,6 +159,8 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
 #pragma mark - Permissions request popup
 
 - (void)showPermissionsPopup {
+    printf("Popup shown");
+    NSLog(@"Popup shown");
     UIAlertController * alert=[UIAlertController alertControllerWithTitle:@"Go to setting to allow Shop101 access for Gallery"
                                                                   message:@"Used for uploading images for products"
                                                            preferredStyle:UIAlertControllerStyleAlert];
