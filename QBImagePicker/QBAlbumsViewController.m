@@ -161,11 +161,11 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
 - (void)showPermissionsPopup {
     printf("Popup shown");
     NSLog(@"Popup shown");
-    UIAlertController * alert=[UIAlertController alertControllerWithTitle:@"Go to setting to allow Shop101 access for Gallery"
-                                                                  message:@"Used for uploading images for products"
+    UIAlertController * alert=[UIAlertController alertControllerWithTitle:@"Shop101 does not have access to your Photos. To enable access, tap Settings and turn on Photos"
+                                                                  message: NULL
                                                            preferredStyle:UIAlertControllerStyleAlert];
     
-    UIAlertAction* yesButton = [UIAlertAction actionWithTitle:@"Go"
+    UIAlertAction* yesButton = [UIAlertAction actionWithTitle:@"Settings"
                                                         style:UIAlertActionStyleDefault
                                                       handler:^(UIAlertAction * action)
     {
@@ -176,7 +176,7 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
         // call method whatever u need
     }];
     
-    UIAlertAction* noButton = [UIAlertAction actionWithTitle:@"No, thanks"
+    UIAlertAction* noButton = [UIAlertAction actionWithTitle:@"Cancel"
                                                        style:UIAlertActionStyleDefault
                                                      handler:^(UIAlertAction * action)
     {
