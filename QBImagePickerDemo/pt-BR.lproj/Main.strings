@@ -1,0 +1,39 @@
+
+/* Class = "UILabel"; text = "Select Multiple Photos"; ObjectID = "7Hi-1h-pca"; */
+"7Hi-1h-pca.text" = "Select Multiple Photos";
+
+/* Class = "UILabel"; text = "Select Single Photo"; ObjectID = "BCh-ru-GBA"; */
+"BCh-ru-GBA.text" = "Select Single Photo";
+
+/* Class = "UINavigationItem"; title = "QBImagePicker"; ObjectID = "JOw-qF-ENZ"; */
+"JOw-qF-ENZ.title" = "QBImagePicker";
+
+/* Class = "UILabel"; text = "3 photos at least, and 6 photos at most"; ObjectID = "Jq8-gd-bjh"; */
+"Jq8-gd-bjh.text" = "3 photos at least, and 6 photos at most";
+
+/* Class = "UILabel"; text = "3 photos at least"; ObjectID = "SPe-aH-Xj9"; */
+"SPe-aH-Xj9.text" = "3 photos at least";
+
+/* Class = "UITableViewSection"; headerTitle = "Single Selection"; ObjectID = "Sb2-Qb-oha"; */
+"Sb2-Qb-oha.headerTitle" = "Single Selection";
+
+/* Class = "UILabel"; text = "Select Multiple Photos"; ObjectID = "jJw-ce-96f"; */
+"jJw-ce-96f.text" = "Select Multiple Photos";
+
+/* Class = "UILabel"; text = "Select Multiple Photos"; ObjectID = "oLZ-pP-4bF"; */
+"oLZ-pP-4bF.text" = "Select Multiple Photos";
+
+/* Class = "UILabel"; text = "1 photos selected"; ObjectID = "tzV-EU-429"; */
+"tzV-EU-429.text" = "1 photos selected";
+
+/* Class = "UILabel"; text = "6 photos at most"; ObjectID = "vgX-45-tXq"; */
+"vgX-45-tXq.text" = "6 photos at most";
+
+/* Class = "UITableViewSection"; headerTitle = "Multiple Selection"; ObjectID = "xG5-eU-WRF"; */
+"xG5-eU-WRF.headerTitle" = "Multiple Selection";
+
+/* Class = "UILabel"; text = "Select Multiple Photos"; ObjectID = "xpg-bM-2sv"; */
+"xpg-bM-2sv.text" = "Select Multiple Photos";
+
+/* Class = "UILabel"; text = "Select Multiple Photos"; ObjectID = "zDu-bX-xy5"; */
+"zDu-bX-xy5.text" = "Select Multiple Photos";
