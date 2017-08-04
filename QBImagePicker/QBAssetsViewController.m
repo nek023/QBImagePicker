@@ -246,6 +246,8 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
             default:
                 break;
         }
+
+		options.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending: self.imagePickerController.sortMediaByCreationDateAscending]];
         
         self.fetchResult = [PHAsset fetchAssetsInAssetCollection:self.assetCollection options:options];
         
