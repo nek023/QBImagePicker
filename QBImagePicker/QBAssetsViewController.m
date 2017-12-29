@@ -76,6 +76,10 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
     
     [self setUpToolbarItems];
     [self resetCachedAssets];
+	
+	if (@available(iOS 11.0, *)) {
+		[(UICollectionViewFlowLayout *)self.collectionView.collectionViewLayout setSectionInsetReference:UICollectionViewFlowLayoutSectionInsetFromSafeArea];
+	}
     
     // Register observer
     [[PHPhotoLibrary sharedPhotoLibrary] registerChangeObserver:self];
@@ -142,6 +146,14 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
     [coordinator animateAlongsideTransition:nil completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
         [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionBottom animated:NO];
     }];
+}
+
+- (void)viewSafeAreaInsetsDidChange
+{
+	[super viewSafeAreaInsetsDidChange];
+	
+	// Update layout
+	[self.collectionViewLayout invalidateLayout];
 }
 
 - (void)dealloc
@@ -655,9 +667,15 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
     } else {
         numberOfColumns = self.imagePickerController.numberOfColumnsInLandscape;
     }
-    
-    CGFloat width = (CGRectGetWidth(self.view.frame) - 2.0 * (numberOfColumns - 1)) / numberOfColumns;
-    
+	
+	CGFloat widthInset = 0.0;
+	
+	if (@available(iOS 11.0, *)) {
+		widthInset = self.view.safeAreaInsets.left + self.view.safeAreaInsets.right;
+	}
+	
+	CGFloat width = ((CGRectGetWidth(self.view.frame) - widthInset) - 2.0 * (numberOfColumns - 1)) / numberOfColumns;
+
     return CGSizeMake(width, width);
 }
 
