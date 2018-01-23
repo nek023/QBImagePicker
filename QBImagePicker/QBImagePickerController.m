@@ -59,6 +59,19 @@
     return self;
 }
 
+
+-(void) viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    for (UIViewController* item in [self.albumsNavigationController childViewControllers]) {
+        if ([item isKindOfClass: QBAlbumsViewController.self]) {
+            QBAlbumsViewController* viewController = (QBAlbumsViewController*)item;
+            viewController.openCameraRollOnLaunch = self.openCameraRollOnLaunch;
+        }
+    }
+    
+}
+
 - (void)setUpAlbumsViewController
 {
     // Add QBAlbumsViewController as a child
