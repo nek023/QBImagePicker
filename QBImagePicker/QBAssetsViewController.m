@@ -66,6 +66,8 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
 @property (nonatomic, assign) BOOL disableScrollToBottom;
 @property (nonatomic, strong) NSIndexPath *lastSelectedItemIndexPath;
 
+@property (nonatomic, strong) NSMutableDictionary *selectedIndexPathsWithCount;
+
 @end
 
 @implementation QBAssetsViewController
@@ -76,7 +78,7 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
     
     [self setUpToolbarItems];
     [self resetCachedAssets];
-    
+    _selectedIndexPathsWithCount = [[NSMutableDictionary alloc] init];
     // Register observer
     [[PHPhotoLibrary sharedPhotoLibrary] registerChangeObserver:self];
 }
@@ -222,6 +224,25 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
     } else {
         [(UIBarButtonItem *)self.toolbarItems[1] setTitle:@""];
     }
+}
+
+- (void)updateSelectedItemBadgeNumbers: (UICollectionView *)collectionView deselectedIndexPath: (NSIndexPath *)indexPath
+{
+    NSArray<NSIndexPath *> *indexPathsForSelectedItems = [collectionView indexPathsForSelectedItems];
+    NSNumber *deselectedNumeral = _selectedIndexPathsWithCount[indexPath];
+    for (NSIndexPath* item in indexPathsForSelectedItems) {
+        if ([_selectedIndexPathsWithCount.allKeys containsObject:item] ) {
+            NSNumber *previousValue = _selectedIndexPathsWithCount[item];
+            if ((previousValue.integerValue > deselectedNumeral.integerValue) && (previousValue.integerValue > 1)) {
+                NSNumber *updatedValue = [NSNumber numberWithInt:previousValue.intValue - 1];
+                [_selectedIndexPathsWithCount setObject:updatedValue forKey:item];
+                QBAssetCell* cell = [collectionView cellForItemAtIndexPath:item];
+                NSString *textForCountLabel = [NSString stringWithFormat:@"%@", _selectedIndexPathsWithCount[item]];
+                cell.selectedCellCountLabel.text = textForCountLabel;
+            }
+        }
+    }
+    [_selectedIndexPathsWithCount removeObjectForKey:indexPath];
 }
 
 
@@ -490,6 +511,11 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
         [collectionView selectItemAtIndexPath:indexPath animated:NO scrollPosition:UICollectionViewScrollPositionNone];
     }
     
+    if ([_selectedIndexPathsWithCount.allKeys containsObject:indexPath]) {
+        NSString *textForCountLabel = [NSString stringWithFormat:@"%@", _selectedIndexPathsWithCount[indexPath]];
+        
+        cell.selectedCellCountLabel.text = textForCountLabel;
+    }
     return cell;
 }
 
@@ -602,6 +628,14 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
                 [self.navigationController setToolbarHidden:NO animated:YES];
             }
         }
+        
+        QBAssetCell* cell = [self.collectionView cellForItemAtIndexPath:indexPath];
+        NSString *textForCountLabel = [NSString stringWithFormat:@"%d", selectedAssets.count];
+        cell.selectedCellCountLabel.text = textForCountLabel;
+        
+        NSDictionary * dict = @{indexPath: [NSNumber numberWithUnsignedInteger:selectedAssets.count]};
+        [_selectedIndexPathsWithCount addEntriesFromDictionary:dict];
+
     } else {
         if ([imagePickerController.delegate respondsToSelector:@selector(qb_imagePickerController:didFinishPickingAssets:)]) {
             [imagePickerController.delegate qb_imagePickerController:imagePickerController didFinishPickingAssets:@[asset]];
@@ -639,6 +673,8 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
             [self.navigationController setToolbarHidden:YES animated:YES];
         }
     }
+    
+    [self updateSelectedItemBadgeNumbers:collectionView deselectedIndexPath:indexPath];
     
     if ([imagePickerController.delegate respondsToSelector:@selector(qb_imagePickerController:didDeselectAsset:)]) {
         [imagePickerController.delegate qb_imagePickerController:imagePickerController didDeselectAsset:asset];

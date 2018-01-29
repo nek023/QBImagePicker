@@ -81,6 +81,9 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
         printf("Status denied");
     }
     printf("View did appear Imagepicker");
+    if (self.openCameraRollOnLaunch) {
+        [self openCameraRoll];
+    }
 }
 
 
@@ -95,9 +98,16 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    QBAssetsViewController *assetsViewController = segue.destinationViewController;
-    assetsViewController.imagePickerController = self.imagePickerController;
-    assetsViewController.assetCollection = self.assetCollections[self.tableView.indexPathForSelectedRow.row];
+    if ([segue.identifier  isEqual: @"albumsSegue"]) {
+        QBAssetsViewController *assetsViewController = segue.destinationViewController;
+        assetsViewController.imagePickerController = self.imagePickerController;
+        if (self.openCameraRollOnLaunch == YES) {
+            assetsViewController.assetCollection = self.assetCollections[0];
+            self.openCameraRollOnLaunch = NO;
+        } else {
+            assetsViewController.assetCollection = self.assetCollections[self.tableView.indexPathForSelectedRow.row];
+        }
+    }
 }
 
 
@@ -118,6 +128,12 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
     }
 }
 
+- (void)openCameraRoll
+{
+    if (self.assetCollections.count > 0) {
+        [self performSegueWithIdentifier:@"albumsSegue" sender:NULL];
+    }
+}
 
 #pragma mark - Toolbar
 
@@ -191,7 +207,7 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
     [self presentViewController:alert animated:YES completion:nil];
 }
 - (void)openAppSettings {
-    BOOL canOpenSettings = (&UIApplicationOpenSettingsURLString != NULL);
+    BOOL canOpenSettings = (UIApplicationOpenSettingsURLString != NULL);
     if (canOpenSettings) {
         NSURL *url = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
         [[UIApplication sharedApplication] openURL:url];

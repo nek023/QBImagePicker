@@ -46,7 +46,7 @@
                                                     </constraints>
                                                 </imageView>
                                             </subviews>
-                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="68" id="LPf-oG-4uz"/>
                                                 <constraint firstAttribute="centerX" secondItem="aA6-Ye-jVF" secondAttribute="centerX" id="MGk-ae-eo0"/>
@@ -88,7 +88,7 @@
                                     <outlet property="imageView2" destination="7bp-En-8qW" id="2ol-my-8hB"/>
                                     <outlet property="imageView3" destination="aA6-Ye-jVF" id="jvN-vK-7sr"/>
                                     <outlet property="titleLabel" destination="SeB-hL-cJJ" id="KAO-l9-FAQ"/>
-                                    <segue destination="QiH-NZ-ZGN" kind="show" id="2ft-L1-HaB"/>
+                                    <segue destination="QiH-NZ-ZGN" kind="show" identifier="albumsSegue" id="2ft-L1-HaB"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -122,9 +122,9 @@
             <objects>
                 <collectionViewController storyboardIdentifier="QBAssetsViewController" id="QiH-NZ-ZGN" customClass="QBAssetsViewController" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="sD2-zK-ryo">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="2" minimumInteritemSpacing="2" id="6wp-N0-PIK">
                             <size key="itemSize" width="77.5" height="77.5"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -133,10 +133,10 @@
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="AssetCell" id="fc0-k1-HNL" customClass="QBAssetCell">
-                                <rect key="frame" x="0.0" y="72" width="78" height="78"/>
+                                <rect key="frame" x="0.0" y="8" width="77.5" height="77.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="78" height="78"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="77.5" height="77.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="0aq-fn-r9R">
@@ -147,7 +147,7 @@
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rKh-6o-xw7" customClass="QBVideoIconView">
                                                     <rect key="frame" x="5" y="6" width="14" height="8"/>
-                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="14" id="NjT-dW-eKX"/>
                                                         <constraint firstAttribute="height" constant="8" id="d0g-9I-F2s"/>
@@ -155,7 +155,7 @@
                                                 </view>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1We-cC-Ruu" customClass="QBSlomoIconView">
                                                     <rect key="frame" x="5" y="3" width="12" height="12"/>
-                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="12" id="1qd-FB-w1Q"/>
                                                         <constraint firstAttribute="width" constant="12" id="iWE-jc-2Za"/>
@@ -164,11 +164,11 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JBs-FX-TZQ">
                                                     <rect key="frame" x="23" y="3" width="50" height="15"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="centerY" secondItem="JBs-FX-TZQ" secondAttribute="centerY" id="2In-Kf-RYP"/>
                                                 <constraint firstItem="JBs-FX-TZQ" firstAttribute="leading" secondItem="rKh-6o-xw7" secondAttribute="trailing" constant="4" id="8p9-Gp-fI0"/>
@@ -190,14 +190,26 @@
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="m99-yj-HSc" customClass="QBCheckmarkView">
                                                     <rect key="frame" x="50" y="50" width="24" height="24"/>
-                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OLD-sN-Fms">
+                                                            <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="24" id="8Dq-6v-oj1"/>
+                                                        <constraint firstItem="OLD-sN-Fms" firstAttribute="leading" secondItem="m99-yj-HSc" secondAttribute="leading" id="IMq-Bz-Lt6"/>
+                                                        <constraint firstAttribute="trailing" secondItem="OLD-sN-Fms" secondAttribute="trailing" id="Kyu-EJ-XhT"/>
                                                         <constraint firstAttribute="height" constant="24" id="bBP-zT-euh"/>
+                                                        <constraint firstItem="OLD-sN-Fms" firstAttribute="top" secondItem="m99-yj-HSc" secondAttribute="top" id="mAC-8s-fYW"/>
+                                                        <constraint firstAttribute="bottom" secondItem="OLD-sN-Fms" secondAttribute="bottom" id="wZX-1L-VxE"/>
                                                     </constraints>
                                                 </view>
                                             </subviews>
-                                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.40000000000000002" colorSpace="calibratedRGB"/>
+                                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.40000000000000002" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="bottom" secondItem="m99-yj-HSc" secondAttribute="bottom" constant="4" id="Hyd-Pf-4Ni"/>
                                                 <constraint firstAttribute="right" secondItem="m99-yj-HSc" secondAttribute="right" constant="4" id="aQv-HN-dQG"/>
@@ -228,6 +240,7 @@
                                 <connections>
                                     <outlet property="imageView" destination="0aq-fn-r9R" id="smK-ma-TWL"/>
                                     <outlet property="overlayView" destination="uyS-Tg-Iyl" id="N6m-w2-m4M"/>
+                                    <outlet property="selectedCellCountLabel" destination="OLD-sN-Fms" id="h6H-BE-j1f"/>
                                     <outlet property="videoIndicatorView" destination="BwJ-KE-LWZ" id="HkB-Dc-nzF"/>
                                 </connections>
                             </collectionViewCell>
