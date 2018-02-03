@@ -81,6 +81,7 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
     _selectedIndexPathsWithCount = [[NSMutableDictionary alloc] init];
     // Register observer
     [[PHPhotoLibrary sharedPhotoLibrary] registerChangeObserver:self];
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -93,7 +94,10 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
     
     // Configure collection view
     self.collectionView.allowsMultipleSelection = self.imagePickerController.allowsMultipleSelection;
-    
+    if (_openCameraRollOnLaunch == YES) {
+        [self setupCancelNavBarButton];
+    }
+
     // Show/hide 'Done' button
     if (self.imagePickerController.allowsMultipleSelection) {
         [self.navigationItem setRightBarButtonItem:self.doneButton animated:NO];
@@ -204,6 +208,19 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
     [infoButtonItem setTitleTextAttributes:attributes forState:UIControlStateDisabled];
     
     self.toolbarItems = @[leftSpace, infoButtonItem, rightSpace];
+}
+
+-(void)setupCancelNavBarButton
+{
+    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(dismissQBImagePickerController)];
+    self.navigationItem.leftBarButtonItem = cancelButton;
+}
+
+-(void)dismissQBImagePickerController
+{
+    if ([self.imagePickerController.delegate respondsToSelector:@selector(qb_imagePickerControllerDidCancel:)]) {
+        [self.imagePickerController.delegate qb_imagePickerControllerDidCancel:self.imagePickerController];
+    }
 }
 
 - (void)updateSelectionInfo

@@ -15,5 +15,6 @@
 
 @property (nonatomic, weak) QBImagePickerController *imagePickerController;
 @property (nonatomic, strong) PHAssetCollection *assetCollection;
+@property (nonatomic, assign) BOOL openCameraRollOnLaunch;
 
 @end

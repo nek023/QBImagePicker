@@ -11,6 +11,7 @@
 
 // ViewControllers
 #import "QBAlbumsViewController.h"
+#import "QBAssetsViewController.h"
 
 @interface QBImagePickerController ()
 
@@ -63,13 +64,10 @@
 -(void) viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    for (UIViewController* item in [self.albumsNavigationController childViewControllers]) {
-        if ([item isKindOfClass: QBAlbumsViewController.self]) {
-            QBAlbumsViewController* viewController = (QBAlbumsViewController*)item;
-            viewController.openCameraRollOnLaunch = self.openCameraRollOnLaunch;
-        }
+    if (_openCameraRollOnLaunch == YES)
+    {
+        [self setupAssetsViewController];
     }
-    
 }
 
 - (void)setUpAlbumsViewController
@@ -86,6 +84,26 @@
     [navigationController didMoveToParentViewController:self];
     
     self.albumsNavigationController = navigationController;
+}
+
+- (void)setupAssetsViewController
+{
+    // Add QBAssetsViewController as a child
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"QBImagePicker" bundle:self.assetBundle];
+    QBAssetsViewController *assetsViewController = [storyboard instantiateViewControllerWithIdentifier:@"QBAssetsViewController"];
+    assetsViewController.imagePickerController = self;
+    assetsViewController.assetCollection = [self getCameraRollImages];
+    assetsViewController.openCameraRollOnLaunch = self.openCameraRollOnLaunch;
+    [self.albumsNavigationController setViewControllers:[NSArray arrayWithObject:assetsViewController] animated:NO];
+}
+
+-(PHAssetCollection *)getCameraRollImages
+{
+    
+    PHFetchResult *fetchResult = [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeSmartAlbum subtype:PHAssetCollectionSubtypeSmartAlbumUserLibrary options:nil];
+    PHAssetCollection *assetCollection = fetchResult.firstObject;
+    return assetCollection;
+   
 }
 
 @end
