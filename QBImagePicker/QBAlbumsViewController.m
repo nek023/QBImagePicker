@@ -195,39 +195,39 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
     UIGraphicsBeginImageContext(size);
     CGContextRef context = UIGraphicsGetCurrentContext();
     
-    UIColor *backgroundColor = [UIColor colorWithRed:(239.0 / 255.0) green:(239.0 / 255.0) blue:(244.0 / 255.0) alpha:1.0];
-    UIColor *iconColor = [UIColor colorWithRed:(179.0 / 255.0) green:(179.0 / 255.0) blue:(182.0 / 255.0) alpha:1.0];
+    UIColor *backgroundColor = [UIColor colorWithRed:(239.0f / 255.0f) green:(239.0f / 255.0f) blue:(244.0f / 255.0f) alpha:1.0f];
+    UIColor *iconColor = [UIColor colorWithRed:(179.0f / 255.0f) green:(179.0f / 255.0f) blue:(182.0f / 255.0f) alpha:1.0f];
     
     // Background
     CGContextSetFillColorWithColor(context, [backgroundColor CGColor]);
     CGContextFillRect(context, CGRectMake(0, 0, size.width, size.height));
     
     // Icon (back)
-    CGRect backIconRect = CGRectMake(size.width * (16.0 / 68.0),
-                                     size.height * (20.0 / 68.0),
-                                     size.width * (32.0 / 68.0),
-                                     size.height * (24.0 / 68.0));
+    CGRect backIconRect = CGRectMake(size.width * (16.0f / 68.0f),
+                                     size.height * (20.0f / 68.0f),
+                                     size.width * (32.0f / 68.0f),
+                                     size.height * (24.0f / 68.0f));
     
     CGContextSetFillColorWithColor(context, [iconColor CGColor]);
     CGContextFillRect(context, backIconRect);
     
     CGContextSetFillColorWithColor(context, [backgroundColor CGColor]);
-    CGContextFillRect(context, CGRectInset(backIconRect, 1.0, 1.0));
+    CGContextFillRect(context, CGRectInset(backIconRect, 1.0f, 1.0f));
     
     // Icon (front)
-    CGRect frontIconRect = CGRectMake(size.width * (20.0 / 68.0),
-                                      size.height * (24.0 / 68.0),
-                                      size.width * (32.0 / 68.0),
-                                      size.height * (24.0 / 68.0));
+    CGRect frontIconRect = CGRectMake(size.width * (20.0f / 68.0f),
+                                      size.height * (24.0f / 68.0f),
+                                      size.width * (32.0f / 68.0f),
+                                      size.height * (24.0f / 68.0f));
     
     CGContextSetFillColorWithColor(context, [backgroundColor CGColor]);
-    CGContextFillRect(context, CGRectInset(frontIconRect, -1.0, -1.0));
+    CGContextFillRect(context, CGRectInset(frontIconRect, -1.0f, -1.0f));
     
     CGContextSetFillColorWithColor(context, [iconColor CGColor]);
     CGContextFillRect(context, frontIconRect);
     
     CGContextSetFillColorWithColor(context, [backgroundColor CGColor]);
-    CGContextFillRect(context, CGRectInset(frontIconRect, 1.0, 1.0));
+    CGContextFillRect(context, CGRectInset(frontIconRect, 1.0f, 1.0f));
     
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
@@ -276,7 +276,7 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
 {
     QBAlbumCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AlbumCell" forIndexPath:indexPath];
     cell.tag = indexPath.row;
-    cell.borderWidth = 1.0 / [[UIScreen mainScreen] scale];
+    cell.borderWidth = 1.0f / [[UIScreen mainScreen] scale];
     
     // Thumbnail
     PHAssetCollection *assetCollection = self.assetCollections[indexPath.row];
