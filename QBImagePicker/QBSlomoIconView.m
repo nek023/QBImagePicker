@@ -22,13 +22,13 @@
 {
     [self.iconColor setStroke];
     
-    CGFloat width = 2.2;
+    CGFloat width = 2.2f;
     CGRect insetRect = CGRectInset(rect, width / 2, width / 2);
     
     // Draw dashed circle
     UIBezierPath* circlePath = [UIBezierPath bezierPathWithOvalInRect:insetRect];
     circlePath.lineWidth = width;
-    CGFloat ovalPattern[] = {0.75, 0.75};
+    CGFloat ovalPattern[] = {0.75f, 0.75f};
     [circlePath setLineDash:ovalPattern count:2 phase:0];
     [circlePath stroke];
 }

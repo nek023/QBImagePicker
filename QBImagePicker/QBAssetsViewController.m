@@ -300,12 +300,12 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
     
     // The preheat window is twice the height of the visible rect
     CGRect preheatRect = self.collectionView.bounds;
-    preheatRect = CGRectInset(preheatRect, 0.0, -0.5 * CGRectGetHeight(preheatRect));
+    preheatRect = CGRectInset(preheatRect, 0.0f, -0.5f * CGRectGetHeight(preheatRect));
     
     // If scrolled by a "reasonable" amount...
     CGFloat delta = ABS(CGRectGetMidY(preheatRect) - CGRectGetMidY(self.previousPreheatRect));
     
-    if (delta > CGRectGetHeight(self.collectionView.bounds) / 3.0) {
+    if (delta > CGRectGetHeight(self.collectionView.bounds) / 3.0f) {
         // Compute the assets to start caching and to stop caching
         NSMutableArray *addedIndexPaths = [NSMutableArray array];
         NSMutableArray *removedIndexPaths = [NSMutableArray array];
@@ -411,7 +411,10 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
                     
                     NSIndexSet *changedIndexes = [collectionChanges changedIndexes];
                     if ([changedIndexes count]) {
-                        [self.collectionView reloadItemsAtIndexPaths:[changedIndexes qb_indexPathsFromIndexesWithSection:0]];
+                        // Fatal Exception: NSInternalInconsistencyException attempt to delete and reload the same index path
+                        NSMutableIndexSet *changedWithoutRemovalsIndexes = [changedIndexes mutableCopy];
+                        [changedWithoutRemovalsIndexes removeIndexes:removedIndexes];
+                        [self.collectionView reloadItemsAtIndexPaths:[changedWithoutRemovalsIndexes qb_indexPathsFromIndexesWithSection:0]];
                     }
                 } completion:NULL];
             }
@@ -521,8 +524,9 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
                 } else {
                     format = NSLocalizedStringFromTableInBundle(@"assets.footer.photos-and-videos", @"QBImagePicker", bundle, nil);
                 }
-                
-                label.text = [NSString stringWithFormat:format, numberOfPhotos, numberOfVideos];
+
+                // Fatal Exception: NSInvalidArgumentException *** -[NSPlaceholderString initWithString:]: nil argument
+                label.text = [NSString stringWithFormat:format ?: @"", numberOfPhotos, numberOfVideos];
             }
                 break;
                 
@@ -530,8 +534,9 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
             {
                 NSString *key = (numberOfPhotos == 1) ? @"assets.footer.photo" : @"assets.footer.photos";
                 NSString *format = NSLocalizedStringFromTableInBundle(key, @"QBImagePicker", bundle, nil);
-                
-                label.text = [NSString stringWithFormat:format, numberOfPhotos];
+
+                // Fatal Exception: NSInvalidArgumentException *** -[NSPlaceholderString initWithString:]: nil argument
+                label.text = [NSString stringWithFormat:format ?: @"", numberOfPhotos];
             }
                 break;
                 
@@ -539,8 +544,9 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
             {
                 NSString *key = (numberOfVideos == 1) ? @"assets.footer.video" : @"assets.footer.videos";
                 NSString *format = NSLocalizedStringFromTableInBundle(key, @"QBImagePicker", bundle, nil);
-                
-                label.text = [NSString stringWithFormat:format, numberOfVideos];
+
+                // Fatal Exception: NSInvalidArgumentException *** -[NSPlaceholderString initWithString:]: nil argument
+                label.text = [NSString stringWithFormat:format ?: @"", numberOfVideos];
             }
                 break;
         }
@@ -655,8 +661,14 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
     } else {
         numberOfColumns = self.imagePickerController.numberOfColumnsInLandscape;
     }
-    
-    CGFloat width = (CGRectGetWidth(self.view.frame) - 2.0 * (numberOfColumns - 1)) / numberOfColumns;
+
+    CGFloat width = (CGRectGetWidth(self.view.frame) - 2.0f * (numberOfColumns - 1)) / numberOfColumns;
+
+    // Fatal Exception: NSInternalInconsistencyException negative sizes are not supported in the flow layout
+    // The width and height of the specified item. Both values must be greater than 0.
+    if (width <= 0) {
+        width = 1.0f;
+    }
     
     return CGSizeMake(width, width);
 }
