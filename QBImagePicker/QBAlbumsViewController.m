@@ -15,6 +15,7 @@
 // ViewControllers
 #import "QBImagePickerController.h"
 #import "QBAssetsViewController.h"
+#import "LocalizationHelper.h"
 
 static CGSize CGSizeScale(CGSize size, CGFloat scale) {
     return CGSizeMake(size.width * scale, size.height * scale);
@@ -59,7 +60,7 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
     [super viewWillAppear:animated];
     
     // Configure navigation item
-    self.navigationItem.title = NSLocalizedStringFromTableInBundle(@"albums.title", @"QBImagePicker", self.imagePickerController.assetBundle, nil);
+    self.navigationItem.title = QBImagePickerLocalizedString(@"albums.title", nil, self.imagePickerController.assetBundle);
     self.navigationItem.prompt = self.imagePickerController.prompt;
     
     // Show/hide 'Done' button
@@ -134,9 +135,9 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
         NSBundle *bundle = self.imagePickerController.assetBundle;
         NSString *format;
         if (selectedAssets.count > 1) {
-            format = NSLocalizedStringFromTableInBundle(@"assets.toolbar.items-selected", @"QBImagePicker", bundle, nil);
+            format = QBImagePickerLocalizedString(@"assets.toolbar.items-selected", nil, bundle);
         } else {
-            format = NSLocalizedStringFromTableInBundle(@"assets.toolbar.item-selected", @"QBImagePicker", bundle, nil);
+            format = QBImagePickerLocalizedString(@"assets.toolbar.item-selected", nil, bundle);
         }
         
         NSString *title = [NSString stringWithFormat:format, selectedAssets.count];

@@ -13,6 +13,7 @@
 #import "QBImagePickerController.h"
 #import "QBAssetCell.h"
 #import "QBVideoIndicatorView.h"
+#import "LocalizationHelper.h"
 
 static CGSize CGSizeScale(CGSize size, CGFloat scale) {
     return CGSizeMake(size.width * scale, size.height * scale);
@@ -214,9 +215,9 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
         NSBundle *bundle = self.imagePickerController.assetBundle;
         NSString *format;
         if (selectedAssets.count > 1) {
-            format = NSLocalizedStringFromTableInBundle(@"assets.toolbar.items-selected", @"QBImagePicker", bundle, nil);
+            format = QBImagePickerLocalizedString(@"assets.toolbar.items-selected", nil, bundle);
         } else {
-            format = NSLocalizedStringFromTableInBundle(@"assets.toolbar.item-selected", @"QBImagePicker", bundle, nil);
+            format = QBImagePickerLocalizedString(@"assets.toolbar.item-selected", nil, bundle);
         }
         
         NSString *title = [NSString stringWithFormat:format, selectedAssets.count];
@@ -512,14 +513,14 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
                 NSString *format;
                 if (numberOfPhotos == 1) {
                     if (numberOfVideos == 1) {
-                        format = NSLocalizedStringFromTableInBundle(@"assets.footer.photo-and-video", @"QBImagePicker", bundle, nil);
+                        format = QBImagePickerLocalizedString(@"assets.footer.photo-and-video", nil, bundle);
                     } else {
-                        format = NSLocalizedStringFromTableInBundle(@"assets.footer.photo-and-videos", @"QBImagePicker", bundle, nil);
+                        format = QBImagePickerLocalizedString(@"assets.footer.photo-and-videos", nil, bundle);
                     }
                 } else if (numberOfVideos == 1) {
-                    format = NSLocalizedStringFromTableInBundle(@"assets.footer.photos-and-video", @"QBImagePicker", bundle, nil);
+                    format = QBImagePickerLocalizedString(@"assets.footer.photos-and-video", nil, bundle);
                 } else {
-                    format = NSLocalizedStringFromTableInBundle(@"assets.footer.photos-and-videos", @"QBImagePicker", bundle, nil);
+                    format = QBImagePickerLocalizedString(@"assets.footer.photos-and-videos", nil, bundle);
                 }
                 
                 label.text = [NSString stringWithFormat:format, numberOfPhotos, numberOfVideos];
@@ -529,7 +530,7 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
             case QBImagePickerMediaTypeImage:
             {
                 NSString *key = (numberOfPhotos == 1) ? @"assets.footer.photo" : @"assets.footer.photos";
-                NSString *format = NSLocalizedStringFromTableInBundle(key, @"QBImagePicker", bundle, nil);
+                NSString *format = QBImagePickerLocalizedString(key, nil, bundle);
                 
                 label.text = [NSString stringWithFormat:format, numberOfPhotos];
             }
@@ -538,7 +539,7 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
             case QBImagePickerMediaTypeVideo:
             {
                 NSString *key = (numberOfVideos == 1) ? @"assets.footer.video" : @"assets.footer.videos";
-                NSString *format = NSLocalizedStringFromTableInBundle(key, @"QBImagePicker", bundle, nil);
+                NSString *format = QBImagePickerLocalizedString(key, nil, bundle);
                 
                 label.text = [NSString stringWithFormat:format, numberOfVideos];
             }
