@@ -10,6 +10,6 @@
 
 @interface LocalizationHelper : NSObject
 
-static inline NSString *QBImagePickerLocalizedString( NSString *key, NSString *comment, NSBundle *framworkBundle);
+NSString *QBImagePickerLocalizedString(NSString *key, NSString *comment, NSBundle *framworkBundle);
 
 @end
