@@ -38,6 +38,10 @@
         self.minimumNumberOfSelection = 1;
         self.numberOfColumnsInPortrait = 4;
         self.numberOfColumnsInLandscape = 7;
+        self.albumsBackgroundColor = [UIColor whiteColor];
+        self.albumCellBackgroundColor = [UIColor whiteColor];
+        self.assetsBackgroundColor = [UIColor whiteColor];
+        self.assetsToolbarTextColor = [UIColor blackColor];
         
         _selectedAssets = [NSMutableOrderedSet orderedSet];
         

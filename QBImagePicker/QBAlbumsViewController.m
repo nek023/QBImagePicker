@@ -47,7 +47,7 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
     PHFetchResult *smartAlbums = [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeSmartAlbum subtype:PHAssetCollectionSubtypeAny options:nil];
     PHFetchResult *userAlbums = [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeAlbum subtype:PHAssetCollectionSubtypeAny options:nil];
     self.fetchResults = @[smartAlbums, userAlbums];
-    
+    self.tableView.backgroundColor = self.imagePickerController.albumsBackgroundColor;
     [self updateAssetCollections];
     
     // Register observer
@@ -61,6 +61,10 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
     // Configure navigation item
     self.navigationItem.title = NSLocalizedStringFromTableInBundle(@"albums.title", @"QBImagePicker", self.imagePickerController.assetBundle, nil);
     self.navigationItem.prompt = self.imagePickerController.prompt;
+    
+    self.navigationController.navigationBar.barTintColor = self.imagePickerController.navigationBarTintColor;
+    self.navigationController.navigationBar.tintColor = self.imagePickerController.navigationTintColor;
+    [self.navigationController.navigationBar setTitleTextAttributes: [NSDictionary dictionaryWithObjectsAndKeys: self.imagePickerController.navigationTitleColor, NSForegroundColorAttributeName, nil]];
     
     // Show/hide 'Done' button
     if (self.imagePickerController.allowsMultipleSelection) {
@@ -277,6 +281,7 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
     QBAlbumCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AlbumCell" forIndexPath:indexPath];
     cell.tag = indexPath.row;
     cell.borderWidth = 1.0 / [[UIScreen mainScreen] scale];
+    cell.backgroundColor = self.imagePickerController.albumCellBackgroundColor;
     
     // Thumbnail
     PHAssetCollection *assetCollection = self.assetCollections[indexPath.row];
@@ -356,9 +361,11 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
     
     // Album title
     cell.titleLabel.text = assetCollection.localizedTitle;
+    cell.titleLabel.textColor = self.imagePickerController.albumCellTitleColor;
     
     // Number of photos
     cell.countLabel.text = [NSString stringWithFormat:@"%lu", (long)fetchResult.count];
+    cell.countLabel.textColor = self.imagePickerController.albumCellCountColor;
     
     return cell;
 }
