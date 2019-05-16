@@ -38,20 +38,9 @@
         self.minimumNumberOfSelection = 1;
         self.numberOfColumnsInPortrait = 4;
         self.numberOfColumnsInLandscape = 7;
-        
         self.albumsBackgroundColor = [UIColor whiteColor];
         self.albumCellBackgroundColor = [UIColor whiteColor];
-//        self.albumCellTitleColor = [UIColor blackColor];
-//        self.albumCellCountColor = [UIColor blackColor];
-
         self.assetsBackgroundColor = [UIColor whiteColor];
-//        self.assetCountColor = [UIColor blackColor];
-
-//        self.navigationBarTintColor = [UIColor blackColor];
-//        self.navigationTintColor = [UIColor whiteColor];
-//        self.navigationTitleColor = [UIColor blackColor];
-        
-//        self.assetsToolbarBackgroundColor = [UIColor whiteColor];
         self.assetsToolbarTextColor = [UIColor blackColor];
         
         _selectedAssets = [NSMutableOrderedSet orderedSet];
