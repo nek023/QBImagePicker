@@ -31,6 +31,21 @@
     imagePickerController.allowsMultipleSelection = (indexPath.section == 1);
     imagePickerController.showsNumberOfSelectedAssets = YES;
     
+    imagePickerController.albumsBackgroundColor = [UIColor blackColor];
+    imagePickerController.albumCellBackgroundColor = [UIColor blackColor];
+    imagePickerController.albumCellTitleColor = [UIColor whiteColor];
+    imagePickerController.albumCellCountColor = [UIColor lightGrayColor];
+
+    imagePickerController.assetsBackgroundColor = [UIColor blackColor];
+    imagePickerController.assetCountColor = [UIColor lightGrayColor];
+
+    imagePickerController.navigationBarTintColor = [UIColor blackColor];
+    imagePickerController.navigationTintColor = [UIColor whiteColor];
+    imagePickerController.navigationTitleColor = [UIColor whiteColor];
+    
+    imagePickerController.assetsToolbarBackgroundColor = [UIColor blackColor];
+    imagePickerController.assetsToolbarTextColor = [UIColor whiteColor];
+    
     if (indexPath.section == 1) {
         switch (indexPath.row) {
             case 1:

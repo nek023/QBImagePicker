@@ -45,6 +45,20 @@ typedef NS_ENUM(NSUInteger, QBImagePickerMediaType) {
 @property (nonatomic, copy) NSString *prompt;
 @property (nonatomic, assign) BOOL showsNumberOfSelectedAssets;
 
+@property (nonatomic, copy) UIColor *navigationBarTintColor;
+@property (nonatomic, copy) UIColor *navigationTintColor;
+@property (nonatomic, copy) UIColor *navigationTitleColor;
+
+@property (nonatomic, copy) UIColor *albumsBackgroundColor;
+@property (nonatomic, copy) UIColor *albumCellBackgroundColor;
+@property (nonatomic, copy) UIColor *albumCellTitleColor;
+@property (nonatomic, copy) UIColor *albumCellCountColor;
+
+@property (nonatomic, copy) UIColor *assetsBackgroundColor;
+@property (nonatomic, copy) UIColor *assetCountColor;
+@property (nonatomic, copy) UIColor *assetsToolbarBackgroundColor;
+@property (nonatomic, copy) UIColor *assetsToolbarTextColor;
+
 @property (nonatomic, assign) NSUInteger numberOfColumnsInPortrait;
 @property (nonatomic, assign) NSUInteger numberOfColumnsInLandscape;
 

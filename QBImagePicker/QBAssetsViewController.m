@@ -91,6 +91,9 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
     
     // Configure collection view
     self.collectionView.allowsMultipleSelection = self.imagePickerController.allowsMultipleSelection;
+    self.collectionView.backgroundColor = self.imagePickerController.assetsBackgroundColor;
+    
+    self.navigationController.toolbar.barTintColor = self.imagePickerController.assetsToolbarBackgroundColor;
     
     // Show/hide 'Done' button
     if (self.imagePickerController.allowsMultipleSelection) {
@@ -197,7 +200,7 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
     UIBarButtonItem *rightSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:NULL];
     
     // Info label
-    NSDictionary *attributes = @{ NSForegroundColorAttributeName: [UIColor blackColor] };
+    NSDictionary *attributes = @{ NSForegroundColorAttributeName: self.imagePickerController.assetsToolbarTextColor };
     UIBarButtonItem *infoButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:NULL];
     infoButtonItem.enabled = NO;
     [infoButtonItem setTitleTextAttributes:attributes forState:UIControlStateNormal];
@@ -501,6 +504,7 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
         
         // Number of assets
         UILabel *label = (UILabel *)[footerView viewWithTag:1];
+        label.textColor = self.imagePickerController.assetCountColor;
         
         NSBundle *bundle = self.imagePickerController.assetBundle;
         NSUInteger numberOfPhotos = [self.fetchResult countOfAssetsWithMediaType:PHAssetMediaTypeImage];
