@@ -29,6 +29,7 @@
     if (self) {
         // Set default values
         self.assetCollectionSubtypes = @[
+                                         @(PHAssetCollectionSubtypeSmartAlbumFavorites),
                                          @(PHAssetCollectionSubtypeSmartAlbumUserLibrary),
                                          @(PHAssetCollectionSubtypeAlbumMyPhotoStream),
                                          @(PHAssetCollectionSubtypeSmartAlbumPanoramas),
