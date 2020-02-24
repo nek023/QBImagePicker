@@ -370,6 +370,19 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
 {
     dispatch_async(dispatch_get_main_queue(), ^{
         // Update fetch results
+        if (@available(iOS 13.0, *)) {
+            PHFetchResult *smartAlbums = [PHAssetCollection fetchAssetCollectionsWithType: PHAssetCollectionTypeSmartAlbum
+                                                                                  subtype: PHAssetCollectionSubtypeAny
+                                                                                  options: nil];
+            PHFetchResult *userAlbums = [PHAssetCollection fetchAssetCollectionsWithType: PHAssetCollectionTypeAlbum
+                                                                                 subtype: PHAssetCollectionSubtypeAny
+                                                                                 options: nil];
+            self.fetchResults = @[smartAlbums, userAlbums];
+            [self updateAssetCollections];
+            [self.tableView reloadData];
+            return;
+        }
+        
         NSMutableArray *fetchResults = [self.fetchResults mutableCopy];
         
         [self.fetchResults enumerateObjectsUsingBlock:^(PHFetchResult *fetchResult, NSUInteger index, BOOL *stop) {
