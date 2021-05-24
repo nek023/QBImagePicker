@@ -419,12 +419,14 @@
 					};
 					AAA8FE0D1ACDA079002A9710 = {
 						CreatedOnToolsVersion = 6.2;
+						DevelopmentTeam = 4BUN42Y2G7;
 					};
 					AAA8FE261ACDA0CE002A9710 = {
 						CreatedOnToolsVersion = 6.2;
 					};
 					AAA8FE3E1ACDA0CE002A9710 = {
 						CreatedOnToolsVersion = 6.2;
+						DevelopmentTeam = 4BUN42Y2G7;
 						TestTargetID = AAA8FE261ACDA0CE002A9710;
 					};
 				};
@@ -434,6 +436,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 				ja,
@@ -711,6 +714,7 @@
 		AAA8FE1D1ACDA079002A9710 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				DEVELOPMENT_TEAM = 4BUN42Y2G7;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -726,6 +730,7 @@
 		AAA8FE1E1ACDA079002A9710 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				DEVELOPMENT_TEAM = 4BUN42Y2G7;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = QBImagePickerTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -764,6 +769,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = 4BUN42Y2G7;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -781,6 +787,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = 4BUN42Y2G7;
 				INFOPLIST_FILE = QBImagePickerDemoTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";

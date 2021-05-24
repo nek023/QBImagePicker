@@ -105,8 +105,12 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
     
     // Scroll to bottom
     if (self.fetchResult.count > 0 && self.isMovingToParentViewController && !self.disableScrollToBottom) {
-        NSIndexPath *indexPath = [NSIndexPath indexPathForItem:(self.fetchResult.count - 1) inSection:0];
-        [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionTop animated:NO];
+        // when presenting as a .FormSheet on iPad, the frame is not correct until just after viewWillAppear:
+        // dispatching to the main thread waits one run loop until the frame is update and the layout is complete
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSIndexPath *indexPath = [NSIndexPath indexPathForItem:(self.fetchResult.count - 1) inSection:0];
+            [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionTop animated:NO];
+        });
     }
 }
 
@@ -407,7 +411,9 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
                     
                     NSIndexSet *changedIndexes = [collectionChanges changedIndexes];
                     if ([changedIndexes count]) {
-                        [self.collectionView reloadItemsAtIndexPaths:[changedIndexes qb_indexPathsFromIndexesWithSection:0]];
+                        NSMutableIndexSet *changedWithoutRemovalsIndexes = [changedIndexes mutableCopy];
+                        [changedWithoutRemovalsIndexes removeIndexes:removedIndexes];
+                        [self.collectionView reloadItemsAtIndexPaths:[changedWithoutRemovalsIndexes qb_indexPathsFromIndexesWithSection:0]];
                     }
                 } completion:NULL];
             }
