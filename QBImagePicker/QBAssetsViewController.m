@@ -195,9 +195,17 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
     // Space
     UIBarButtonItem *leftSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:NULL];
     UIBarButtonItem *rightSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:NULL];
-    
+
     // Info label
-    NSDictionary *attributes = @{ NSForegroundColorAttributeName: [UIColor blackColor] };
+
+    NSDictionary *attributes;
+    if (@available(iOS 13.0, *)) {
+        attributes = @{ NSForegroundColorAttributeName: [UIColor labelColor] };
+    } else {
+        // Fallback on earlier versions
+       attributes = @{ NSForegroundColorAttributeName: [UIColor blackColor] };
+    }
+    
     UIBarButtonItem *infoButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:NULL];
     infoButtonItem.enabled = NO;
     [infoButtonItem setTitleTextAttributes:attributes forState:UIControlStateNormal];
@@ -660,5 +668,6 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
     
     return CGSizeMake(width, width);
 }
+
 
 @end
