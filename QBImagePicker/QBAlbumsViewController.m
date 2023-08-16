@@ -292,7 +292,7 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
             options.predicate = [NSPredicate predicateWithFormat:@"mediaType == %ld", PHAssetMediaTypeVideo];
             break;
         case QBImagePickerMediaTypeAny:
-            options.predicate = [NSPredicate predicateWithFormat:@"(mediaType == %ld AND duration <= %d) OR mediaType == %ld", PHAssetMediaTypeVideo, 3, PHAssetMediaTypeImage];
+            options.predicate = [NSPredicate predicateWithFormat:@"(mediaType == %ld AND duration <= %d) OR mediaType == %ld", PHAssetMediaTypeVideo, 30, PHAssetMediaTypeImage];
             break;
         default:
             break;
