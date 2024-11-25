@@ -38,6 +38,8 @@
         self.minimumNumberOfSelection = 1;
         self.numberOfColumnsInPortrait = 4;
         self.numberOfColumnsInLandscape = 7;
+        self.shouldFilterOutVideosWithMaxNumberOfSeconds = NO;
+        self.maxNumberOfSecondsForVideos = 100;
         
         _selectedAssets = [NSMutableOrderedSet orderedSet];
         

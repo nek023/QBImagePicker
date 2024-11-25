@@ -1,6 +1,10 @@
-# QBImagePicker
+# NOTE: 
+We have a new Swift library called **SCMediaPicker** inspired by the QBImagePicker. 
+https://github.com/fotonotes/SCMediaPicker
 
-[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
+-----
+
+# QBImagePicker
 
 A clone of UIImagePickerController with multiple selection support.
 
